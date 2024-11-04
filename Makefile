@@ -1,4 +1,4 @@
-	# **************************************************************************** #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/10/28 13:58:42 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/04 10:24:54 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 SRCS = \
 	main.c \
 	init.c \
-	free.c \
+	free.c \sudo apt install valgrind
 	validate_map_file.c \
 	_utils.c
 
@@ -34,6 +34,14 @@ LIBFT_DIR = lib/libft/
 LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_INCLUDE = -I $(LIBFT_DIR)
 
+TEST_SRCS = \
+	test/map_tester.c
+
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+
+# Exclude main.c from OBJS when compiling tests
+OBJS_NO_MAIN = $(filter-out $(SRCS_DIR)/main.o, $(OBJS))
+
 all: makelibft $(NAME)
 
 makelibft:
@@ -44,14 +52,17 @@ makelibft:
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_INCLUDE) $(INCLUDE) $(LIBFT) -o $(NAME) $(LIBS)
+
+test: $(TEST_OBJS) $(OBJS_NO_MAIN) $(LIBFT)
+	$(CC) $(CFLAGS) $(TEST_OBJS) $(OBJS_NO_MAIN) $(LIBFT_INCLUDE) $(INCLUDE) $(LIBFT) -o tester.o $(LIBS)
 	
 clean:
 	make -C $(LIBFT_DIR) clean
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(TEST_OBJS)
 
 fclean: clean
 	$(RM) $(NAME) $(LIBFT)
 
 re: fclean all
 
-.PHONY: all makelibft clean fclean re
+.PHONY: all makelibft test clean fclean re
