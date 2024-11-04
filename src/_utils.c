@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:05:47 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:42 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:53:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void print_map_struct(t_map *map)
     int i;
     
     printf("Textures:\n");
-    printf("  NO: %s", map->no);
-    printf("  SO: %s", map->so);
-    printf("  WE: %s", map->we);
-    printf("  EA: %s", map->ea);
+    printf("  NO: %s\n", map->no);
+    printf("  SO: %s\n", map->so);
+    printf("  WE: %s\n", map->we);
+    printf("  EA: %s\n", map->ea);
 
     printf("\nFloor Colors (RGB):\n");
     printf("  F: %d, %d, %d\n", map->f[0], map->f[1], map->f[2]);

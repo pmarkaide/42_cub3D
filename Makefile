@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/04 10:24:54 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/04 10:27:28 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 SRCS = \
 	main.c \
 	init.c \
-	free.c \sudo apt install valgrind
+	free.c \
 	validate_map_file.c \
 	_utils.c
 

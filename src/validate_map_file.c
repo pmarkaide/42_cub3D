@@ -6,11 +6,24 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 09:21:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:53:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static char *clean_trailingws(char *line)
+{
+    char *end;
+    
+    end = line + ft_strlen(line) - 1;
+    while (end > line && (*end == ' ' || *end == '\n' || *end == '\t'))
+    {
+        *end = '\0';
+        end--;
+    }
+    return (line);
+}
 
 static int check_file_contents(char *file)
 {
@@ -21,14 +34,14 @@ static int check_file_contents(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf(2, "Error\nCannot open file %s\n", file);
+		ft_printf(2, "LOL\nCannot open file %s:%s\n", file, strerror(errno));
 		return (1);
 	}
 	bytes_read = read(fd, buffer, 1);
 	close(fd);
 	if (bytes_read <= 0)
 	{
-		ft_printf(2, "Error\nFile %s is empty or unreadable\n", file);
+		ft_printf(2, "Error\nFile %s is empty or unreadable: %s\n", file, strerror(errno));
 		return (1);
 	}
 	return (0);
@@ -71,6 +84,7 @@ static int parse_textures(char *line, t_macro *macro)
 	int err = 0;
 	char *skipped = ft_skipws(line);
 	char *path = ft_skipws(skipped + 2);
+	path = clean_trailingws(path);
 
 	if (ft_strncmp(skipped, "NO ", 3) == 0)
 		err = set_texture_path(&(macro->map->no), path);
@@ -239,17 +253,20 @@ static int validate_colors(int *f, int *c)
 	return (0);
 }
 
-static int is_valid_map_char(char **map)
+static int is_valid_map_char(t_macro *macro)
 {
-	int i, j;
+	int i = 0;
+	int j;
+	int height = macro->map->h_map;
+	int width = macro->map->w_map;
+	char **map = macro->map->map;
 
-	i = 0;
-	while (map[i])
+	while (i < height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (j < width)
 		{
-			if (strchr("10NSWE ", map[i][j]) == NULL)
+			if (map[i][j] && strchr("10NSWE ", map[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character '%c' in map\n", map[i][j]);
 				return (0);
@@ -348,7 +365,7 @@ static int evaluate_map(t_macro *macro)
 {
 	calculate_map_dimensions(macro);
 
-	if (!is_valid_map_char(macro->map->map))
+	if (!is_valid_map_char(macro))
 		return (1);
 	if (!is_valid_map_structure(macro))
 	{
