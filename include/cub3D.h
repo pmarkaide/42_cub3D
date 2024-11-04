@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/04 11:54:55 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:30:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,17 @@ typedef struct s_macro
 #endif
 
 t_macro	*init_macro(t_macro *macro);
-void	validate_map_file(char *file, t_macro *macro);
 void	free_and_exit(t_macro *macro);
-
-
-
+void	free_map(t_macro *macro);
+void	free_macro(t_macro *macro);
+void	print_map_struct(t_map *map);
+int 	validation(t_macro *macro);
+int		validate_map(t_macro *macro);
+int		check_file_contents(char *file);
+char	*clean_trailingws(char *line);
+int		save_texture_path(char **texture, char *path);
+int		parse_line(char *line, t_macro *macro, int section, t_list **head);
+void	read_input(char *file, t_macro *macro);
 
 /* _utils */
 void	print_map_struct(t_map *map);

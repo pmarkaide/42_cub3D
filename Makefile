@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/04 10:27:28 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/04 12:29:24 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,12 @@ SRCS = \
 	main.c \
 	init.c \
 	free.c \
-	validate_map_file.c \
-	_utils.c
+	_utils.c \
+	input.c \
+	input_utils.c \
+	input_parse.c \
+	validation.c \
+	validation_map.c
 
 SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
