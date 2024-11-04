@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 14:56:42 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/07/17 12:47:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:16:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	ft_print_char_array(char **array)
 
 	if (array == NULL)
 	{
-		ft_printf("Error: array is NULL\n");
+		ft_printf(2, "Error: array is NULL\n");
 		return ;
 	}
 	i = 0;
 	while (array[i] != NULL)
-		ft_printf("%s\n", array[i++]);
+		ft_printf(1, "%s\n", array[i++]);
 }
