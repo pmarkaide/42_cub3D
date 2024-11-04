@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 15:15:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:04:40 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ static int check_walls(t_macro *macro)
 	int i = 0;
 	int j;
 	int height = macro->map->h_map;
-	int width = macro->map->w_map;
 	char **map = macro->map->map;
 
 	while (i < height)
 	{
 		j = 0;
+		int width = ft_strlen(map[i]);
 		while (j < width)
 		{
-			if (map[i][j] == '0')
+			if (ft_strchr("0NSEW", map[i][j]))
 			{
 				if (!is_surrounded_by_walls(map, i, j, height, width))
 					return (0);
