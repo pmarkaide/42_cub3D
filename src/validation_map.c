@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 16:19:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:53:35 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,17 @@ static int	check_unique_starting_position(t_macro *macro)
 		while (j < line_length)
 		{
 			if (ft_strchr("NSWE", map[i][j]))
-			{
-				ft_printf(2, "Starting position: %c at (%d, %d)\n", map[i][j],
-					i, j);
 				count++;
-			}
-			if (count > 1)
-			{
-				ft_printf(2, "Error\nMultiple starting positions in map\n");
-				return (0);
-			}
 			j++;
 		}
 		i++;
 	}
-	return (count == 1);
+	if (count != 1)
+	{
+		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
+		return (0);
+	}
+	return (1);
 }
 
 static int	map_chars_are_valid(t_macro *macro)
@@ -52,6 +48,7 @@ static int	map_chars_are_valid(t_macro *macro)
 	int		i;
 	int		j;
 	char	**map;
+	int		line_length;
 
 	i = 0;
 	map = macro->map->map;
@@ -60,12 +57,12 @@ static int	map_chars_are_valid(t_macro *macro)
 	while (i < macro->map->h_map)
 	{
 		j = 0;
-		while (j < macro->map->w_map)
+		line_length = ft_strlen(map[i]);
+		while (j < line_length)
 		{
 			if (map[i][j] && ft_strchr("10NSWE ", map[i][j]) == NULL)
 			{
-				ft_printf(2, "Error\nInvalid character '%c' in map\n",
-					map[i][j]);
+				ft_printf(2, "Error\nInvalid character '%c' in map\n", map[i][j]);
 				return (0);
 			}
 			j++;
