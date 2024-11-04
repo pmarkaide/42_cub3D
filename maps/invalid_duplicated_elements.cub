@@ -1,8 +1,8 @@
-NO ./path_to_the_north_texture
-NO ./path_to_the_north_texture_duplicate
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO textures/north_texture
+NO textures/north_texture
+SO textures/south_texture
+WE textures/west_texture
+EA textures/east_texture
 
 F 220,100,0
 C 225,30,0
