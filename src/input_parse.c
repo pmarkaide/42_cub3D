@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 12:22:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:00:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int parse_textures(char *line, t_macro *macro)
 	int err = 0;
 	char *skipped = ft_skipws(line);
 	char *path = ft_skipws(skipped + 2);
-	path = clean_trailingws(path);
+	clean_trailing_char(path, " \t\n");
 
 	if (ft_strncmp(skipped, "NO ", 3) == 0)
 		err = save_texture_path(&(macro->map->no), path);
@@ -71,6 +71,7 @@ static int parse_map(char *line, t_list **head)
 {
 	t_list *new;
 
+	clean_trailing_char(line, "\n");
 	new = ft_lstnew(ft_strdup(line));
 	if (!new)
 		return (1);

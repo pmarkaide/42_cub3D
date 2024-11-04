@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 12:21:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:00:38 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,14 @@ int check_file_contents(char *file)
 	return (0);
 }
 
-char *clean_trailingws(char *line)
+void clean_trailing_char(char *str, const char *set)
 {
-    char *end;
-    
-    end = line + ft_strlen(line) - 1;
-    while (end > line && (*end == ' ' || *end == '\n' || *end == '\t'))
-    {
-        *end = '\0';
-        end--;
-    }
-    return (line);
+	int len = ft_strlen(str);
+	while (len > 0 && ft_strchr(set, str[len - 1]))
+	{
+		str[len - 1] = '\0';
+		len--;
+	}
 }
 
 int save_texture_path(char **texture, char *path)

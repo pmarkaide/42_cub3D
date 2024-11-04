@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 12:29:46 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:02:39 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	read_input(char *file, t_macro *macro)
 		free_and_exit(macro);
 	if (read_file(file, macro))
 		free_and_exit(macro);
-	print_map_struct(macro->map);
 	if (validation(macro))
 		free_and_exit(macro);
+	print_map_struct(macro->map);
 }

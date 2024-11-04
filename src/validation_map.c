@@ -6,13 +6,31 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 12:23:09 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:49:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
-static int is_valid_map_char(t_macro *macro)
+static void calculate_map_dimensions(t_macro *macro)
+{
+	int height = 0;
+	int width = 0;
+	int current_width;
+	char **map = macro->map->map;
+
+	while (map[height])
+	{
+		current_width = ft_strlen(map[height]);
+		if (current_width > width)
+			width = current_width;
+		height++;
+	}
+	macro->map->w_map = width;
+	macro->map->h_map = height;
+}
+
+static int map_chars_are_valid(t_macro *macro)
 {
 	int i = 0;
 	int j;
@@ -35,24 +53,6 @@ static int is_valid_map_char(t_macro *macro)
 		i++;
 	}
 	return (1);
-}
-
-static void calculate_map_dimensions(t_macro *macro)
-{
-	int height = 0;
-	int width = 0;
-	int current_width;
-	char **map = macro->map->map;
-
-	while (map[height])
-	{
-		current_width = ft_strlen(map[height]);
-		if (current_width > width)
-			width = current_width;
-		height++;
-	}
-	macro->map->w_map = width;
-	macro->map->h_map = height;
 }
 
 static int check_first_last_rows(t_macro *macro)
@@ -128,7 +128,7 @@ int validate_map(t_macro *macro)
 {
 	calculate_map_dimensions(macro);
 
-	if (!is_valid_map_char(macro))
+	if (!map_chars_are_valid(macro))
 		return (1);
 	if (!is_valid_map_structure(macro))
 	{
