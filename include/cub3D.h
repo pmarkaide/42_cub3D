@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/04 15:00:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:09:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	clean_trailing_char(char *str, const char *set);
 int		save_texture_path(char **texture, char *path);
 int		parse_line(char *line, t_macro *macro, int section, t_list **head);
 void	read_input(char *file, t_macro *macro);
+void	calculate_map_dimensions(t_macro *macro);
 
 /* _utils */
 void	print_map_struct(t_map *map);
