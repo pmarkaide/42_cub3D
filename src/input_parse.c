@@ -10,15 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3D.h"
+#include "cub3D.h"
 
-static int parse_textures(char *line, t_macro *macro)
+static int	parse_textures(char *line, t_macro *macro)
 {
-	int err = 0;
-	char *skipped = ft_skipws(line);
-	char *path = ft_skipws(skipped + 2);
-	clean_trailing_char(path, " \t\n");
+	int		err;
+	char	*skipped;
+	char	*path;
 
+	err = 0;
+	skipped = ft_skipws(line);
+	path = ft_skipws(skipped + 2);
+	clean_trailing_char(path, " \t\n");
 	if (ft_strncmp(skipped, "NO ", 3) == 0)
 		err = save_texture_path(&(macro->map->no), path);
 	else if (ft_strncmp(skipped, "SO ", 3) == 0)
@@ -27,36 +30,37 @@ static int parse_textures(char *line, t_macro *macro)
 		err = save_texture_path(&(macro->map->we), path);
 	else if (ft_strncmp(skipped, "EA ", 3) == 0)
 		err = save_texture_path(&(macro->map->ea), path);
-	return err;
+	return (err);
 }
 
-static int parse_colors(char *line, t_macro *macro)
+static int	parse_colors(char *line, t_macro *macro)
 {
-	char *skipped;
-	int i;
+	char	*skipped;
+	int		i;
 
 	i = -1;
 	skipped = ft_skipws(line);
 	skipped = ft_skipws(skipped + 1);
-	while(++i < 3)
+	while (++i < 3)
 	{
-		if(ft_skipws(line)[0] == 'F')
+		if (ft_skipws(line)[0] == 'F')
 			macro->map->f[i] = ft_atoi(skipped);
-		else if(ft_skipws(line)[0]  == 'C')
+		else if (ft_skipws(line)[0] == 'C')
 			macro->map->c[i] = ft_atoi(skipped);
 		skipped = ft_strchr(skipped, ',');
-		if(skipped)
+		if (skipped)
 			skipped++;
 	}
-	return(0);
+	return (0);
 }
 
-static int premap_ready(t_macro *macro)
+static int	premap_ready(t_macro *macro)
 {
-	int i = 0;
+	int	i;
 
-	if (macro->map->no == NULL || macro->map->so == NULL ||
-		macro->map->we == NULL || macro->map->ea == NULL)
+	i = 0;
+	if (macro->map->no == NULL || macro->map->so == NULL
+		|| macro->map->we == NULL || macro->map->ea == NULL)
 		return (0);
 	while (i < 3)
 	{
@@ -67,9 +71,9 @@ static int premap_ready(t_macro *macro)
 	return (1);
 }
 
-static int parse_map(char *line, t_list **head)
+static int	parse_map(char *line, t_list **head)
 {
-	t_list *new;
+	t_list	*new;
 
 	clean_trailing_char(line, "\n");
 	new = ft_lstnew(ft_strdup(line));
@@ -79,25 +83,26 @@ static int parse_map(char *line, t_list **head)
 	return (0);
 }
 
-int parse_line(char *line, t_macro *macro, int section, t_list **head)
+int	parse_line(char *line, t_macro *macro, int section, t_list **head)
 {
-	int err;
+	int	err;
 
 	err = 0;
-	if(section == 0)
-		return(0);
-	if(section == 1)
+	if (section == 0)
+		return (0);
+	if (section == 1)
 		err = parse_textures(line, macro);
-	if(section == 2)
+	if (section == 2)
 		err = parse_colors(line, macro);
-	if(section == 3)
+	if (section == 3)
 	{
 		if (!premap_ready(macro))
 		{
-			ft_printf(2, "Error\nMap section found before textures and colors are fully defined\n");
+			ft_printf(2,
+				"Error\nMap section found before textures and colors are fully defined\n");
 			return (1);
 		}
 		err = parse_map(line, head);
 	}
-	return(err);
+	return (err);
 }

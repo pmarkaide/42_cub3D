@@ -14,7 +14,8 @@
 
 void	free_map(t_macro *macro)
 {
-	int i;
+	int	i;
+
 	i = -1;
 	if (macro->map)
 	{
@@ -27,11 +28,11 @@ void	free_map(t_macro *macro)
 		if (macro->map->ea)
 			free(macro->map->ea);
 		if (macro->map->map)
-        {
-            while (++i < macro->map->h_map)
-                free(macro->map->map[i]);
-            free(macro->map->map);
-        }
+		{
+			while (++i < macro->map->h_map)
+				free(macro->map->map[i]);
+			free(macro->map->map);
+		}
 		free(macro->map);
 	}
 }
@@ -50,7 +51,7 @@ void	free_macro(t_macro *macro)
 
 void	free_and_exit(t_macro *macro)
 {
-	//write(2, "Error\n", 6);
+	// write(2, "Error\n", 6);
 	free_macro(macro);
 	exit(1);
 }

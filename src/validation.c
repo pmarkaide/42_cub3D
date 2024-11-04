@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-static int validate_textures(t_macro *macro)
+static int	validate_textures(t_macro *macro)
 {
 	if (check_file_contents(macro->map->no))
 		return (1);
@@ -25,9 +25,9 @@ static int validate_textures(t_macro *macro)
 	return (0);
 }
 
-static int validate_colors(int *f, int *c)
+static int	validate_colors(int *f, int *c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 3)
@@ -47,8 +47,7 @@ static int validate_colors(int *f, int *c)
 	return (0);
 }
 
-
-int validation(t_macro *macro)
+int	validation(t_macro *macro)
 {
 	if (validate_textures(macro))
 		return (1);
@@ -58,5 +57,3 @@ int validation(t_macro *macro)
 		return (1);
 	return (0);
 }
-
-

@@ -10,15 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3D.h"
+#include "cub3D.h"
 
-void calculate_map_dimensions(t_macro *macro)
+void	calculate_map_dimensions(t_macro *macro)
 {
-	int height = 0;
-	int width = 0;
-	int current_width;
-	char **map = macro->map->map;
+	int		height;
+	int		width;
+	int		current_width;
+	char	**map;
 
+	height = 0;
+	width = 0;
+	map = macro->map->map;
 	while (map[height])
 	{
 		current_width = ft_strlen(map[height]);
@@ -30,11 +33,11 @@ void calculate_map_dimensions(t_macro *macro)
 	macro->map->h_map = height;
 }
 
-int check_file_contents(char *file)
+int	check_file_contents(char *file)
 {
-	int fd;
-	char buffer[1];
-	ssize_t bytes_read;
+	int		fd;
+	char	buffer[1];
+	ssize_t	bytes_read;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -46,15 +49,18 @@ int check_file_contents(char *file)
 	close(fd);
 	if (bytes_read <= 0)
 	{
-		ft_printf(2, "Error\nFile %s is empty or unreadable: %s\n", file, strerror(errno));
+		ft_printf(2, "Error\nFile %s is empty or unreadable: %s\n", file,
+			strerror(errno));
 		return (1);
 	}
 	return (0);
 }
 
-void clean_trailing_char(char *str, const char *set)
+void	clean_trailing_char(char *str, const char *set)
 {
-	int len = ft_strlen(str);
+	int	len;
+
+	len = ft_strlen(str);
 	while (len > 0 && ft_strchr(set, str[len - 1]))
 	{
 		str[len - 1] = '\0';
@@ -62,7 +68,7 @@ void clean_trailing_char(char *str, const char *set)
 	}
 }
 
-int save_texture_path(char **texture, char *path)
+int	save_texture_path(char **texture, char *path)
 {
 	if (*texture != NULL)
 	{
