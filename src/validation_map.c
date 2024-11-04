@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 14:49:16 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:15:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,51 +55,38 @@ static int map_chars_are_valid(t_macro *macro)
 	return (1);
 }
 
-static int check_first_last_rows(t_macro *macro)
+static int is_surrounded_by_walls(char **map, int i, int j, int height, int width)
 {
-	int j = 0;
-	char **map = macro->map->map;
-	int width = macro->map->w_map;
-
-	while (j < width)
+	if (i == 0 || j == 0 || i == height - 1 || j == width - 1 ||
+		map[i - 1][j] == ' ' || map[i + 1][j] == ' ' ||
+		map[i][j - 1] == ' ' || map[i][j + 1] == ' ' ||
+		map[i - 1][j - 1] == ' ' || map[i - 1][j + 1] == ' ' ||
+		map[i + 1][j - 1] == ' ' || map[i + 1][j + 1] == ' ')
 	{
-		if (map[0][j] == '0' || map[0][j] == ' ')
-			return (0);
-		if (map[macro->map->h_map - 1][j] == '0' || map[macro->map->h_map - 1][j] == ' ')
-			return (0);
-		j++;
+		ft_printf(2, "Error\nInvalid map structure at (%d, %d)\n", i, j);
+		return (0);
 	}
 	return (1);
 }
 
-static int check_edges(char **map, int height)
+static int check_walls(t_macro *macro)
 {
-	int i = 1;
-	int len;
-
-	while (i < height - 1)
-	{
-		len = ft_strlen(map[i]);
-		if (map[i][0] == '0' || map[i][len - 1] == '0' ||
-			map[i][0] == ' ' || map[i][len - 1] == ' ')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-static int check_spaces(char **map, int height)
-{
-	int i = 1;
+	int i = 0;
 	int j;
+	int height = macro->map->h_map;
+	int width = macro->map->w_map;
+	char **map = macro->map->map;
 
-	while (i < height - 1)
+	while (i < height)
 	{
-		j = 1;
-		while (map[i][j + 1])
+		j = 0;
+		while (j < width)
 		{
-			if (map[i][j] == ' ' && (map[i][j - 1] != '1' || map[i][j + 1] != '1'))
-				return (0);
+			if (map[i][j] == '0')
+			{
+				if (!is_surrounded_by_walls(map, i, j, height, width))
+					return (0);
+			}
 			j++;
 		}
 		i++;
@@ -109,20 +96,10 @@ static int check_spaces(char **map, int height)
 
 static int is_valid_map_structure(t_macro *macro)
 {
-	char **map = macro->map->map;
-
-	if (!check_first_last_rows(macro))
-		return (0);
-	if (!check_edges(map, macro->map->h_map))
-		return (0);
-	if (!check_spaces(map, macro->map->h_map))
+	if (!check_walls(macro))
 		return (0);
 	return (1);
 }
-
-
-
-
 
 int validate_map(t_macro *macro)
 {
@@ -131,9 +108,6 @@ int validate_map(t_macro *macro)
 	if (!map_chars_are_valid(macro))
 		return (1);
 	if (!is_valid_map_structure(macro))
-	{
-		ft_printf(2, "Error\nInvalid map structure\n");
 		return (1);
-	}
 	return (0);
 }
