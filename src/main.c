@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 15:26:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:58:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_game(macro);
+	render_minimap(macro);
+	mlx_terminate(macro->m_mlx->mlx_cub);
+	free_and_exit(macro);
 }

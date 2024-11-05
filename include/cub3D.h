@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/05 15:29:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:00:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_macro
 	int			play_x;
 	int			play_y;
 	char		play_facing;
-	mlx_t		*m_mlx;
+	t_mlx		*m_mlx;
 }				t_macro;
 
 t_macro			*init_macro(t_macro *macro);

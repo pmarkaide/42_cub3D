@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 15:28:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:58:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,41 @@ t_macro	*init_macro(t_macro *macro)
 	macro->map->we = NULL;
 	macro->map->ea = NULL;
 	macro->map->map = NULL;
+	macro->m_mlx = (t_mlx *)malloc(sizeof(t_mlx));
+	if (!macro->m_mlx)
+	{
+		free(macro->map);
+		free(macro);
+		return (NULL);
+	}
 	return (macro);
 }
-
-int32_t	init_game(t_macro *macro)
+int32_t init_game(t_macro *macro)
 {
-	mlx_t	*mlx;
+	mlx_t* mlx;
+	mlx_image_t* image;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "cubeD", false);
-	if (!mlx)
-		free_and_exit(macro);
-	render_minimap(macro);
+	// Gotta error check this stuff
+	if (!(macro->m_mlx->mlx_cub = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+	{
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	mlx = macro->m_mlx->mlx_cub;
+	if (!(macro->m_mlx->img = mlx_new_image(mlx, 512, 512)))
+	{
+		mlx_close_window(mlx);
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	image = macro->m_mlx->img;
+	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
+	{
+		mlx_close_window(mlx);
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
 	mlx_loop_hook(mlx, quit_hook, macro);
-	//mlx_key_hook(mlx, (mlx_keyfunc)player_hook, &data);
 	mlx_loop(mlx);
-	return (0);
+	return (EXIT_SUCCESS);
 }

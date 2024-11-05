@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 15:22:26 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 16:30:31 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/02/08 11:55:48 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/02/08 11:55:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3D.h"
+#ifndef COLORS_H
 
-void quit_hook(void *param)
-{
-    t_macro *macro;
+# define COLORS_H
 
-    if (!param)
-        return;
-    macro = (t_macro *)param;
-    if (!macro->m_mlx || !macro->m_mlx->mlx_cub)
-        return;
-    if (mlx_is_key_down(macro->m_mlx->mlx_cub, MLX_KEY_ESCAPE))
-        free_and_exit(macro);
-}
+/* Color codes for printf  */
+# define DEFAULT "\033[0;39m"
+# define GRAY "\033[0;90m"
+# define RED "\033[0;91m"
+# define GREEN "\033[0;92m"
+# define YELLOW "\033[0;93m"
+# define BLUE "\033[0;94m"
+# define MAGENTA "\033[0;95m"
+# define CYAN "\033[0;96m"
+# define WHITE "\033[0;97m"
+
+#endif
