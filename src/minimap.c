@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 15:26:45 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/11/05 15:30:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+# include "cub3D.h"
 
-int	main(int argc, char **argv)
+void render_minimap(t_macro *macro)
 {
-	t_macro	*macro;
 
-	macro = NULL;
-	if (argc != 2)
-		return (write(2, "Error\nIncorrect number of arguments\n", 36), 1);
-	macro = init_macro(macro);
-	if (!macro)
-		return (write(2, "Error\nMalloc failed\n", 20), 1);
-	read_input(argv[1], macro);
-	if (validate_map(macro))
-	{
-		ft_printf(2, "Map validation failed\n");
-		return (1);
-	}
-	init_game(macro);
 }

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 14:44:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:28:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,16 @@ t_macro	*init_macro(t_macro *macro)
 	return (macro);
 }
 
-// int32_t	game_init(t_map map)
-// {
-// 	mlx_t	*mlx;
-// 	t_data	data;
+int32_t	init_game(t_macro *macro)
+{
+	mlx_t	*mlx;
 
-// 	prepare_data_struct(&data, &map);
-// 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-// 	mlx = mlx_init(data.width, data.height, "Pac Man", true);
-// 	if (!mlx)
-// 		free_game_and_bad_exit(&data, "mlx initiation failed");
-// 	load_images_into_struct(&data, mlx);
-// 	render_map(&data);
-// 	mlx_loop_hook(mlx, quit_hook, &data);
-// 	mlx_loop_hook(mlx, exit_hook, &data);
-// 	mlx_key_hook(mlx, (mlx_keyfunc)player_hook, &data);
-// 	mlx_loop(mlx);
-// 	return (0);
-// }
+	mlx = mlx_init(WIDTH, HEIGHT, "cubeD", false);
+	if (!mlx)
+		free_and_exit(macro);
+	render_minimap(macro);
+	mlx_loop_hook(mlx, quit_hook, macro);
+	//mlx_key_hook(mlx, (mlx_keyfunc)player_hook, &data);
+	mlx_loop(mlx);
+	return (0);
+}

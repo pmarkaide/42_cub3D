@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/04 16:40:34 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:29:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ typedef struct s_macro
 	int			play_x;
 	int			play_y;
 	char		play_facing;
-	t_mlx		*m_mlx;
+	mlx_t		*m_mlx;
 }				t_macro;
 
 t_macro			*init_macro(t_macro *macro);
+int32_t			init_game(t_macro *macro);
 void			free_and_exit(t_macro *macro);
 void			free_map(t_macro *macro);
 void			free_macro(t_macro *macro);
@@ -67,6 +68,8 @@ int				save_texture_path(char **texture, char *path);
 int				parse_line(char *line, t_macro *macro, int section, t_list **head);
 void			read_input(char *file, t_macro *macro);
 void			calculate_map_dimensions(t_macro *macro);
+void			quit_hook(void *param);
+void			render_minimap(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);

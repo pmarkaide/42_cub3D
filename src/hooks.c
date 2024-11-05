@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 15:26:45 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/11/05 15:22:26 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/11/05 15:24:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+# include "cub3D.h"
 
-int	main(int argc, char **argv)
+void	quit_hook(void *param)
 {
-	t_macro	*macro;
+	t_macro *macro;
 
-	macro = NULL;
-	if (argc != 2)
-		return (write(2, "Error\nIncorrect number of arguments\n", 36), 1);
-	macro = init_macro(macro);
-	if (!macro)
-		return (write(2, "Error\nMalloc failed\n", 20), 1);
-	read_input(argv[1], macro);
-	if (validate_map(macro))
-	{
-		ft_printf(2, "Map validation failed\n");
-		return (1);
-	}
-	init_game(macro);
+	macro = param;
+	if (mlx_is_key_down(macro->m_mlx, MLX_KEY_ESCAPE))
+		free_and_exit(macro);
 }
