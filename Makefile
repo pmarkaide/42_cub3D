@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/04 12:29:24 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/06 07:14:44 by dbejar-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,12 @@ SRCS = \
 	input_utils.c \
 	input_parse.c \
 	validation.c \
-	validation_map.c
+	validation_map.c \
+	hooks.c \
+	paint.c \
+	player.c \
+	raycasting.c \
+	reutils.c
 
 SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
