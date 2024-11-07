@@ -6,51 +6,64 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/05 16:58:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:06:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
-void render_minimap(t_macro *macro)
+// void render_minimap(t_macro *macro)
+// {
+// 	size_t	x;
+// 	size_t	y;
+
+//     if (!macro || !macro->map || !macro->map->map || !macro->m_mlx || !macro->m_mlx->img)
+//     {
+//         fprintf(stderr, "Invalid macro or map structure\n");
+//         return;
+//     }
+
+// 	x = 0;
+// 	while (x < (size_t)macro->map->w_map)
+// 	{
+// 		y = 0;
+// 		while (y < (size_t)macro->map->h_map)
+// 		{
+// 			if (macro->map->map[x][y] == '1')
+// 				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
+// 			else if (macro->map->map[x][y] == '0')
+// 				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
+// 			y += 1;
+// 		}
+// 		x += 1;
+// 	}
+
+static void	render_block(t_macro *macro, mlx_image_t *img, size_t y, size_t x)
+{
+	int	exit_code;
+
+	exit_code = mlx_image_to_window(macro->m_mlx->mlx_cub, img, y * 32, x * 32);
+	if (exit_code == -1)
+		free_and_exit(macro);
+}
+
+void	render_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
 
-    if (!macro || !macro->map || !macro->map->map || !macro->m_mlx || !macro->m_mlx->img)
-    {
-        fprintf(stderr, "Invalid macro or map structure\n");
-        return;
-    }
-
 	x = 0;
-	while (x < (size_t)macro->map->w_map)
+	while (x < macro->map->w_map)
 	{
 		y = 0;
-		while (y < (size_t)macro->map->h_map)
+		while (y < macro->map->h_map)
 		{
+			render_block(macro, macro->minimap->background, y, x);
 			if (macro->map->map[x][y] == '1')
-				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
-			else if (macro->map->map[x][y] == '0')
-				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
+				render_block(macro, macro->minimap->wall, y, x);
 			y += 1;
 		}
 		x += 1;
 	}
-
-    // works
-    // x = 0;
-	// while (x < WIDTH)
-	// {
-	// 	y = 0;
-	// 	while (y < HEIGHT)
-	// 	{
-	// 		if (y % 10 == 0)
-	// 			mlx_put_pixel(macro->m_mlx->img, y , x , 0xFFFFFFFF);
-	// 		else
-	// 			mlx_put_pixel(macro->m_mlx->img, y , x , 0x00000000);
-	// 		y += 1;
-	// 	}
-	// 	x += 1;
-	// }
+	//render_block(macro, macro->player, macro->map->start_y, macro->map->start_x);
 }

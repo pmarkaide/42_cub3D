@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/05 16:00:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:09:05 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,30 @@ typedef struct s_map
 	char		*so;
 	char		*we;
 	char		*ea;
-	int			f[3];
-	int			c[3];
+	size_t			f[3];
+	size_t			c[3];
 	char		**map;
-	int			w_map;
-	int			h_map;
+	size_t			w_map;
+	size_t			h_map;
 }				t_map;
 
+typedef struct s_minimap
+{
+	//mlx_image_t	*player;
+	mlx_image_t	*wall;
+	mlx_image_t	*background;
+} 				t_minimap;
 typedef struct s_macro
 {
 	t_map		*map;
-	int			play_x;
-	int			play_y;
+	t_minimap		*minimap;
+	size_t			play_x;
+	size_t			play_y;
 	char		play_facing;
 	t_mlx		*m_mlx;
 }				t_macro;
+
+
 
 t_macro			*init_macro(t_macro *macro);
 int32_t			init_game(t_macro *macro);
@@ -70,6 +79,7 @@ void			read_input(char *file, t_macro *macro);
 void			calculate_map_dimensions(t_macro *macro);
 void			quit_hook(void *param);
 void			render_minimap(t_macro *macro);
+void			load_images_into_struct(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);
