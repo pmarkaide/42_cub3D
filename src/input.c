@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/06 07:27:41 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:38:53 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static int	read_file(char *file, t_macro *macro)
 		free(line);
 	}
 	close(fd);
+	if(!head)
+		return (1);
 	macro->map->map = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
 	return (0);

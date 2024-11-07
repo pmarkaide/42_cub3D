@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:50:02 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:34:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ t_macro	*init_macro(t_macro *macro)
 		free(macro);
 		return (NULL);
 	}
+	macro->minimap->vision_angle = 90;
+	macro->minimap->vision_distance = 10;
 	return (macro);
 }
 
