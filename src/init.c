@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:11:34 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:31:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,6 @@ t_macro	*init_macro(t_macro *macro)
 	}
 	return (macro);
 }
-int32_t init_game(t_macro *macro)
-{
-	mlx_t* mlx;
-	mlx_image_t* image;
-
-	// Gotta error check this stuff
-	if (!(macro->mlx_cub = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	mlx = macro->mlx_cub;
-	if (!(macro->img = mlx_new_image(mlx, 512, 512)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	image = macro->img;
-	if (mlx_image_to_window(mlx, image, 512, 512) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	load_images_into_struct(macro); // TODO: errors
-	mlx_loop_hook(mlx, quit_hook, macro);
-	mlx_loop(mlx);
-	return (EXIT_SUCCESS);
-}
-
 mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 {
 	mlx_texture_t	*texture;
@@ -90,6 +59,10 @@ void	load_images_into_struct(t_macro *macro)
 {
 	// TODO: errors
 	macro->minimap->background = load_png_into_image(macro, "textures/background.png");
+	if(!macro->minimap->background)
+		free_and_exit(macro);
 	macro->minimap->wall = load_png_into_image(macro, "textures/wall.png");
+	if(!macro->minimap->wall)
+		free_and_exit(macro);
 	//macro->player = load_png_into_image(macro, "textures/player.png");
 }

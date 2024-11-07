@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 11:14:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:21:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ typedef struct s_macro
 
 
 t_macro			*init_macro(t_macro *macro);
-int32_t			init_game(t_macro *macro);
 void			free_and_exit(t_macro *macro);
 void			free_map(t_macro *macro);
 void			free_macro(t_macro *macro);
