@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 11:21:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:46:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_minimap
 	//mlx_image_t	*player;
 	mlx_image_t	*wall;
 	mlx_image_t	*background;
+	mlx_image_t *player;
 } 				t_minimap;
 typedef struct s_macro
 {

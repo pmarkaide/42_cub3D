@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:44:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:50:02 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ void	load_images_into_struct(t_macro *macro)
 	macro->minimap->wall = load_png_into_image(macro, "textures/wall.png");
 	if(!macro->minimap->wall)
 		free_and_exit(macro);
-	//macro->player = load_png_into_image(macro, "textures/player.png");
+	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
 }

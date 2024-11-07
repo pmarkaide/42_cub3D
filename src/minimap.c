@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:36:56 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:50:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	render_minimap(t_macro *macro)
 		}
 		x += 1;
 	}
-	//render_block(macro, macro->player, macro->map->start_y, macro->map->start_x);
+	render_block(macro, macro->minimap->player, macro->start_x, macro->start_y);
 }
