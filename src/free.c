@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/10/29 17:09:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:50:31 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	free_map(t_macro *macro)
 void	free_macro(t_macro *macro)
 {
 	free_map(macro);
-	if (macro->m_mlx)
+	/*if (macro->m_mlx)
 	{
 		mlx_delete_image(macro->m_mlx->mlx_cub, macro->m_mlx->img);
 		mlx_close_window(macro->m_mlx->mlx_cub);
 		mlx_terminate(macro->m_mlx->mlx_cub);
-	}
+	}*/
 	free(macro);
 }
 
