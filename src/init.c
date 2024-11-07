@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:31:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:44:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ t_macro	*init_macro(t_macro *macro)
 	}
 	return (macro);
 }
+
+void adjust_image_transparency(mlx_texture_t* texture, float alpha_factor) {
+    if (!texture || alpha_factor < 0.0f || alpha_factor > 1.0f) return;
+
+    uint32_t y = 0;
+    while (y < texture->height) {
+        uint32_t x = 0;
+        while (x < texture->width) {
+            uint8_t* pixel = &texture->pixels[(y * texture->width + x) * 4];
+            pixel[3] = (uint8_t)(pixel[3] * alpha_factor);
+            x++;
+        }
+        y++;
+    }
+}
+
 mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 {
 	mlx_texture_t	*texture;
@@ -48,6 +64,7 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	texture = mlx_load_png(file);
 	if (!texture)
 		free_and_exit(macro);
+	adjust_image_transparency(texture, 0.5f);
 	img = mlx_texture_to_image(macro->mlx_cub, texture);
 	if (!img)
 		free_and_exit(macro);

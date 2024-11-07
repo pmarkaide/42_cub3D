@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 11:04:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:38:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void ft_hook(mlx_key_data_t keydata, void *param)
                 macro->play_angle -= 2 * M_PI;
         }
         load_game(macro);
+        render_minimap(macro);
 	}
 }
