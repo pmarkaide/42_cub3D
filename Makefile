@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/07 11:05:12 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/07 11:15:31 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRCS = \
 	validation_map.c \
 	hooks.c \
 	minimap.c \
-	hooks.c \
 	paint.c \
 	player.c \
 	raycasting.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/06 07:50:31 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:11:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_map(t_macro *macro)
 			free(macro->map->ea);
 		if (macro->map->map)
 		{
-			while (++i < macro->map->h_map)
+			while (++i < (int)macro->map->h_map)
 				free(macro->map->map[i]);
 			free(macro->map->map);
 		}
@@ -40,11 +40,11 @@ void	free_map(t_macro *macro)
 void	free_macro(t_macro *macro)
 {
 	free_map(macro);
-	/*if (macro->m_mlx)
+	/*if (macro->mlx_cub)
 	{
-		mlx_delete_image(macro->m_mlx->mlx_cub, macro->m_mlx->img);
-		mlx_close_window(macro->m_mlx->mlx_cub);
-		mlx_terminate(macro->m_mlx->mlx_cub);
+		mlx_delete_image(macro->mlx_cub, macro->img);
+		mlx_close_window(macro->mlx_cub);
+		mlx_terminate(macro->mlx_cub);
 	}*/
 	free(macro);
 }

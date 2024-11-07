@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 11:05:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:14:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_map
 	char		*so;
 	char		*we;
 	char		*ea;
-	size_t			f[3];
-	size_t			c[3];
+	int			f[3];
+	int			c[3];
 	char		**map;
 	size_t			w_map;
 	size_t			h_map;
@@ -70,6 +70,7 @@ typedef struct s_minimap
 typedef struct s_macro
 {
 	t_map		*map;
+	t_minimap	*minimap;
 	int			play_x;
 	int			play_y;
 	//t_mlx		*m_mlx;

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 10:06:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:11:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // 	size_t	x;
 // 	size_t	y;
 
-//     if (!macro || !macro->map || !macro->map->map || !macro->m_mlx || !macro->m_mlx->img)
+//     if (!macro || !macro->map || !macro->map->map || !macro->mlx_cub || !macro->img)
 //     {
 //         fprintf(stderr, "Invalid macro or map structure\n");
 //         return;
@@ -30,9 +30,9 @@
 // 		while (y < (size_t)macro->map->h_map)
 // 		{
 // 			if (macro->map->map[x][y] == '1')
-// 				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
+// 				mlx_put_pixel(macro->img, y * 5, x * 5, 0x00000000);
 // 			else if (macro->map->map[x][y] == '0')
-// 				mlx_put_pixel(macro->m_mlx->img, y * 5, x * 5, 0x00000000);
+// 				mlx_put_pixel(macro->img, y * 5, x * 5, 0x00000000);
 // 			y += 1;
 // 		}
 // 		x += 1;
@@ -42,7 +42,7 @@ static void	render_block(t_macro *macro, mlx_image_t *img, size_t y, size_t x)
 {
 	int	exit_code;
 
-	exit_code = mlx_image_to_window(macro->m_mlx->mlx_cub, img, y * 32, x * 32);
+	exit_code = mlx_image_to_window(macro->mlx_cub, img, y * 32, x * 32);
 	if (exit_code == -1)
 		free_and_exit(macro);
 }

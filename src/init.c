@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 10:56:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:11:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,10 @@ t_macro	*init_macro(t_macro *macro)
 	macro->map->we = NULL;
 	macro->map->ea = NULL;
 	macro->map->map = NULL;
-	macro->m_mlx = (t_mlx *)malloc(sizeof(t_mlx));
-	if (!macro->m_mlx)
-	{
-		free(macro->map);
-		free(macro);
-		return (NULL);
-	}
 	macro->minimap = malloc(sizeof(t_minimap));
 	if (!macro->minimap)
 	{
-		free(macro->m_mlx);
+		free(macro->mlx_cub);
 		free(macro->map);
 		free(macro);
 		return (NULL);
@@ -53,19 +46,19 @@ int32_t init_game(t_macro *macro)
 	mlx_image_t* image;
 
 	// Gotta error check this stuff
-	if (!(macro->m_mlx->mlx_cub = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+	if (!(macro->mlx_cub = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
-	mlx = macro->m_mlx->mlx_cub;
-	if (!(macro->m_mlx->img = mlx_new_image(mlx, 512, 512)))
+	mlx = macro->mlx_cub;
+	if (!(macro->img = mlx_new_image(mlx, 512, 512)))
 	{
 		mlx_close_window(mlx);
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
-	image = macro->m_mlx->img;
+	image = macro->img;
 	if (mlx_image_to_window(mlx, image, 512, 512) == -1)
 	{
 		mlx_close_window(mlx);
@@ -86,7 +79,7 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	texture = mlx_load_png(file);
 	if (!texture)
 		free_and_exit(macro);
-	img = mlx_texture_to_image(macro->m_mlx->mlx_cub, texture);
+	img = mlx_texture_to_image(macro->mlx_cub, texture);
 	if (!img)
 		free_and_exit(macro);
 	mlx_delete_texture(texture);
