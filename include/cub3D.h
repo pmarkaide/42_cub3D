@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/06 07:52:22 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:46:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,21 @@ typedef struct s_map
 	int			f[3];
 	int			c[3];
 	char		**map;
-	int			w_map;
-	int			h_map;
+	size_t			w_map;
+	size_t			h_map;
 }				t_map;
 
+typedef struct s_minimap
+{
+	//mlx_image_t	*player;
+	mlx_image_t	*wall;
+	mlx_image_t	*background;
+	mlx_image_t *player;
+} 				t_minimap;
 typedef struct s_macro
 {
 	t_map		*map;
+	t_minimap	*minimap;
 	int			play_x;
 	int			play_y;
 	//t_mlx		*m_mlx;
@@ -107,6 +115,8 @@ typedef struct s_macro
 	int32_t		wall_color;
 }				t_macro;
 
+
+
 t_macro			*init_macro(t_macro *macro);
 void			free_and_exit(t_macro *macro);
 void			free_map(t_macro *macro);
@@ -120,6 +130,9 @@ int				save_texture_path(char **texture, char *path);
 int				parse_line(char *line, t_macro *macro, int section, t_list **head);
 void			read_input(char *file, t_macro *macro);
 void			calculate_map_dimensions(t_macro *macro);
+void			quit_hook(void *param);
+void			render_minimap(t_macro *macro);
+void			load_images_into_struct(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/06 07:44:18 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:38:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 	if (!macro)
 		return (write(2, "Error\nMalloc failed\n", 20), 1);
 	read_input(argv[1], macro);
-
 	if (validate_map(macro))
 	{
 		ft_printf(2, "Map validation failed\n");
@@ -45,6 +44,8 @@ int	main(int argc, char **argv)
     printf("\nLOADING GAME\n\n");
     load_game(macro);
     printf("\nLOADING HOOK\n\n");
+	load_images_into_struct(macro);
+	render_minimap(macro);
     mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
     mlx_loop(macro->mlx_cub);
     mlx_terminate(macro->mlx_cub);

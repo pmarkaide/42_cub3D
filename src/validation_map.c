@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 16:53:35 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:15:05 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	check_unique_starting_position(t_macro *macro)
 {
-	int		i;
+	size_t		i;
 	int		j;
 	int		count;
 	char	**map;
@@ -45,7 +45,7 @@ static int	check_unique_starting_position(t_macro *macro)
 
 static int	map_chars_are_valid(t_macro *macro)
 {
-	int		i;
+	size_t		i;
 	int		j;
 	char	**map;
 	int		line_length;

@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/01 23:29:00 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:38:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+void quit_hook(void *param)
+{
+    t_macro *macro;
+
+    if (!param)
+        return;
+    macro = (t_macro *)param;
+    if (!macro->mlx_cub || !macro->mlx_cub)
+        return;
+    if (mlx_is_key_down(macro->mlx_cub, MLX_KEY_ESCAPE))
+        free_and_exit(macro);
+}
 
 void ft_hook(mlx_key_data_t keydata, void *param)
 {
@@ -36,5 +49,6 @@ void ft_hook(mlx_key_data_t keydata, void *param)
                 macro->play_angle -= 2 * M_PI;
         }
         load_game(macro);
+        render_minimap(macro);
 	}
 }

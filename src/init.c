@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 14:44:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:50:02 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,56 @@ t_macro	*init_macro(t_macro *macro)
 	macro->map->we = NULL;
 	macro->map->ea = NULL;
 	macro->map->map = NULL;
+	macro->minimap = malloc(sizeof(t_minimap));
+	if (!macro->minimap)
+	{
+		free(macro->mlx_cub);
+		free(macro->map);
+		free(macro);
+		return (NULL);
+	}
 	return (macro);
 }
 
-// int32_t	game_init(t_map map)
-// {
-// 	mlx_t	*mlx;
-// 	t_data	data;
+void adjust_image_transparency(mlx_texture_t* texture, float alpha_factor) {
+    if (!texture || alpha_factor < 0.0f || alpha_factor > 1.0f) return;
 
-// 	prepare_data_struct(&data, &map);
-// 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-// 	mlx = mlx_init(data.width, data.height, "Pac Man", true);
-// 	if (!mlx)
-// 		free_game_and_bad_exit(&data, "mlx initiation failed");
-// 	load_images_into_struct(&data, mlx);
-// 	render_map(&data);
-// 	mlx_loop_hook(mlx, quit_hook, &data);
-// 	mlx_loop_hook(mlx, exit_hook, &data);
-// 	mlx_key_hook(mlx, (mlx_keyfunc)player_hook, &data);
-// 	mlx_loop(mlx);
-// 	return (0);
-// }
+    uint32_t y = 0;
+    while (y < texture->height) {
+        uint32_t x = 0;
+        while (x < texture->width) {
+            uint8_t* pixel = &texture->pixels[(y * texture->width + x) * 4];
+            pixel[3] = (uint8_t)(pixel[3] * alpha_factor);
+            x++;
+        }
+        y++;
+    }
+}
+
+mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
+{
+	mlx_texture_t	*texture;
+	mlx_image_t		*img;
+
+	texture = mlx_load_png(file);
+	if (!texture)
+		free_and_exit(macro);
+	adjust_image_transparency(texture, 0.5f);
+	img = mlx_texture_to_image(macro->mlx_cub, texture);
+	if (!img)
+		free_and_exit(macro);
+	mlx_delete_texture(texture);
+	return (img);
+}
+
+void	load_images_into_struct(t_macro *macro)
+{
+	// TODO: errors
+	macro->minimap->background = load_png_into_image(macro, "textures/background.png");
+	if(!macro->minimap->background)
+		free_and_exit(macro);
+	macro->minimap->wall = load_png_into_image(macro, "textures/wall.png");
+	if(!macro->minimap->wall)
+		free_and_exit(macro);
+	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
+}
