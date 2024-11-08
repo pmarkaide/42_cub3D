@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:50:02 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:00:19 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ t_macro	*init_macro(t_macro *macro)
 		free(macro);
 		return (NULL);
 	}
+	macro->key_w = 0;
+	macro->key_a = 0;
+	macro->key_s = 0;
+	macro->key_d = 0;
+	macro->key_left = 0;
+	macro->key_right = 0;
 	return (macro);
 }
 
