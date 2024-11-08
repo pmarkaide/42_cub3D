@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 11:38:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:03:40 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,40 @@ void quit_hook(void *param)
     if (mlx_is_key_down(macro->mlx_cub, MLX_KEY_ESCAPE))
         free_and_exit(macro);
 }
+void release_all(mlx_key_data_t keydata, t_macro *macro)
+{
+    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
+		macro->key_w = 0;
+	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
+		macro->key_a = 0;
+	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
+		macro->key_s = 0;
+	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
+		macro->key_d = 0;
+	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
+		macro->key_left = 0;
+	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
+		macro->key_right = 0;
+}
 
 void ft_hook(mlx_key_data_t keydata, void *param)
 {
     t_macro *macro;
-    double rot_speed;
 	
 	macro = (t_macro *)param;
-	rot_speed = 0.05;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         mlx_close_window(macro->mlx_cub);
-    if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-    {
-        if (keydata.key == MLX_KEY_LEFT)
-        {
-            macro->play_angle -= rot_speed;
-            if (macro->play_angle < 0)
-                macro->play_angle += 2 * M_PI;
-        }
-        if (keydata.key == MLX_KEY_RIGHT)
-        {
-            macro->play_angle += rot_speed;
-            if (macro->play_angle > 2 * M_PI)
-                macro->play_angle -= 2 * M_PI;
-        }
-        load_game(macro);
-        render_minimap(macro);
-	}
+    else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS))
+		macro->key_w = 1;
+	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
+        macro->key_a = 1;
+	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
+        macro->key_s = 1;
+	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+        macro->key_d = 1;
+	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+        macro->key_left = 1;
+	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+        macro->key_right = 1;
+    release_all(keydata, macro);
 }

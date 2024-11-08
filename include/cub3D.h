@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/07 12:25:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:33:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define TWO_PI (2 * M_PI)
 # define A_DEG 180 / M_PI
 # define A_RAD M_PI / 180
+# define ROT_SPEED 0.05
+# define WALK_SPEED 5
 
 
 /* LIMPIAMOS LOS STRUCT DESPUES
@@ -115,6 +117,12 @@ typedef struct s_macro
 	int			draw_start;
 	int			draw_end;
 	int32_t		wall_color;
+	int			key_w;
+	int			key_a;
+	int			key_s;
+	int			key_d;
+	int			key_left;
+	int			key_right;
 }				t_macro;
 
 
@@ -143,7 +151,7 @@ void			print_map_struct(t_map *map);
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 //char** 	parse_map(const char* filename, int* rows, int* cols);
 void	ft_hook(mlx_key_data_t keydata, void *param);
-void	load_game(t_macro *macro);
+void load_game(void *param);
 void	print_map(t_macro *macro);
 void	calculate_wall_distance(t_macro *macro);
 void	draw_wall_slice(t_macro *macro, int x);
@@ -152,7 +160,6 @@ void	paint_background(t_macro *macro);
 void	calculate_ray_direction(t_macro *macro, int x);
 void	calculate_step_and_side_dist(t_macro *macro);
 void	perform_dda(t_macro *macro);
-void	load_game(t_macro *macro);
 void	load_player(t_macro *macro);
 void    player_in_map(t_macro *macro);
 void    load_map(t_macro *macro);

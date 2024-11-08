@@ -6,18 +6,61 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/06 07:43:46 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:05:28 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-void load_game(t_macro *macro)
+
+void move(t_macro *macro)
 {
+    if (macro->key_w)
+    {
+        macro->pos_pl_x += WALK_SPEED * cos(macro->play_angle);
+        macro->pos_pl_y += WALK_SPEED * sin(macro->play_angle);
+    }
+    if (macro->key_a)
+    {
+        macro->pos_pl_x -= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
+        macro->pos_pl_y -= WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+    }
+    if (macro->key_s)
+    {
+        macro->pos_pl_x -= WALK_SPEED * cos(macro->play_angle);
+        macro->pos_pl_y -= WALK_SPEED * sin(macro->play_angle);
+    }
+    if (macro->key_d)
+    {
+        macro->pos_pl_x += WALK_SPEED * cos(macro->play_angle + M_PI / 2);
+        macro->pos_pl_y += WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+    }
+    if (macro->key_left)
+    {
+        macro->play_angle -= ROT_SPEED;
+        if (macro->play_angle < 0)
+            macro->play_angle += 2 * M_PI;
+    }
+    if (macro->key_right)
+    {
+        macro->play_angle += ROT_SPEED;
+        if (macro->play_angle > 2 * M_PI)
+            macro->play_angle -= 2 * M_PI;  
+    }
+
+}
+
+void load_game(void *param)
+{
+    t_macro *macro;
+    
+    macro = (t_macro*)param;
     mlx_delete_image(macro->mlx_cub, macro->img);
     macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+    move(macro);
     paint_background(macro);
     paint_wall(macro);
+    //render_minimap(macro);
     mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
 }
 
