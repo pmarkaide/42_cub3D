@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:43:48 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	main(int argc, char **argv)
     macro->width *= RATIO_SCREEN;
     macro->height *= RATIO_SCREEN;
     macro->mlx_cub = mlx_init(macro->width, macro->height, "cub3D", 0);
-    load_player(macro);
-	
-	load_images_into_struct(macro);
-	//render_minimap(macro);
+	macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+	//load_images_into_struct(macro);
+	load_player(macro);
+	render_minimap(macro);
+	printf("height is: %zu\n", macro->map->h_map);
 	mlx_loop_hook(macro->mlx_cub, &load_game, macro);
-
+	//mlx_key_hook(macro->mlx_cub, &minimap_hook, macro);
     mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
     mlx_loop(macro->mlx_cub);
     mlx_terminate(macro->mlx_cub);

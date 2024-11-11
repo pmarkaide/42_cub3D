@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 16:11:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:39:20 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	render_minimap(t_macro *macro)
 	size_t	y;
 
 	x = 0;
+	unload_images_from_struct(macro);
+	load_images_into_struct(macro);
 	while (x < macro->map->h_map)
 	{
 		y = 0;

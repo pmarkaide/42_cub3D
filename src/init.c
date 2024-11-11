@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/11 11:43:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:38:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ t_macro	*init_macro(t_macro *macro)
 		free(macro);
 		return (NULL);
 	}
-	macro->key_w = 0;
-	macro->key_a = 0;
-	macro->key_s = 0;
-	macro->key_d = 0;
-	macro->key_left = 0;
-	macro->key_right = 0;
 	return (macro);
 }
 
@@ -77,6 +71,26 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	mlx_delete_texture(texture);
 	return (img);
 }
+
+void unload_images_from_struct(t_macro *macro)
+{
+    if (macro->minimap->background)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->background);
+        macro->minimap->background = NULL;
+    }
+    if (macro->minimap->wall)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
+        macro->minimap->wall = NULL;
+    }
+    if (macro->minimap->player)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->player);
+        macro->minimap->player = NULL;
+    }
+}
+
 
 void	load_images_into_struct(t_macro *macro)
 {

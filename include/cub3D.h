@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/11 11:43:36 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:26:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void			calculate_map_dimensions(t_macro *macro);
 void			quit_hook(void *param);
 void			render_minimap(t_macro *macro);
 void			load_images_into_struct(t_macro *macro);
+void			unload_images_from_struct(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);
