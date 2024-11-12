@@ -6,34 +6,50 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:28 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/12 07:07:05 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
 
+void stop_at_wall(t_macro *macro, int x, int y)
+{
+    if (macro->map->map[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
+    {
+        macro->pos_pl_x = x;
+        macro->pos_pl_y = y;
+    }
+}
+
+
 void move(t_macro *macro)
 {
+    int x;
+    int y;
+    
+    x = macro->pos_pl_x;
+    y = macro->pos_pl_y;
+   
     if (macro->key_w)
     {
-        macro->pos_pl_x += WALK_SPEED * cos(macro->play_angle);
-        macro->pos_pl_y += WALK_SPEED * sin(macro->play_angle);
+        x+= WALK_SPEED * cos(macro->play_angle);
+        y += WALK_SPEED * sin(macro->play_angle);
     }
     if (macro->key_a)
     {
-        macro->pos_pl_x -= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
-        macro->pos_pl_y -= WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+        x-= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
+        y -= WALK_SPEED * sin(macro->play_angle + M_PI / 2);
     }
     if (macro->key_s)
     {
-        macro->pos_pl_x -= WALK_SPEED * cos(macro->play_angle);
-        macro->pos_pl_y -= WALK_SPEED * sin(macro->play_angle);
+        x-= WALK_SPEED * cos(macro->play_angle);
+        y -= WALK_SPEED * sin(macro->play_angle);
     }
     if (macro->key_d)
     {
-        macro->pos_pl_x += WALK_SPEED * cos(macro->play_angle + M_PI / 2);
-        macro->pos_pl_y += WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+        x+= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
+        y += WALK_SPEED * sin(macro->play_angle + M_PI / 2);
     }
     if (macro->key_left)
     {
@@ -47,7 +63,7 @@ void move(t_macro *macro)
         if (macro->play_angle > 2 * M_PI)
             macro->play_angle -= 2 * M_PI;  
     }
-
+    stop_at_wall(macro, x, y);
 }
 
 void load_game(void *param)
