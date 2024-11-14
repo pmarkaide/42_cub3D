@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/14 10:27:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:57:17 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,6 @@ void	perform_dda(t_macro *macro);
 void	load_player(t_macro *macro);
 void    player_in_map(t_macro *macro);
 void    load_map(t_macro *macro);
-void print_image_contents(mlx_image_t *img);
+void 	print_image_contents(mlx_image_t *img);
 
 #endif

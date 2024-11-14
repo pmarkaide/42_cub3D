@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/14 10:29:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:19:36 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void draw_cone(t_macro *macro) {
 
 static void	render_block(t_macro *macro, mlx_image_t *img, size_t y, size_t x)
 {
-	int	exit_code;
+	int32_t	exit_code;
 
 	exit_code = mlx_image_to_window(macro->mlx_cub, img, y * 32, x * 32);
 	if (exit_code == -1)
 		free_and_exit(macro);
+	printf("exit:_code: %d, img: %d\n", exit_code, img->instances->z);
+	mlx_set_instance_depth(&img->instances[exit_code], 2);
 }
 
 void remove_minimap(t_macro *macro) {
@@ -58,6 +60,7 @@ void	render_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
+	
 
 	x = 0;
     remove_minimap(macro);
@@ -70,7 +73,7 @@ void	render_minimap(t_macro *macro)
 		{
 			render_block(macro, macro->minimap->background, y, x);
 			if (macro->map->map[x][y] == '1')
-				render_block(macro, macro->minimap->wall, y, x);
+				render_block(macro, macro->minimap->wall,  y, x);
 			y += 1;
 		}
 		x += 1;

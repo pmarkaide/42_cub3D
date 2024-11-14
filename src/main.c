@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/14 10:27:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:04:41 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
 	mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
 	//load_game(macro);
-	render_minimap(macro);
+	//render_minimap(macro);
 	mlx_loop_hook(macro->mlx_cub, &load_game, macro);
 	//mlx_key_hook(macro->mlx_cub, &minimap_hook, macro);
     mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
