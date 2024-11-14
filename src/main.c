@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/12 20:46:52 by pmarkaid         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/14 10:27:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "cub3D.h"
 
@@ -47,7 +49,7 @@ int	main(int argc, char **argv)
 	//load_game(macro);
 	render_minimap(macro);
 	mlx_loop_hook(macro->mlx_cub, &load_game, macro);
-
+	//mlx_key_hook(macro->mlx_cub, &minimap_hook, macro);
     mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
     mlx_loop(macro->mlx_cub);
     mlx_terminate(macro->mlx_cub);

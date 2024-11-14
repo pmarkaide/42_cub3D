@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 12:08:42 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/08 13:33:03 by pmarkaid         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/14 10:27:40 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -143,6 +144,7 @@ void			calculate_map_dimensions(t_macro *macro);
 void			quit_hook(void *param);
 void			render_minimap(t_macro *macro);
 void			load_images_into_struct(t_macro *macro);
+void			unload_images_from_struct(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);

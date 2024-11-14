@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/12 20:49:42 by pmarkaid         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/14 10:30:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/cub3D.h"
 

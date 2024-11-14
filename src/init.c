@@ -5,10 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/12 20:51:30 by pmarkaid         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/14 10:29:20 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #include "cub3D.h"
 
@@ -77,6 +80,26 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	mlx_delete_texture(texture);
 	return (img);
 }
+
+void unload_images_from_struct(t_macro *macro)
+{
+    if (macro->minimap->background)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->background);
+        macro->minimap->background = NULL;
+    }
+    if (macro->minimap->wall)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
+        macro->minimap->wall = NULL;
+    }
+    if (macro->minimap->player)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->player);
+        macro->minimap->player = NULL;
+    }
+}
+
 
 void	load_images_into_struct(t_macro *macro)
 {
