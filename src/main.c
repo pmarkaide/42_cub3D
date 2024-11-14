@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:46:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	main(int argc, char **argv)
     load_player(macro);
 	
 	load_images_into_struct(macro);
-	//render_minimap(macro);
+	macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+	mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
+	//load_game(macro);
+	render_minimap(macro);
 	mlx_loop_hook(macro->mlx_cub, &load_game, macro);
 
     mlx_key_hook(macro->mlx_cub, &ft_hook, macro);

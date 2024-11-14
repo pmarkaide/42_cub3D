@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 16:11:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:50:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,21 @@ static void	render_block(t_macro *macro, mlx_image_t *img, size_t y, size_t x)
 		free_and_exit(macro);
 }
 
+void remove_minimap(t_macro *macro) {
+    mlx_delete_image(macro->mlx_cub, macro->minimap->background);
+    mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
+    mlx_delete_image(macro->mlx_cub, macro->minimap->player);
+}
+
 void	render_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
 
 	x = 0;
+    remove_minimap(macro);
+    load_images_into_struct(macro);
+    printf("rendering minimap...\n");
 	while (x < macro->map->h_map)
 	{
 		y = 0;
@@ -67,5 +76,5 @@ void	render_minimap(t_macro *macro)
 		x += 1;
 	}
 	render_block(macro, macro->minimap->player, macro->start_x, macro->start_y);
-	draw_cone(macro);
+	//draw_cone(macro);
 }

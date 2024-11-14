@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:26:44 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/01 23:38:18 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:05:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void paint_wall(t_macro *macro)
     }
 }
 
-void paint_background(t_macro *macro)
+void   paint_background(t_macro *macro)
 {
     int y = 0;
     while (y < (macro->height) / 2)

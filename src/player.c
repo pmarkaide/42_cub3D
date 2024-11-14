@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:28 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:49:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,16 @@ void load_game(void *param)
     t_macro *macro;
     
     macro = (t_macro*)param;
-    mlx_delete_image(macro->mlx_cub, macro->img);
-    macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+    printf("rendering game...\n");
+    //mlx_delete_image(macro->mlx_cub, macro->img);
+    //macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
     move(macro);
     paint_background(macro);
     paint_wall(macro);
-    //render_minimap(macro);
-    mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
+    render_minimap(macro);
+    //macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+	//mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
+    
 }
 
 void load_player(t_macro *macro)

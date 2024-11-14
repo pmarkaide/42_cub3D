@@ -163,5 +163,6 @@ void	perform_dda(t_macro *macro);
 void	load_player(t_macro *macro);
 void    player_in_map(t_macro *macro);
 void    load_map(t_macro *macro);
+void print_image_contents(mlx_image_t *img);
 
 #endif
