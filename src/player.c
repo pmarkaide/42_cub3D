@@ -6,12 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 15:45:41 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:03:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/cub3D.h"
+#include <stdio.h>
 
 
 void move(t_macro *macro)
@@ -57,12 +58,12 @@ void load_game(void *param)
     
     macro = (t_macro*)param;
     //mlx_delete_image(macro->mlx_cub, macro->mini_i);
-    //mlx_delete_image(macro->mlx_cub, macro->scene_i);
-    //macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+    mlx_delete_image(macro->mlx_cub, macro->scene_i);
+    macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
 	
     move(macro);
     paint_background(macro);
-    //paint_wall(macro);
+    paint_wall(macro);
     //draw_minimap(macro);
     mlx_image_to_window(macro->mlx_cub, macro->scene_i, 0, 0);
 }
@@ -113,6 +114,8 @@ void    load_map(t_macro *macro)
     //macro->map = parse_map(file, &rows, &cols);
     macro->floor = get_rgba(macro->map->f[0], macro->map->f[1], macro->map->f[2], 255);
     macro->ceiling = get_rgba(macro->map->c[0], macro->map->c[1], macro->map->c[2], 255);
+    //printf("Floor color: %d\n", macro->floor);
+    //printf("Ceiling color: %d\n", macro->ceiling);
     player_in_map(macro);
     // macro->start_x = 10;
     // macro->start_y = 7;

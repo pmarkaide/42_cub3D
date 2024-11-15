@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/15 15:52:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:03:08 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,15 @@ int init_game(t_macro *macro)
 	mlx_get_monitor_size(0, &macro->width, &macro->height);
 	mlx_terminate(first);
 	macro->width *= RATIO_SCREEN;
-	macro->height *= RATIO_SCREEN;;
+	macro->height *= RATIO_SCREEN;
 	macro->mlx_cub = mlx_init(macro->width, macro->height, "cub3D", 0);
-	if (!macro->mlx_cub)
-		return (write(2, "Error\nFailed to initialize mlx\n", 31), 1);
-	load_player(macro);
-	load_images_into_struct(macro);
 	macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
-	if (!macro->scene_i)
-		return (write(2, "Error\nFailed to create new image\n", 33), 1);
 	macro->mini_i = mlx_new_image(macro->mlx_cub, macro->map->w_map * 32, macro->map->h_map * 32);
-	if (!macro->mini_i)
-		return (write(2, "Error\nFailed to create mini image\n", 34), 1);
+	if (!macro->mlx_cub || !macro->scene_i || !macro->mini_i)
+		return (write(2, "Error\nFailed to initialize mlx or create images\n", 48), 1);
+	load_images_into_struct(macro);
+	load_map(macro);
+	load_player(macro);
 	load_game(macro);
 	return (0);
 }
