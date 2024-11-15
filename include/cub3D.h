@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/14 10:57:17 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:28:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void			quit_hook(void *param);
 void			render_minimap(t_macro *macro);
 void			load_images_into_struct(t_macro *macro);
 void			unload_images_from_struct(t_macro *macro);
+void			draw_minimap(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);

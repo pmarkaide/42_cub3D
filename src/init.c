@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/14 10:29:20 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:23:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	return (img);
 }
 
+
+
 void unload_images_from_struct(t_macro *macro)
 {
     if (macro->minimap->background)
@@ -111,4 +113,6 @@ void	load_images_into_struct(t_macro *macro)
 	if(!macro->minimap->wall)
 		free_and_exit(macro);
 	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
+	if(!macro->minimap->player)
+		free_and_exit(macro);	
 }
