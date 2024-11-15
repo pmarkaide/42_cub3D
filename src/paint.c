@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:26:44 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/08 14:05:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:24:10 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void draw_wall_slice(t_macro *macro, int x)
     int y = macro->draw_start;
     while (y < macro->draw_end)
     {
-        mlx_put_pixel(macro->img, x, y, macro->wall_color);
+        mlx_put_pixel(macro->scene_i, x, y, macro->wall_color);
         y++;
     }
 }
@@ -45,9 +45,9 @@ void paint_wall(t_macro *macro)
         perform_dda(macro);
         calculate_wall_distance(macro);
         if (macro->side == 1)
-            macro->wall_color = ft_pixel(255, 255, 255, 255);
+            macro->wall_color = get_rgba(255, 255, 255, 255);
         else
-            macro->wall_color = ft_pixel(220, 220, 220, 255);
+            macro->wall_color = get_rgba(220, 220, 220, 255);
         draw_wall_slice(macro, x);
         x++;
     }
@@ -60,14 +60,14 @@ void   paint_background(t_macro *macro)
     {
         int x = 0;
         while (x < macro->width)
-            mlx_put_pixel(macro->img, x++, y, macro->ceiling);
+            mlx_put_pixel(macro->scene_i, x++, y, macro->ceiling);
         y++;
     }
     while (y < macro->height)
     {
         int x = 0;
         while (x < macro->width)
-            mlx_put_pixel(macro->img, x++, y, macro->floor);
+            mlx_put_pixel(macro->scene_i, x++, y, macro->floor);
         y++;
     }
 }

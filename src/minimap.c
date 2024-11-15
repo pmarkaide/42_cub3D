@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/15 14:08:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:53:41 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void draw_cone(t_macro *macro) {
 	// int i = 0;
 	// while(i < 50)
 	// {
-	// 	mlx_put_pixel(macro->img, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 + i, 0xffff00);
-	// 	mlx_put_pixel(macro->img, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 - i, 0xffff00);
+	// 	mlx_put_pixel(macro->scene_i, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 + i, 0xffff00);
+	// 	mlx_put_pixel(macro->scene_i, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 - i, 0xffff00);
 	// 	i++;
 	// }
     float angle_step = 0.001f;  // Adjust this for smoothness of the filled cone
@@ -32,7 +32,7 @@ void draw_cone(t_macro *macro) {
         for (float dist = 0; dist <= max_distance; dist++) {
             int x = macro->start_x * 32 + 15 + (int)(cos(angle) * dist);
             int y = macro->start_y * 32 + 15 + (int)(sin(angle) * dist);
-            mlx_put_pixel(macro->img, x, y, 0xFFFF00);  // Draw pixel in the cone
+            mlx_put_pixel(macro->scene_i, x, y, 0xFFFF00);  // Draw pixel in the cone
         }
     }
 }
@@ -80,24 +80,20 @@ void draw_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
-	mlx_image_t *mm_img;
-	
-	mm_img = mlx_new_image(macro->mlx_cub, macro->map->w_map*32, macro->map->h_map*32);
-	if (!mm_img)
-		free_and_exit(macro);
+
 	x = 0;
 	while (x < macro->map->h_map)
 	{
 		y = 0;
 		while (y < macro->map->w_map)
 		{
-			put_img_to_img(mm_img, macro->minimap->background, y*32, x*32);
+			put_img_to_img(macro->mini_i, macro->minimap->background, y*32, x*32);
 			if (macro->map->map[x][y] == '1')
-				put_img_to_img(mm_img, macro->minimap->wall, y*32, x*32);
+				put_img_to_img(macro->mini_i, macro->minimap->wall, y*32, x*32);
 			y += 1;
 		}
 		x += 1;
 	}
-	put_img_to_img(mm_img, macro->minimap->player, macro->start_x*32, macro->start_y*32);
-	mlx_image_to_window(macro->mlx_cub, mm_img, 0, 0);
+	put_img_to_img(macro->mini_i, macro->minimap->player, macro->start_x*32, macro->start_y*32);
+	mlx_image_to_window(macro->mlx_cub, macro->mini_i, 0, 0);
 }

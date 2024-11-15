@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 13:23:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:32:17 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,11 @@ t_macro	*init_macro(t_macro *macro)
 	macro->minimap = malloc(sizeof(t_minimap));
 	if (!macro->minimap)
 	{
-		free(macro->mlx_cub);
 		free(macro->map);
 		free(macro);
 		return (NULL);
 	}
-	macro->key_w = 0;
-	macro->key_a = 0;
-	macro->key_s = 0;
-	macro->key_d = 0;
-	macro->key_left = 0;
-	macro->key_right = 0;
+	macro->mini_i = NULL;
 	return (macro);
 }
 
@@ -73,7 +67,7 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	texture = mlx_load_png(file);
 	if (!texture)
 		free_and_exit(macro);
-	adjust_image_transparency(texture, 0.5f);
+	//adjust_image_transparency(texture, 0.5f);
 	img = mlx_texture_to_image(macro->mlx_cub, texture);
 	if (!img)
 		free_and_exit(macro);

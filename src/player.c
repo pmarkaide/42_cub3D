@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 14:09:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:45:41 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,15 @@ void load_game(void *param)
     t_macro *macro;
     
     macro = (t_macro*)param;
+    //mlx_delete_image(macro->mlx_cub, macro->mini_i);
+    //mlx_delete_image(macro->mlx_cub, macro->scene_i);
+    //macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+	
     move(macro);
     paint_background(macro);
-    paint_wall(macro);
+    //paint_wall(macro);
     //draw_minimap(macro);
-   
+    mlx_image_to_window(macro->mlx_cub, macro->scene_i, 0, 0);
 }
 
 void load_player(t_macro *macro)
@@ -107,8 +111,8 @@ void    load_map(t_macro *macro)
 {
     //int rows, cols;
     //macro->map = parse_map(file, &rows, &cols);
-    macro->floor = ft_pixel(macro->map->f[0], macro->map->f[1], macro->map->f[2], 255);
-    macro->ceiling = ft_pixel(macro->map->c[0], macro->map->c[1], macro->map->c[2], 255);
+    macro->floor = get_rgba(macro->map->f[0], macro->map->f[1], macro->map->f[2], 255);
+    macro->ceiling = get_rgba(macro->map->c[0], macro->map->c[1], macro->map->c[2], 255);
     player_in_map(macro);
     // macro->start_x = 10;
     // macro->start_y = 7;

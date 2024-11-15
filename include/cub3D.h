@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 13:28:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:39:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_macro
 {
 	t_map		*map;
 	t_minimap	*minimap;
+	mlx_image_t 	*mini_i;
+	mlx_image_t		*scene_i;
 	int			play_x;
 	int			play_y;
 	//t_mlx		*m_mlx;
@@ -132,7 +134,6 @@ t_macro			*init_macro(t_macro *macro);
 void			free_and_exit(t_macro *macro);
 void			free_map(t_macro *macro);
 void			free_macro(t_macro *macro);
-void			print_map_struct(t_map *map);
 int				validation(t_macro *macro);
 int				validate_map(t_macro *macro);
 int				check_file_contents(char *file);
@@ -142,19 +143,18 @@ int				parse_line(char *line, t_macro *macro, int section, t_list **head);
 void			read_input(char *file, t_macro *macro);
 void			calculate_map_dimensions(t_macro *macro);
 void			quit_hook(void *param);
-void			render_minimap(t_macro *macro);
 void			load_images_into_struct(t_macro *macro);
 void			unload_images_from_struct(t_macro *macro);
 void			draw_minimap(t_macro *macro);
+void 			init_mini_image(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);
 
 /* Merged functions */
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 //char** 	parse_map(const char* filename, int* rows, int* cols);
 void	ft_hook(mlx_key_data_t keydata, void *param);
-void load_game(void *param);
+void 	load_game(void *param);
 void	print_map(t_macro *macro);
 void	calculate_wall_distance(t_macro *macro);
 void	draw_wall_slice(t_macro *macro, int x);
@@ -166,6 +166,8 @@ void	perform_dda(t_macro *macro);
 void	load_player(t_macro *macro);
 void    player_in_map(t_macro *macro);
 void    load_map(t_macro *macro);
-void 	print_image_contents(mlx_image_t *img);
+int32_t mlx_get_pixel(mlx_image_t* image, uint32_t x, uint32_t y);
+void put_img_to_img(mlx_image_t* dst, mlx_image_t* src, int x, int y);
+int get_rgba(int r, int g, int b, int a);
 
 #endif
