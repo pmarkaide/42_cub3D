@@ -3,19 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:34:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+int init_game(t_macro *macro)
+{
+	mlx_t *first = mlx_init(800, 600, "Loading...", 0);
+	mlx_get_monitor_size(0, &macro->width, &macro->height);
+	mlx_terminate(first);
+	macro->width *= RATIO_SCREEN;
+	macro->height *= RATIO_SCREEN;
+	macro->mlx_cub = mlx_init(macro->width, macro->height, "cub3D", 0);
+	macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
+	macro->mini_i = mlx_new_image(macro->mlx_cub, macro->map->w_map * 32, macro->map->h_map * 32);
+	if (!macro->mlx_cub || !macro->scene_i || !macro->mini_i)
+		return (write(2, "Error\nFailed to initialize mlx or create images\n", 48), 1);
+	load_images_into_struct(macro);
+	macro->pos_pl_x = macro->start_x;
+	macro->pos_pl_y = macro->start_y;
+	load_map(macro);
+	load_player(macro);
+	load_game(macro);
+	draw_minimap(macro);
+	mlx_image_to_window(macro->mlx_cub, macro->scene_i, 0, 0);
+	mlx_image_to_window(macro->mlx_cub, macro->mini_i, 0, 0);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_macro	*macro;
-	mlx_t	*first;
 
 	macro = NULL;
 	if (argc != 2)
@@ -26,33 +49,15 @@ int	main(int argc, char **argv)
 	read_input(argv[1], macro);
 	if (validate_map(macro))
 	{
-		ft_printf(2, "Map validation failed\n");
+		printf("Error\nInvalid map\n");
+		free_and_exit(macro);
 		return (1);
 	}
-	
-	/************* NUEVO CODIGO */
-	load_map(macro);
-	first = mlx_init(800, 600, "Loading...", 0);
-    mlx_get_monitor_size(0, &macro->width, &macro->height);
-    printf("width %d height %d \n", macro->width, macro->height);
-    mlx_terminate(first);
-    macro->width *= RATIO_SCREEN;
-    macro->height *= RATIO_SCREEN;
-    macro->mlx_cub = mlx_init(macro->width, macro->height, "cub3D", 0);
-    load_player(macro);
-	
-	load_images_into_struct(macro);
-	//render_minimap(macro);
+	if (init_game(macro))
+		return (1);
 	mlx_loop_hook(macro->mlx_cub, &load_game, macro);
-
-    mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
-    mlx_loop(macro->mlx_cub);
-    mlx_terminate(macro->mlx_cub);
-    return (0);
-
-	
-
-	// eval_file(argv[1]);
-	// map = read_file(argv[1]);
-	// eval_elements(map);
+	mlx_key_hook(macro->mlx_cub, &ft_hook, macro);
+	mlx_loop(macro->mlx_cub);
+	mlx_terminate(macro->mlx_cub);
+	return (0);
 }

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
 /*   Updated: 2024/11/12 07:07:05 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../include/cub3D.h"
+#include <stdio.h>
 
 
 void stop_at_wall(t_macro *macro, int x, int y)
@@ -71,13 +73,10 @@ void load_game(void *param)
     t_macro *macro;
     
     macro = (t_macro*)param;
-    mlx_delete_image(macro->mlx_cub, macro->img);
-    macro->img = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
     move(macro);
     paint_background(macro);
     paint_wall(macro);
-    //render_minimap(macro);
-    mlx_image_to_window(macro->mlx_cub, macro->img, 0, 0);
+    draw_minimap(macro);
 }
 
 void load_player(t_macro *macro)
@@ -124,8 +123,10 @@ void    load_map(t_macro *macro)
 {
     //int rows, cols;
     //macro->map = parse_map(file, &rows, &cols);
-    macro->floor = ft_pixel(macro->map->f[0], macro->map->f[1], macro->map->f[2], 255);
-    macro->ceiling = ft_pixel(macro->map->c[0], macro->map->c[1], macro->map->c[2], 255);
+    macro->floor = get_rgba(macro->map->f[0], macro->map->f[1], macro->map->f[2], 255);
+    macro->ceiling = get_rgba(macro->map->c[0], macro->map->c[1], macro->map->c[2], 255);
+    //printf("Floor color: %d\n", macro->floor);
+    //printf("Ceiling color: %d\n", macro->ceiling);
     player_in_map(macro);
     // macro->start_x = 10;
     // macro->start_y = 7;

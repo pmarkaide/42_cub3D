@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 12:23:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:59:10 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ static int	validate_colors(int *f, int *c)
 	return (0);
 }
 
+static void	fill_with_spaces(char **map, size_t width)
+{
+	size_t	i;
+	size_t	len;
+	char	*new_line;
+
+	i = 0;
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len < width)
+		{
+			new_line = malloc(width + 1);
+			if (!new_line)
+				return;
+			ft_memcpy(new_line, map[i], len);
+			ft_memset(new_line + len, ' ', width - len);
+			new_line[width] = '\0';
+			free(map[i]);
+			map[i] = new_line;
+		}
+		i++;
+	}
+}
+
 int	validation(t_macro *macro)
 {
 	if (validate_textures(macro))
@@ -55,5 +80,6 @@ int	validation(t_macro *macro)
 		return (1);
 	if (validate_map(macro))
 		return (1);
+	fill_with_spaces(macro->map->map, macro->map->w_map);
 	return (0);
 }

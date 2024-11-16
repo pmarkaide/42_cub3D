@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 15:45:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/08 13:00:19 by dbejar-s         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/15 16:10:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #include "cub3D.h"
 
@@ -33,17 +36,11 @@ t_macro	*init_macro(t_macro *macro)
 	macro->minimap = malloc(sizeof(t_minimap));
 	if (!macro->minimap)
 	{
-		free(macro->mlx_cub);
 		free(macro->map);
 		free(macro);
 		return (NULL);
 	}
-	macro->key_w = 0;
-	macro->key_a = 0;
-	macro->key_s = 0;
-	macro->key_d = 0;
-	macro->key_left = 0;
-	macro->key_right = 0;
+	macro->mini_i = NULL;
 	return (macro);
 }
 
@@ -78,6 +75,28 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	return (img);
 }
 
+
+
+void unload_images_from_struct(t_macro *macro)
+{
+    if (macro->minimap->background)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->background);
+        macro->minimap->background = NULL;
+    }
+    if (macro->minimap->wall)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
+        macro->minimap->wall = NULL;
+    }
+    if (macro->minimap->player)
+    {
+        mlx_delete_image(macro->mlx_cub, macro->minimap->player);
+        macro->minimap->player = NULL;
+    }
+}
+
+
 void	load_images_into_struct(t_macro *macro)
 {
 	// TODO: errors
@@ -88,4 +107,6 @@ void	load_images_into_struct(t_macro *macro)
 	if(!macro->minimap->wall)
 		free_and_exit(macro);
 	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
+	if(!macro->minimap->player)
+		free_and_exit(macro);	
 }
