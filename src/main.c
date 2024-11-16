@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/15 16:03:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:34:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ int init_game(t_macro *macro)
 	if (!macro->mlx_cub || !macro->scene_i || !macro->mini_i)
 		return (write(2, "Error\nFailed to initialize mlx or create images\n", 48), 1);
 	load_images_into_struct(macro);
+	macro->pos_pl_x = macro->start_x;
+	macro->pos_pl_y = macro->start_y;
 	load_map(macro);
 	load_player(macro);
 	load_game(macro);
+	draw_minimap(macro);
+	mlx_image_to_window(macro->mlx_cub, macro->scene_i, 0, 0);
+	mlx_image_to_window(macro->mlx_cub, macro->mini_i, 0, 0);
 	return (0);
 }
 

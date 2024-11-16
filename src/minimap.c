@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/15 14:53:41 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:35:39 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,5 @@ void draw_minimap(t_macro *macro)
 		}
 		x += 1;
 	}
-	put_img_to_img(macro->mini_i, macro->minimap->player, macro->start_x*32, macro->start_y*32);
-	mlx_image_to_window(macro->mlx_cub, macro->mini_i, 0, 0);
+	put_img_to_img(macro->mini_i, macro->minimap->player, macro->pos_pl_x, macro->pos_pl_y);
 }

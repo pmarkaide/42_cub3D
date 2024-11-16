@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 15:32:17 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:10:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
 	texture = mlx_load_png(file);
 	if (!texture)
 		free_and_exit(macro);
-	//adjust_image_transparency(texture, 0.5f);
+	adjust_image_transparency(texture, 0.5f);
 	img = mlx_texture_to_image(macro->mlx_cub, texture);
 	if (!img)
 		free_and_exit(macro);

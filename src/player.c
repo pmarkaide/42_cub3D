@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 16:03:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:35:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,10 @@ void load_game(void *param)
     t_macro *macro;
     
     macro = (t_macro*)param;
-    //mlx_delete_image(macro->mlx_cub, macro->mini_i);
-    mlx_delete_image(macro->mlx_cub, macro->scene_i);
-    macro->scene_i = mlx_new_image(macro->mlx_cub, macro->width, macro->height);
-	
     move(macro);
     paint_background(macro);
     paint_wall(macro);
-    //draw_minimap(macro);
-    mlx_image_to_window(macro->mlx_cub, macro->scene_i, 0, 0);
+    draw_minimap(macro);
 }
 
 void load_player(t_macro *macro)
