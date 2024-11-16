@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/16 12:35:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:52:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,27 @@ void  put_img_to_img(mlx_image_t* dst, mlx_image_t* src, int x, int y) {
   }
 }
 
+void correct_player_pos_in_edge(t_macro *macro, int *adj_x, int *adj_y) {
+    *adj_x = macro->pos_pl_x;
+    *adj_y = macro->pos_pl_y;
+
+    if (*adj_x < 32)
+        *adj_x = 32;
+    else if (*adj_x >= (int)macro->map->w_map * 32 - 64)
+        *adj_x = macro->map->w_map * 32 - 64;
+
+    if (*adj_y < 32)
+        *adj_y = 32;
+    else if (*adj_y >= (int)macro->map->h_map * 32 - 64)
+        *adj_y = macro->map->h_map * 32 - 64;
+}
 
 void draw_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
+    int     adj_x;
+    int     adj_y;
 
 	x = 0;
 	while (x < macro->map->h_map)
@@ -94,5 +110,7 @@ void draw_minimap(t_macro *macro)
 		}
 		x += 1;
 	}
-	put_img_to_img(macro->mini_i, macro->minimap->player, macro->pos_pl_x, macro->pos_pl_y);
+    correct_player_pos_in_edge(macro, &adj_x, &adj_y);
+    printf("player position: %d, %d\n", adj_x, adj_y);
+	put_img_to_img(macro->mini_i, macro->minimap->player, adj_x, adj_y);
 }
