@@ -6,36 +6,49 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/16 12:52:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/17 12:55:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
 
-void draw_cone(t_macro *macro) {
+void draw_vision_cone(t_macro *macro)
+{
+    int x;
+    int draw_x, draw_y;
+    float ray_length;
+    int max_distance = 64;
 
-	// int i = 0;
-	// while(i < 50)
-	// {
-	// 	mlx_put_pixel(macro->scene_i, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 + i, 0xffff00);
-	// 	mlx_put_pixel(macro->scene_i, macro->start_x * 32 + 15 + i, macro->start_y * 32 + 15 - i, 0xffff00);
-	// 	i++;
-	// }
-    float angle_step = 0.001f;  // Adjust this for smoothness of the filled cone
-    float max_distance = 70;   // Maximum distance of the cone's vision
-    float vision_angle = M_PI / 4;  // Define the cone's angle (e.g., 45 degrees)
+    x = 0;
+    while (x < macro->width)
+    {
+        macro->camera_x = 2 * x / (double)macro->width - 1;
+        macro->ray_dir_x = cos(macro->play_angle) + macro->camera_x * cos(macro->play_angle + M_PI / 2);
+        macro->ray_dir_y = sin(macro->play_angle) + macro->camera_x * sin(macro->play_angle + M_PI / 2);
+        
+        ray_length = macro->perp_wall_dist * BLOCK;
+        ray_length = fmin(ray_length, max_distance);
 
-    // Loop over angles from the left edge to the right edge of the cone
-    for (float angle = -vision_angle / 2; angle <= vision_angle / 2; angle += angle_step) {
-        // Draw a line from the center to the maximum distance at this angle
-        for (float dist = 0; dist <= max_distance; dist++) {
-            int x = macro->start_x * 32 + 15 + (int)(cos(angle) * dist);
-            int y = macro->start_y * 32 + 15 + (int)(sin(angle) * dist);
-            mlx_put_pixel(macro->scene_i, x, y, 0xFFFF00);  // Draw pixel in the cone
+        float dist = 0.0f;
+        while (dist <= ray_length)
+        {
+            draw_x = macro->pos_pl_x + (BLOCK / 2) + (int)(macro->ray_dir_x * dist);
+            draw_y = macro->pos_pl_y + (BLOCK / 2) + (int)(macro->ray_dir_y * dist);
+            
+            if (draw_x >= 0 && draw_x < (int)macro->map->w_map * BLOCK &&
+                draw_y >= 0 && draw_y < (int)macro->map->h_map * BLOCK)
+            {
+                int alpha = 255 - (int)((dist / ray_length) * 200);
+                int color = (255 << 24) | (255 << 16) | (255 << 8) | alpha; // Yellow with fade
+                mlx_put_pixel(macro->mini_i, draw_x, draw_y, color);
+            }
+            dist += 0.5f;
         }
+        x += 4;
     }
 }
+
 
 int get_rgba(int r, int g, int b, int a) {
   return (r << 24 | g << 16 | b << 8 | a);
@@ -113,4 +126,5 @@ void draw_minimap(t_macro *macro)
     correct_player_pos_in_edge(macro, &adj_x, &adj_y);
     printf("player position: %d, %d\n", adj_x, adj_y);
 	put_img_to_img(macro->mini_i, macro->minimap->player, adj_x, adj_y);
+  draw_vision_cone(macro);
 }
