@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/17 12:55:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:26:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,101 @@ void draw_vision_cone(t_macro *macro)
     int x;
     int draw_x, draw_y;
     float ray_length;
-    int max_distance = 64;
-
+    
+    
+    double camera_x;
+    double ray_dir_x, ray_dir_y;
+    int map_x, map_y;
+    double side_dist_x, side_dist_y;
+    double delta_dist_x, delta_dist_y;
+    int step_x, step_y;
+    int hit, side;
+    
+    
+    float center_x = macro->pos_pl_x + BLOCK / 2;
+    float center_y = macro->pos_pl_y + BLOCK / 2;
+    
     x = 0;
     while (x < macro->width)
     {
-        macro->camera_x = 2 * x / (double)macro->width - 1;
-        macro->ray_dir_x = cos(macro->play_angle) + macro->camera_x * cos(macro->play_angle + M_PI / 2);
-        macro->ray_dir_y = sin(macro->play_angle) + macro->camera_x * sin(macro->play_angle + M_PI / 2);
         
-        ray_length = macro->perp_wall_dist * BLOCK;
-        ray_length = fmin(ray_length, max_distance);
+        camera_x = 2 * x / (double)macro->width - 1;
+        ray_dir_x = cos(macro->play_angle) + camera_x * cos(macro->play_angle + M_PI / 2);
+        ray_dir_y = sin(macro->play_angle) + camera_x * sin(macro->play_angle + M_PI / 2);
 
+        
+        map_x = (int)(center_x / BLOCK);
+        map_y = (int)(center_y / BLOCK);
+        delta_dist_x = fabs(1 / ray_dir_x);
+        delta_dist_y = fabs(1 / ray_dir_y);
+        hit = 0;
+
+        
+        if (ray_dir_x < 0)
+        {
+            step_x = -1;
+            side_dist_x = (center_x / BLOCK - map_x) * delta_dist_x;
+        }
+        else
+        {
+            step_x = 1;
+            side_dist_x = (map_x + 1.0 - center_x / BLOCK) * delta_dist_x;
+        }
+        if (ray_dir_y < 0)
+        {
+            step_y = -1;
+            side_dist_y = (center_y / BLOCK - map_y) * delta_dist_y;
+        }
+        else
+        {
+            step_y = 1;
+            side_dist_y = (map_y + 1.0 - center_y / BLOCK) * delta_dist_y;
+        }
+
+        
+        while (hit == 0)
+        {
+            if (side_dist_x < side_dist_y)
+            {
+                side_dist_x += delta_dist_x;
+                map_x += step_x;
+                side = 0;
+            }
+            else
+            {
+                side_dist_y += delta_dist_y;
+                map_y += step_y;
+                side = 1;
+            }
+            if (macro->map->map[map_y][map_x] == '1')
+                hit = 1;
+        }
+
+        
+        if (side == 0)
+            ray_length = (map_x - center_x / BLOCK + 
+                (1 - step_x) / 2) / ray_dir_x * BLOCK;
+        else
+            ray_length = (map_y - center_y / BLOCK + 
+                (1 - step_y) / 2) / ray_dir_y * BLOCK;
+
+        
         float dist = 0.0f;
         while (dist <= ray_length)
         {
-            draw_x = macro->pos_pl_x + (BLOCK / 2) + (int)(macro->ray_dir_x * dist);
-            draw_y = macro->pos_pl_y + (BLOCK / 2) + (int)(macro->ray_dir_y * dist);
+            draw_x = center_x + (int)(ray_dir_x * dist);
+            draw_y = center_y + (int)(ray_dir_y * dist);
             
-            if (draw_x >= 0 && draw_x < (int)macro->map->w_map * BLOCK &&
-                draw_y >= 0 && draw_y < (int)macro->map->h_map * BLOCK)
+            if (draw_x >= 0 && draw_x < (int)macro->map->w_map * 32 &&
+                draw_y >= 0 && draw_y < (int)macro->map->h_map * 32)
             {
-                int alpha = 255 - (int)((dist / ray_length) * 200);
-                int color = (255 << 24) | (255 << 16) | (255 << 8) | alpha; // Yellow with fade
+                int alpha = 255;
+                int color = (255 << 24) | (255 << 16) | (255 << 8) | alpha;
                 mlx_put_pixel(macro->mini_i, draw_x, draw_y, color);
             }
             dist += 0.5f;
         }
-        x += 4;
+        x += 1;
     }
 }
 
