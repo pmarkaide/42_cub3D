@@ -6,26 +6,41 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/17 14:04:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/17 14:34:18 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
+void correct_player_pos_in_edge(t_macro *macro, int *adj_x, int *adj_y) {
+    *adj_x = macro->pos_pl_x;
+    *adj_y = macro->pos_pl_y;
+
+    if (*adj_x < 32)
+        *adj_x = 32;
+    else if (*adj_x >= (int)macro->map->w_map * 32 - 64)
+        *adj_x = macro->map->w_map * 32 - 64;
+
+    if (*adj_y < 32)
+        *adj_y = 32;
+    else if (*adj_y >= (int)macro->map->h_map * 32 - 64)
+        *adj_y = macro->map->h_map * 32 - 64;
+}
+
 
 void initialize_vision_ray(t_macro *macro, int x, double *ray_dir_x, double *ray_dir_y)
 {
     double camera_x;
-    float center_x;
-    float center_y;
+    int center_x;
+    int center_y;
     
-    center_x = macro->pos_pl_x + BLOCK / 2;
-    center_y = macro->pos_pl_y + BLOCK / 2;
+    correct_player_pos_in_edge(macro, &center_x, &center_y);
+    
     camera_x = 2 * x / (double)macro->width - 1;
     *ray_dir_x = cos(macro->play_angle) + camera_x * cos(macro->play_angle + M_PI / 2);
     *ray_dir_y = sin(macro->play_angle) + camera_x * sin(macro->play_angle + M_PI / 2);
-    macro->map_x = (int)(center_x / BLOCK);
-    macro->map_y = (int)(center_y / BLOCK);
+    macro->map_x = (int)((center_x + BLOCK / 2) / BLOCK);
+    macro->map_y = (int)((center_y + BLOCK / 2) / BLOCK);
     macro->delta_dist_x = fabs(1 / *ray_dir_x);
     macro->delta_dist_y = fabs(1 / *ray_dir_y);
     macro->hit = 0;
@@ -65,19 +80,20 @@ void draw_ray(t_macro *macro, float ray_length, double ray_dir_x, double ray_dir
     float dist;
     int draw_x;
     int draw_y;
-    float center_x;
-    float center_y;
+    int adj_x;
+    int adj_y;
 
     dist = 0.0f;
-    center_x = macro->pos_pl_x + BLOCK / 2;
-    center_y = macro->pos_pl_y + BLOCK / 2;
+    correct_player_pos_in_edge(macro, &adj_x, &adj_y);
     while (dist <= ray_length)
     {
-        draw_x = center_x + (int)(ray_dir_x * dist);
-        draw_y = center_y + (int)(ray_dir_y * dist);
+        draw_x = adj_x + BLOCK / 2 + (int)(ray_dir_x * dist);
+        draw_y = adj_y + BLOCK / 2 + (int)(ray_dir_y * dist);
         if (draw_x >= 0 && draw_x < (int)macro->map->w_map * 32 &&
             draw_y >= 0 && draw_y < (int)macro->map->h_map * 32)
         {
+            if (macro->map->map[draw_y / BLOCK][draw_x / BLOCK] == '1')
+                break; // Stop at the nearest wall
             mlx_put_pixel(macro->mini_i, draw_x, draw_y, 
                 get_rgba(255, 255, 255, 255));
         }
@@ -91,29 +107,26 @@ void draw_vision_cone(t_macro *macro)
     float ray_length;
     double ray_dir_x;
     double ray_dir_y;
-    float center_x;
-    float center_y;
+    int adj_x;
+    int adj_y;
     
     x = 0;
-    center_x = macro->pos_pl_x + BLOCK / 2;
-    center_y = macro->pos_pl_y + BLOCK / 2;
+    correct_player_pos_in_edge(macro, &adj_x, &adj_y);
     while (x < macro->width)
     {
         initialize_vision_ray(macro, x, &ray_dir_x, &ray_dir_y);
         calculate_ray_steps(macro, ray_dir_x, ray_dir_y);
         perform_dda(macro);
-        
         if (macro->side == 0)
-            ray_length = (macro->map_x - center_x / BLOCK + 
-                (1 - macro->step_x) / 2) / ray_dir_x * BLOCK;
+            ray_length = ((macro->map_x - (adj_x + BLOCK/2) / BLOCK + 
+                (1 - macro->step_x) / 2) / ray_dir_x) * BLOCK*2;
         else
-            ray_length = (macro->map_y - center_y / BLOCK + 
-                (1 - macro->step_y) / 2) / ray_dir_y * BLOCK;
+            ray_length = ((macro->map_y - (adj_y + BLOCK) / BLOCK + 
+                (1 - macro->step_y) / 2) / ray_dir_y) * BLOCK*2;
         draw_ray(macro, ray_length, ray_dir_x, ray_dir_y);
         x += 1;
     }
 }
-
 
 int get_rgba(int r, int g, int b, int a) {
   return (r << 24 | g << 16 | b << 8 | a);
@@ -151,21 +164,6 @@ void  put_img_to_img(mlx_image_t* dst, mlx_image_t* src, int x, int y) {
     }
     i++;
   }
-}
-
-void correct_player_pos_in_edge(t_macro *macro, int *adj_x, int *adj_y) {
-    *adj_x = macro->pos_pl_x;
-    *adj_y = macro->pos_pl_y;
-
-    if (*adj_x < 32)
-        *adj_x = 32;
-    else if (*adj_x >= (int)macro->map->w_map * 32 - 64)
-        *adj_x = macro->map->w_map * 32 - 64;
-
-    if (*adj_y < 32)
-        *adj_y = 32;
-    else if (*adj_y >= (int)macro->map->h_map * 32 - 64)
-        *adj_y = macro->map->h_map * 32 - 64;
 }
 
 void draw_minimap(t_macro *macro)
