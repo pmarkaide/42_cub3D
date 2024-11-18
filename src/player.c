@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/12 07:07:05 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/18 09:43:47 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,34 @@ void move(t_macro *macro)
    
     if (macro->key_w)
     {
-        x+= WALK_SPEED * cos(macro->play_angle);
-        y += WALK_SPEED * sin(macro->play_angle);
+        x+= (int)(WALK_SPEED * cos(macro->play_angle));
+        y += (int)(WALK_SPEED * sin(macro->play_angle));
     }
     if (macro->key_a)
     {
-        x-= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
-        y -= WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+        x-= (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
+        y -= (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
     }
     if (macro->key_s)
     {
-        x-= WALK_SPEED * cos(macro->play_angle);
-        y -= WALK_SPEED * sin(macro->play_angle);
+        x-= (int)(WALK_SPEED * cos(macro->play_angle));
+        y -= (int)(WALK_SPEED * sin(macro->play_angle));
     }
     if (macro->key_d)
     {
-        x+= WALK_SPEED * cos(macro->play_angle + M_PI / 2);
-        y += WALK_SPEED * sin(macro->play_angle + M_PI / 2);
+        x+= (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
+        y += (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
     }
-    if (macro->key_left)
-    {
-        macro->play_angle -= ROT_SPEED;
-        if (macro->play_angle < 0)
-            macro->play_angle += 2 * M_PI;
-    }
-    if (macro->key_right)
-    {
-        macro->play_angle += ROT_SPEED;
-        if (macro->play_angle > 2 * M_PI)
-            macro->play_angle -= 2 * M_PI;  
-    }
+if (macro->key_left)
+{
+    macro->play_angle -= ROT_SPEED;
+    macro->play_angle = fmod(macro->play_angle + 2 * M_PI, 2 * M_PI);
+}
+if (macro->key_right)
+{
+    macro->play_angle += ROT_SPEED;
+    macro->play_angle = fmod(macro->play_angle, 2 * M_PI);
+}
     stop_at_wall(macro, x, y);
 }
 
