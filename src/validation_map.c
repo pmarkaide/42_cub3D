@@ -6,30 +6,28 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:15:05 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:09:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	check_unique_starting_position(t_macro *macro)
+static int	check_unique_starting_position(char **grid, int height)
 {
 	size_t	i;
 	int		j;
 	int		count;
-	char	**map;
 	int		line_length;
 
 	i = 0;
 	count = 0;
-	map = macro->map->map;
-	while (i < macro->map->h_map)
+	while (i < height)
 	{
 		j = 0;
-		line_length = ft_strlen(map[i]);
+		line_length = ft_strlen(grid[i]);
 		while (j < line_length)
 		{
-			if (ft_strchr("NSWE", map[i][j]))
+			if (ft_strchr("NSWE", grid[i][j]))
 				count++;
 			j++;
 		}
@@ -43,27 +41,24 @@ static int	check_unique_starting_position(t_macro *macro)
 	return (1);
 }
 
-static int	map_chars_are_valid(t_macro *macro)
+static int	map_chars_are_valid(char **grid, int height)
 {
 	size_t	i;
 	int		j;
-	char	**map;
 	int		line_length;
 
 	i = 0;
-	map = macro->map->map;
-	if (!check_unique_starting_position(macro))
+	if (!check_unique_starting_position(grid, height))
 		return (0);
-	while (i < macro->map->h_map)
+	while (i < height)
 	{
 		j = 0;
-		line_length = ft_strlen(map[i]);
+		line_length = ft_strlen(grid[i]);
 		while (j < line_length)
 		{
-			if (map[i][j] && ft_strchr("10NSWE ", map[i][j]) == NULL)
+			if (grid[i][j] && ft_strchr("10NSWE ", grid[i][j]) == NULL)
 			{
-				ft_printf(2, "Error\nInvalid character '%c' in map\n",
-					map[i][j]);
+				ft_printf(2, "Error\nInvalid character in map\n");
 				return (0);
 			}
 			j++;
@@ -73,13 +68,26 @@ static int	map_chars_are_valid(t_macro *macro)
 	return (1);
 }
 
-static int	is_surrounded_by_walls(char **map, int i, int j, int height,
-		int width)
+static int	is_surrounded_by_walls(t_macro *macro, int i, int j, int width)
 {
-	if (i == 0 || j == 0 || i == height - 1 || j == width - 1 || map[i
-		- 1][j] == ' ' || map[i + 1][j] == ' ' || map[i][j - 1] == ' '
-		|| map[i][j + 1] == ' ' || map[i - 1][j - 1] == ' ' || map[i - 1][j
-		+ 1] == ' ' || map[i + 1][j - 1] == ' ' || map[i + 1][j + 1] == ' ')
+	int		height;
+	char	**map;
+	int		err;
+
+	err = 0;
+	height = macro->map->h_map;
+	map = macro->map->grid;
+	if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
+		err = 1;
+	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
+		err = 1;
+	if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+		err = 1;
+	if (map[i - 1][j - 1] == ' ' || map[i - 1][j + 1] == ' ')
+		err = 1;
+	if (map[i + 1][j - 1] == ' ' || map[i + 1][j + 1] == ' ')
+		err = 1;
+	if (err)
 	{
 		ft_printf(2, "Error\nInvalid map structure at (%d, %d)\n", i, j);
 		return (0);
@@ -91,14 +99,12 @@ static int	is_valid_wall_structure(t_macro *macro)
 {
 	int		i;
 	int		j;
-	int		height;
 	char	**map;
 	int		width;
 
 	i = 0;
-	height = macro->map->h_map;
-	map = macro->map->map;
-	while (i < height)
+	map = macro->map->grid;
+	while (i < macro->map->h_map)
 	{
 		j = 0;
 		width = ft_strlen(map[i]);
@@ -106,7 +112,7 @@ static int	is_valid_wall_structure(t_macro *macro)
 		{
 			if (ft_strchr("0NSEW", map[i][j]))
 			{
-				if (!is_surrounded_by_walls(map, i, j, height, width))
+				if (!is_surrounded_by_walls(macro, i, j, width))
 					return (0);
 			}
 			j++;
@@ -119,7 +125,7 @@ static int	is_valid_wall_structure(t_macro *macro)
 int	validate_map(t_macro *macro)
 {
 	calculate_map_dimensions(macro);
-	if (!map_chars_are_valid(macro))
+	if (!map_chars_are_valid(macro->map->grid, macro->map->h_map))
 		return (1);
 	if (!is_valid_wall_structure(macro))
 		return (1);

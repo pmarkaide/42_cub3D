@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 12:24:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	draw_ray(t_macro *macro, float ray_length, double ray_dir_x,
 		if (draw_x >= 0 && draw_x < (int)macro->map->w_map * 32 && draw_y >= 0
 			&& draw_y < (int)macro->map->h_map * 32)
 		{
-			if (macro->map->map[draw_y / BLOCK][draw_x / BLOCK] == '1')
+			if (macro->map->grid[draw_y / BLOCK][draw_x / BLOCK] == '1')
 				break ; // Stop at the nearest wall
 			mlx_put_pixel(macro->mini_i, draw_x, draw_y, get_rgba(255, 255, 255,
 					255));
@@ -195,7 +195,7 @@ void	draw_minimap(t_macro *macro)
 		{
 			put_img2img(macro->mini_i, macro->minimap->background, y * 32, x
 				* 32);
-			if (macro->map->map[x][y] == '1')
+			if (macro->map->grid[x][y] == '1')
 				put_img2img(macro->mini_i, macro->minimap->wall, y * 32, x
 					* 32);
 			y += 1;

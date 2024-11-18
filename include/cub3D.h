@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 12:26:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:48:48 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_map
 	char		*ea;
 	int			f[3];
 	int			c[3];
-	char		**map;
+	char		**grid;
 	size_t		w_map;
 	size_t		h_map;
 }				t_map;

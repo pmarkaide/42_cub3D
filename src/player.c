@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/18 09:43:47 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:01:23 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,44 @@
 
 void	stop_at_wall(t_macro *macro, int x, int y)
 {
-	if (macro->map->map[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
+	if (macro->map->grid[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
 	{
 		macro->pos_pl_x = x;
 		macro->pos_pl_y = y;
 	}
 }
 
-void	move(t_macro *macro)
+void	move_wsda(t_macro *macro)
 {
-	int	x;
-	int	y;
+	int	*x;
+	int	*y;
 
-	x = macro->pos_pl_x;
-	y = macro->pos_pl_y;
+	x = &macro->pos_pl_x;
+	y = &macro->pos_pl_y;
 	if (macro->key_w)
 	{
-		x += (int)(WALK_SPEED * cos(macro->play_angle));
-		y += (int)(WALK_SPEED * sin(macro->play_angle));
+		*x += (int)(WALK_SPEED * cos(macro->play_angle));
+		*y += (int)(WALK_SPEED * sin(macro->play_angle));
 	}
 	if (macro->key_a)
 	{
-		x -= (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
-		y -= (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
+		*x -= (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
+		*y -= (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
 	}
 	if (macro->key_s)
 	{
-		x -= (int)(WALK_SPEED * cos(macro->play_angle));
-		y -= (int)(WALK_SPEED * sin(macro->play_angle));
+		*x -= (int)(WALK_SPEED * cos(macro->play_angle));
+		*y -= (int)(WALK_SPEED * sin(macro->play_angle));
 	}
 	if (macro->key_d)
 	{
-		x += (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
-		y += (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
+		*x += (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
+		*y += (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
 	}
+}
+
+void	move_rotate(t_macro *macro)
+{
 	if (macro->key_left)
 	{
 		macro->play_angle -= ROT_SPEED;
@@ -59,7 +63,13 @@ void	move(t_macro *macro)
 		macro->play_angle += ROT_SPEED;
 		macro->play_angle = fmod(macro->play_angle, 2 * M_PI);
 	}
-	stop_at_wall(macro, x, y);
+}
+
+void	move(t_macro *macro)
+{
+	move_wsda(macro);
+	move_rotate(macro);
+	stop_at_wall(macro, macro->pos_pl_x, macro->pos_pl_y);
 }
 
 void	load_game(void *param)
@@ -94,18 +104,19 @@ void	player_in_map(t_macro *macro)
 	int	x;
 
 	y = 0;
-	while (macro->map->map[y] != NULL)
+	while (macro->map->grid[y] != NULL)
 	{
 		x = 0;
-		while (macro->map->map[y][x])
+		while (macro->map->grid[y][x])
 		{
-			if (macro->map->map[y][x] == 'N' || macro->map->map[y][x] == 'S'
-				|| macro->map->map[y][x] == 'E' || macro->map->map[y][x] == 'W')
+			if (macro->map->grid[y][x] == 'N' || macro->map->grid[y][x] == 'S'
+				|| macro->map->grid[y][x] == 'E'
+				|| macro->map->grid[y][x] == 'W')
 			{
 				macro->start_x = x;
 				macro->start_y = y;
-				macro->orientation = macro->map->map[y][x];
-				macro->map->map[y][x] = '0';
+				macro->orientation = macro->map->grid[y][x];
+				macro->map->grid[y][x] = '0';
 				break ;
 			}
 			x++;
@@ -116,16 +127,9 @@ void	player_in_map(t_macro *macro)
 
 void	load_map(t_macro *macro)
 {
-	// int rows, cols;
-	// macro->map = parse_map(file, &rows, &cols);
 	macro->floor = get_rgba(macro->map->f[0], macro->map->f[1],
 			macro->map->f[2], 255);
 	macro->ceiling = get_rgba(macro->map->c[0], macro->map->c[1],
 			macro->map->c[2], 255);
-	// printf("Floor color: %d\n", macro->floor);
-	// printf("Ceiling color: %d\n", macro->ceiling);
 	player_in_map(macro);
-	// macro->start_x = 10;
-	// macro->start_y = 7;
-	// macro->orientation = 'E';
 }

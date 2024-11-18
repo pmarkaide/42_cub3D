@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:30:02 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/06 07:47:41 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	perform_dda(t_macro *macro)
 			macro->map_y += macro->step_y;
 			macro->side = 1;
 		}
-		if (macro->map->map[macro->map_y][macro->map_x] == '1')
+		if (macro->map->grid[macro->map_y][macro->map_x] == '1')
 			macro->hit = 1;
 	}
 }

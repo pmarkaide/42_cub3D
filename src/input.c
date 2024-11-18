@@ -4,9 +4,9 @@
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                             /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */                   +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 12:38:53 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	eval_file(char *file, char *ext)
 {
 	char	*dot;
 
-	if (ft_strcmp(ext, ".cub") == 0)
+	if (ft_strcmp(ext, ".cub") /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */== 0)
 	{
 		dot = ft_strrchr(file, '.');
 		if (dot == NULL || (dot != NULL && ft_strcmp(dot, ".cub")))
@@ -50,7 +50,7 @@ static int	detect_section(char *line)
 		section = 2;
 	else
 		section = 3;
-	return (section);
+	return (section);/*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
 }
 
 static int	read_file(char *file, t_macro *macro)
@@ -77,7 +77,7 @@ static int	read_file(char *file, t_macro *macro)
 	close(fd);
 	if (!head)
 		return (1);
-	macro->map->map = ft_lst_to_array(&head);
+	macro->map->grid = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
 	return (0);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 16:10:52 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/11/18 15:54:00 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_macro	*init_macro(t_macro *macro)
 	macro->map->so = NULL;
 	macro->map->we = NULL;
 	macro->map->ea = NULL;
-	macro->map->map = NULL;
+	macro->map->grid = NULL;
 	macro->minimap = malloc(sizeof(t_minimap));
 	if (!macro->minimap)
 	{
@@ -100,7 +100,6 @@ void	unload_images_from_struct(t_macro *macro)
 
 void	load_images_into_struct(t_macro *macro)
 {
-	// TODO: errors
 	macro->minimap->background = load_png_into_image(macro,
 			"textures/background.png");
 	if (!macro->minimap->background)
