@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h" 
+#include "libft.h"
 
 char	*ft_skipws(char *str)
 {
-    while (*str && (*str == ' ' || *str == '\t'))
-        str++;
-    return (str);
+	while (*str && (*str == ' ' || *str == '\t'))
+		str++;
+	return (str);
 }

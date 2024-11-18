@@ -6,12 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/18 16:01:23 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:37:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
-#include <stdio.h>
+#include "cub3D.h"
 
 void	stop_at_wall(t_macro *macro, int x, int y)
 {

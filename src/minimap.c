@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:44:36 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,36 +46,32 @@ void	initialize_vision_ray(t_macro *macro, int x, double *ray_dir_x,
 	macro->hit = 0;
 }
 
-void	calculate_ray_steps(t_macro *macro, double ray_dir_x, double ray_dir_y)
+void	calculate_ray_steps(t_macro *m, double ray_dir_x, double ray_dir_y)
 {
 	float	center_x;
 	float	center_y;
 
-	center_x = macro->pos_pl_x + BLOCK / 2;
-	center_y = macro->pos_pl_y + BLOCK / 2;
+	center_x = m->pos_pl_x + BLOCK / 2;
+	center_y = m->pos_pl_y + BLOCK / 2;
 	if (ray_dir_x < 0)
 	{
-		macro->step_x = -1;
-		macro->side_dist_x = (center_x / BLOCK - macro->map_x)
-			* macro->delta_dist_x;
+		m->step_x = -1;
+		m->side_dist_x = (center_x / BLOCK - m->map_x) * m->delta_dist_x;
 	}
 	else
 	{
-		macro->step_x = 1;
-		macro->side_dist_x = (macro->map_x + 1.0 - center_x / BLOCK)
-			* macro->delta_dist_x;
+		m->step_x = 1;
+		m->side_dist_x = (m->map_x + 1.0 - center_x / BLOCK) * m->delta_dist_x;
 	}
 	if (ray_dir_y < 0)
 	{
-		macro->step_y = -1;
-		macro->side_dist_y = (center_y / BLOCK - macro->map_y)
-			* macro->delta_dist_y;
+		m->step_y = -1;
+		m->side_dist_y = (center_y / BLOCK - m->map_y) * m->delta_dist_y;
 	}
 	else
 	{
-		macro->step_y = 1;
-		macro->side_dist_y = (macro->map_y + 1.0 - center_y / BLOCK)
-			* macro->delta_dist_y;
+		m->step_y = 1;
+		m->side_dist_y = (m->map_y + 1.0 - center_y / BLOCK) * m->delta_dist_y;
 	}
 }
 
@@ -98,7 +94,7 @@ void	draw_ray(t_macro *macro, float ray_length, double ray_dir_x,
 			&& draw_y < (int)macro->map->h_map * 32)
 		{
 			if (macro->map->grid[draw_y / BLOCK][draw_x / BLOCK] == '1')
-				break ; // Stop at the nearest wall
+				break ;
 			mlx_put_pixel(macro->mini_i, draw_x, draw_y, get_rgba(255, 255, 255,
 					255));
 		}
