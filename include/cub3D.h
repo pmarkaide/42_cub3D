@@ -5,26 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 15:39:29 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/11/18 12:26:32 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include "../lib/libft/libft.h"
-# include "MLX42.h"    // mlx42
-# include <errno.h>    // errno
-# include <fcntl.h>    // open
+# include "MLX42.h" // mlx42
+# include <errno.h> // errno
+# include <fcntl.h> // open
+# include <math.h>
+# include <stdbool.h>
 # include <stdio.h>    // printf, perror
 # include <stdlib.h>   // malloc, free, exit
 # include <string.h>   // strerror
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // close, read, write
-# include <stdbool.h>
-# include <math.h>
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -32,24 +31,11 @@
 
 # define WIDTH 512
 # define HEIGHT 512
-# define BLOCK 32 // size of each block
+# define BLOCK 32      // size of each block
 # define ANGLE_VIEW 60 // Angle View for the Player
-/* Standard POV is 90, narrow POV is 60, wide POV is 120*/
 # define RATIO_SCREEN 0.75
-# define TWO_PI (2 * M_PI)
-# define A_DEG 180 / M_PI
-# define A_RAD M_PI / 180
 # define ROT_SPEED 0.05
 # define WALK_SPEED 5
-
-
-/* LIMPIAMOS LOS STRUCT DESPUES
-typedef struct s_mlx
-{
-	mlx_image_t	*img;
-	mlx_t		*mlx_cub;
-}				t_mlx;
-*/
 
 typedef struct s_map
 {
@@ -60,32 +46,29 @@ typedef struct s_map
 	int			f[3];
 	int			c[3];
 	char		**map;
-	size_t			w_map;
-	size_t			h_map;
+	size_t		w_map;
+	size_t		h_map;
 }				t_map;
 
 typedef struct s_minimap
 {
-	//mlx_image_t	*player;
 	mlx_image_t	*wall;
 	mlx_image_t	*background;
-	mlx_image_t *player;
-	int 		vision_distance;
+	mlx_image_t	*player;
+	int			vision_distance;
 	float		vision_angle;
-} 				t_minimap;
+}				t_minimap;
 typedef struct s_macro
 {
 	t_map		*map;
 	t_minimap	*minimap;
-	mlx_image_t 	*mini_i;
-	mlx_image_t		*scene_i;
+	mlx_image_t	*mini_i;
+	mlx_image_t	*scene_i;
 	int			play_x;
 	int			play_y;
-	//t_mlx		*m_mlx;
 	int			width;
 	int			height;
-	//char		**map;
-	char		orientation; //N, W, E, S
+	char		orientation;
 	int32_t		floor;
 	int32_t		ceiling;
 	int32_t		wall;
@@ -95,7 +78,7 @@ typedef struct s_macro
 	int			pos_pl_y;
 	float		play_view;
 	double		play_angle;
-	char		play_facing; //la direccion en la que mira N, W, E, S
+	char		play_facing;
 	int			w_map;
 	int			h_map;
 	double		distance;
@@ -105,10 +88,10 @@ typedef struct s_macro
 	double		camera_x;
 	double		ray_dir_x;
 	double		ray_dir_y;
-	int 		map_x;
-	int 		map_y;
+	int			map_x;
+	int			map_y;
 	double		side_dist_x;
-    double		side_dist_y;
+	double		side_dist_y;
 	double		delta_dist_x;
 	double		delta_dist_y;
 	double		perp_wall_dist;
@@ -128,8 +111,6 @@ typedef struct s_macro
 	int			key_right;
 }				t_macro;
 
-
-
 t_macro			*init_macro(t_macro *macro);
 void			free_and_exit(t_macro *macro);
 void			free_map(t_macro *macro);
@@ -139,35 +120,36 @@ int				validate_map(t_macro *macro);
 int				check_file_contents(char *file);
 void			clean_trailing_char(char *str, const char *set);
 int				save_texture_path(char **texture, char *path);
-int				parse_line(char *line, t_macro *macro, int section, t_list **head);
+int				parse_line(char *line, t_macro *macro, int section,
+					t_list **head);
 void			read_input(char *file, t_macro *macro);
 void			calculate_map_dimensions(t_macro *macro);
 void			quit_hook(void *param);
 void			load_images_into_struct(t_macro *macro);
 void			unload_images_from_struct(t_macro *macro);
 void			draw_minimap(t_macro *macro);
-void 			init_mini_image(t_macro *macro);
+void			init_mini_image(t_macro *macro);
 
 /* _utils */
 void			print_map_struct(t_map *map);
 
 /* Merged functions */
-//char** 	parse_map(const char* filename, int* rows, int* cols);
-void	ft_hook(mlx_key_data_t keydata, void *param);
-void 	load_game(void *param);
-void	print_map(t_macro *macro);
-void	calculate_wall_distance(t_macro *macro);
-void	draw_wall_slice(t_macro *macro, int x);
-void	paint_wall(t_macro *macro);
-void	paint_background(t_macro *macro);
-void	calculate_ray_direction(t_macro *macro, int x);
-void	calculate_step_and_side_dist(t_macro *macro);
-void	perform_dda(t_macro *macro);
-void	load_player(t_macro *macro);
-void    player_in_map(t_macro *macro);
-void    load_map(t_macro *macro);
-int32_t mlx_get_pixel(mlx_image_t* image, uint32_t x, uint32_t y);
-void put_img_to_img(mlx_image_t* dst, mlx_image_t* src, int x, int y);
-int get_rgba(int r, int g, int b, int a);
+// char** 	parse_map(const char* filename, int* rows, int* cols);
+void			ft_hook(mlx_key_data_t keydata, void *param);
+void			load_game(void *param);
+void			print_map(t_macro *macro);
+void			calculate_wall_distance(t_macro *macro);
+void			draw_wall_slice(t_macro *macro, int x);
+void			paint_wall(t_macro *macro);
+void			paint_background(t_macro *macro);
+void			calculate_ray_direction(t_macro *macro, int x);
+void			calculate_step_and_side_dist(t_macro *macro);
+void			perform_dda(t_macro *macro);
+void			load_player(t_macro *macro);
+void			player_in_map(t_macro *macro);
+void			load_map(t_macro *macro);
+int32_t			mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
+void			put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y);
+int				get_rgba(int r, int g, int b, int a);
 
 #endif

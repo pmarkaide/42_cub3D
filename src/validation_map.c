@@ -14,7 +14,7 @@
 
 static int	check_unique_starting_position(t_macro *macro)
 {
-	size_t		i;
+	size_t	i;
 	int		j;
 	int		count;
 	char	**map;
@@ -45,7 +45,7 @@ static int	check_unique_starting_position(t_macro *macro)
 
 static int	map_chars_are_valid(t_macro *macro)
 {
-	size_t		i;
+	size_t	i;
 	int		j;
 	char	**map;
 	int		line_length;
@@ -62,7 +62,8 @@ static int	map_chars_are_valid(t_macro *macro)
 		{
 			if (map[i][j] && ft_strchr("10NSWE ", map[i][j]) == NULL)
 			{
-				ft_printf(2, "Error\nInvalid character '%c' in map\n", map[i][j]);
+				ft_printf(2, "Error\nInvalid character '%c' in map\n",
+					map[i][j]);
 				return (0);
 			}
 			j++;

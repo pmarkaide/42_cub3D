@@ -75,7 +75,7 @@ static int	read_file(char *file, t_macro *macro)
 		free(line);
 	}
 	close(fd);
-	if(!head)
+	if (!head)
 		return (1);
 	macro->map->map = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);

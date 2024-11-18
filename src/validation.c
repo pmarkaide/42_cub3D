@@ -61,7 +61,7 @@ static void	fill_with_spaces(char **map, size_t width)
 		{
 			new_line = malloc(width + 1);
 			if (!new_line)
-				return;
+				return ;
 			ft_memcpy(new_line, map[i], len);
 			ft_memset(new_line + len, ' ', width - len);
 			new_line[width] = '\0';
