@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 09:33:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:51:19 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ static int	detect_section(char *line)
 	return (section);
 }
 
-static char **handle_lines(t_macro *macro, int fd)
+static char	**handle_lines(t_macro *macro, int fd)
 {
 	char	*line;
 	int		section;
 	t_list	*head;
-	
+
 	head = NULL;
 	line = get_next_line(fd);
-	if(!line)
-		return(NULL);
+	if (!line)
+		return (NULL);
 	while (line)
 	{
 		section = detect_section(line);
@@ -77,19 +77,24 @@ static char **handle_lines(t_macro *macro, int fd)
 	}
 	macro->map->grid = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
-	return(macro->map->grid);
+	return (macro->map->grid);
 }
 
 static int	read_file(char *file, t_macro *macro)
 {
-	int		fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
-	handle_lines(macro, fd);		
-	if(!macro->map->grid)
+	if (fd < 0)
 	{
-		ft_printf(2, "Error\nMalloc failed\n");
-		return(NULL);
+		ft_printf(2, "Error\nFailed to open file\n");
+		return (1);
+	}
+	if (!handle_lines(macro, fd))
+	{
+		close(fd);
+		ft_printf(2, "Error\nFailed to parse file\n");
+		return (1);
 	}
 	close(fd);
 	return (0);
