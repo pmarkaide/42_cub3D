@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 12:25:22 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:05:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	validate_colors(int *f, int *c)
 	return (0);
 }
 
-static void	fill_with_spaces(char **map, size_t width)
+void	fill_with_spaces(char **map, size_t width)
 {
 	size_t	i;
 	size_t	len;
@@ -78,8 +78,9 @@ int	validation(t_macro *m)
 		return (1);
 	if (validate_colors(m->map->f, m->map->c))
 		return (1);
+	calculate_map_dimensions(m);
+	fill_with_spaces(m->map->grid, m->map->w_map);
 	if (validate_map(m))
 		return (1);
-	fill_with_spaces(m->map->grid, m->map->w_map);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:20:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:53:48 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ t_macro	*init_macro(t_macro *m)
 	m->images->player = NULL;
 	ft_bzero(&m->keys, sizeof(t_keys));
 	ft_bzero(&m->raycast, sizeof(t_raycast));
-	m->width = WIDTH;
-	m->height = HEIGHT;
 	return (m);
 }
 

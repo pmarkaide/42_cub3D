@@ -6,26 +6,24 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:16:02 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:09:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	check_unique_starting_position(char **grid, size_t height)
+static int	check_unique_starting_position(char **grid, size_t width, size_t height)
 {
 	size_t	i;
 	int		j;
 	int		count;
-	int		line_length;
 
 	i = 0;
 	count = 0;
 	while (i < height)
 	{
 		j = 0;
-		line_length = ft_strlen(grid[i]);
-		while (j < line_length)
+		while (j < width)
 		{
 			if (ft_strchr("NSWE", grid[i][j]))
 				count++;
@@ -41,20 +39,18 @@ static int	check_unique_starting_position(char **grid, size_t height)
 	return (1);
 }
 
-static int	map_chars_are_valid(char **grid, size_t height)
+static int	map_chars_are_valid(char **grid, size_t width, size_t height)
 {
 	size_t	i;
 	int		j;
-	int		line_length;
 
 	i = 0;
-	if (!check_unique_starting_position(grid, height))
+	if (!check_unique_starting_position(grid, width, height))
 		return (0);
 	while (i < height)
 	{
 		j = 0;
-		line_length = ft_strlen(grid[i]);
-		while (j < line_length)
+		while (j < width)
 		{
 			if (grid[i][j] && ft_strchr("10NSWE ", grid[i][j]) == NULL)
 			{
@@ -68,25 +64,22 @@ static int	map_chars_are_valid(char **grid, size_t height)
 	return (1);
 }
 
-static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j,
-		size_t width)
+static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 {
-	size_t	height;
-	char	**map;
+	char	**grid;
 	int		err;
+	size_t	width;
 
 	err = 0;
-	height = m->map->h_map;
-	map = m->map->grid;
-	if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
+	grid = m->map->grid;
+	width = m->map->w_map;
+	if (grid[i - 1][j] == ' ' || grid[i + 1][j] == ' ')
 		err = 1;
-	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
+	if (grid[i][j - 1] == ' ' || grid[i][j + 1] == ' ')
 		err = 1;
-	if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+	if (grid[i - 1][j - 1] == ' ' || grid[i - 1][j + 1] == ' ')
 		err = 1;
-	if (map[i - 1][j - 1] == ' ' || map[i - 1][j + 1] == ' ')
-		err = 1;
-	if (map[i + 1][j - 1] == ' ' || map[i + 1][j + 1] == ' ')
+	if (grid[i + 1][j - 1] == ' ' || grid[i + 1][j + 1] == ' ')
 		err = 1;
 	if (err)
 	{
@@ -125,8 +118,7 @@ static int	is_valid_wall_structure(t_macro *m)
 
 int	validate_map(t_macro *m)
 {
-	calculate_map_dimensions(m);
-	if (!map_chars_are_valid(m->map->grid, m->map->h_map))
+	if (!map_chars_are_valid(m->map->grid, m->map->w_map, m->map->h_map))
 		return (1);
 	if (!is_valid_wall_structure(m))
 		return (1);
