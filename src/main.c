@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 15:16:48 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:18:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	init_game(t_macro *m)
 	m->height *= RATIO_SCREEN;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	m->images->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
-	m->images->mini_i = mlx_new_image(m->mlx_cub, m->map->w_map * 32,
-			m->map->h_map * 32);
+	m->images->mini_i = mlx_new_image(m->mlx_cub, m->map->w_map * BLOCK,
+			m->map->h_map * BLOCK);
 	if (!m->mlx_cub || !m->images->scene_i || !m->images->mini_i)
 		return (write(2, "Error\nFailed to initialize game\n", 33), 1);
 	load_images_into_struct(m);

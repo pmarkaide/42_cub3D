@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 15:07:18 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:18:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	draw_ray(t_macro *m, float ray_length, double ray_dir_x,
 	{
 		draw_x = m->ray->pos_pl_x + BLOCK / 2 + (int)(ray_dir_x * dist);
 		draw_y = m->ray->pos_pl_y + BLOCK / 2 + (int)(ray_dir_y * dist);
-		if (draw_x >= 0 && draw_x < (int)m->map->w_map * 32 && draw_y >= 0
-			&& draw_y < (int)m->map->h_map * 32)
+		if (draw_x >= 0 && draw_x < (int)m->map->w_map * BLOCK && draw_y >= 0
+			&& draw_y < (int)m->map->h_map * BLOCK)
 		{
 			if (m->map->grid[draw_y / BLOCK][draw_x / BLOCK] == '1')
 				break ;
@@ -102,10 +102,11 @@ void	draw_minimap(t_macro *m)
 		y = 0;
 		while (y < m->map->w_map)
 		{
-			put_img2img(m->images->mini_i, m->images->background, y * 32, x
-				* 32);
+			put_img2img(m->images->mini_i, m->images->background, y * BLOCK, x
+				* BLOCK);
 			if (m->map->grid[x][y] == '1')
-				put_img2img(m->images->mini_i, m->images->wall, y * 32, x * 32);
+				put_img2img(m->images->mini_i, m->images->wall, y * BLOCK, x
+					* BLOCK);
 			y += 1;
 		}
 		x += 1;

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:46:15 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 15:07:18 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:18:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	correct_player_pos_in_edge(t_macro *m)
 {
-	if (m->ray->pos_pl_x < 32)
-		m->ray->pos_pl_x = 32;
-	else if (m->ray->pos_pl_x >= (int)m->map->w_map * 32 - 64)
-		m->ray->pos_pl_x = m->map->w_map * 32 - 64;
-	if (m->ray->pos_pl_y < 32)
-		m->ray->pos_pl_y = 32;
-	else if (m->ray->pos_pl_y >= (int)m->map->h_map * 32 - 64)
-		m->ray->pos_pl_y = m->map->h_map * 32 - 64;
+	if (m->ray->pos_pl_x < BLOCK)
+		m->ray->pos_pl_x = BLOCK;
+	else if (m->ray->pos_pl_x >= (int)m->map->w_map * BLOCK - BLOCK * 2)
+		m->ray->pos_pl_x = m->map->w_map * BLOCK - BLOCK * 2;
+	if (m->ray->pos_pl_y < BLOCK)
+		m->ray->pos_pl_y = BLOCK;
+	else if (m->ray->pos_pl_y >= (int)m->map->h_map * BLOCK - BLOCK * 2)
+		m->ray->pos_pl_y = m->map->h_map * BLOCK - BLOCK * 2;
 }
 
 void	calculate_ray_steps_x(t_macro *m, double ray_dir_x)
