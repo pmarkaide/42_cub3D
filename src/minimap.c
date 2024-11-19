@@ -6,24 +6,22 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:20:28 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 16:44:36 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:36:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	correct_player_pos_in_edge(t_macro *macro, int *adj_x, int *adj_y)
+void	correct_player_pos_in_edge(t_macro *macro)
 {
-	*adj_x = macro->pos_pl_x;
-	*adj_y = macro->pos_pl_y;
-	if (*adj_x < 32)
-		*adj_x = 32;
-	else if (*adj_x >= (int)macro->map->w_map * 32 - 64)
-		*adj_x = macro->map->w_map * 32 - 64;
-	if (*adj_y < 32)
-		*adj_y = 32;
-	else if (*adj_y >= (int)macro->map->h_map * 32 - 64)
-		*adj_y = macro->map->h_map * 32 - 64;
+	if (macro->pos_pl_x < 32)
+		macro->pos_pl_x = 32;
+	else if (macro->pos_pl_x >= (int)macro->map->w_map * 32 - 64)
+		macro->pos_pl_x = macro->map->w_map * 32 - 64;
+	if (macro->pos_pl_y < 32)
+		macro->pos_pl_y = 32;
+	else if (macro->pos_pl_y >= (int)macro->map->h_map * 32 - 64)
+		macro->pos_pl_y = macro->map->h_map * 32 - 64;
 }
 
 void	initialize_vision_ray(t_macro *macro, int x, double *ray_dir_x,
@@ -33,7 +31,9 @@ void	initialize_vision_ray(t_macro *macro, int x, double *ray_dir_x,
 	int		center_x;
 	int		center_y;
 
-	correct_player_pos_in_edge(macro, &center_x, &center_y);
+	correct_player_pos_in_edge(macro);
+	center_x = macro->pos_pl_x;
+	center_y = macro->pos_pl_y;
 	camera_x = 2 * x / (double)macro->width - 1;
 	*ray_dir_x = cos(macro->play_angle) + camera_x * cos(macro->play_angle
 			+ M_PI / 2);
@@ -81,15 +81,13 @@ void	draw_ray(t_macro *macro, float ray_length, double ray_dir_x,
 	float	dist;
 	int		draw_x;
 	int		draw_y;
-	int		adj_x;
-	int		adj_y;
 
 	dist = 0.0f;
-	correct_player_pos_in_edge(macro, &adj_x, &adj_y);
+	correct_player_pos_in_edge(macro);
 	while (dist <= ray_length)
 	{
-		draw_x = adj_x + BLOCK / 2 + (int)(ray_dir_x * dist);
-		draw_y = adj_y + BLOCK / 2 + (int)(ray_dir_y * dist);
+		draw_x = macro->pos_pl_x + BLOCK / 2 + (int)(ray_dir_x * dist);
+		draw_y = macro->pos_pl_y + BLOCK / 2 + (int)(ray_dir_y * dist);
 		if (draw_x >= 0 && draw_x < (int)macro->map->w_map * 32 && draw_y >= 0
 			&& draw_y < (int)macro->map->h_map * 32)
 		{
@@ -108,21 +106,19 @@ void	draw_vision_cone(t_macro *macro)
 	float	ray_length;
 	double	ray_dir_x;
 	double	ray_dir_y;
-	int		adj_x;
-	int		adj_y;
 
 	x = 0;
-	correct_player_pos_in_edge(macro, &adj_x, &adj_y);
+	correct_player_pos_in_edge(macro);
 	while (x < macro->width)
 	{
 		initialize_vision_ray(macro, x, &ray_dir_x, &ray_dir_y);
 		calculate_ray_steps(macro, ray_dir_x, ray_dir_y);
 		perform_dda(macro);
 		if (macro->side == 0)
-			ray_length = ((macro->map_x - (adj_x + BLOCK / 2) / BLOCK + (1
-							- macro->step_x) / 2) / ray_dir_x) * BLOCK * 2;
+			ray_length = ((macro->map_x - (macro->pos_pl_x + BLOCK / 2) / BLOCK
+						+ (1 - macro->step_x) / 2) / ray_dir_x) * BLOCK * 2;
 		else
-			ray_length = ((macro->map_y - (adj_y + BLOCK) / BLOCK + (1
+			ray_length = ((macro->map_y - (macro->pos_pl_y + BLOCK) / BLOCK + (1
 							- macro->step_y) / 2) / ray_dir_y) * BLOCK * 2;
 		draw_ray(macro, ray_length, ray_dir_x, ray_dir_y);
 		x += 1;
@@ -180,8 +176,6 @@ void	draw_minimap(t_macro *macro)
 {
 	size_t	x;
 	size_t	y;
-	int		adj_x;
-	int		adj_y;
 
 	x = 0;
 	while (x < macro->map->h_map)
@@ -198,8 +192,9 @@ void	draw_minimap(t_macro *macro)
 		}
 		x += 1;
 	}
-	correct_player_pos_in_edge(macro, &adj_x, &adj_y);
-	printf("player position: %d, %d\n", adj_x, adj_y);
-	put_img2img(macro->mini_i, macro->minimap->player, adj_x, adj_y);
+	correct_player_pos_in_edge(macro);
+	printf("player position: %d, %d\n", macro->pos_pl_x, macro->pos_pl_y);
+	put_img2img(macro->mini_i, macro->minimap->player, macro->pos_pl_x,
+		macro->pos_pl_y);
 	draw_vision_cone(macro);
 }
