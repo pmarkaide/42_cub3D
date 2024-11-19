@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 12:24:13 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:18:00 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ int	init_game(t_macro *m)
 	m->width *= RATIO_SCREEN;
 	m->height *= RATIO_SCREEN;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
-	m->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
-	m->mini_i = mlx_new_image(m->mlx_cub, m->map->w_map * 32,
+	m->images->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
+	m->images->mini_i = mlx_new_image(m->mlx_cub, m->map->w_map * 32,
 			m->map->h_map * 32);
-	if (!m->mlx_cub || !m->scene_i || !m->mini_i)
+	if (!m->mlx_cub || !m->images->scene_i || !m->images->mini_i)
 		return (write(2, "Error\nFailed to initialize mlx or create images\n",
 				48), 1);
 	load_images_into_struct(m);
-	m->pos_pl_x = m->start_x;
-	m->pos_pl_y = m->start_y;
+	m->raycast->pos_pl_x = m->map->start_x;
+	m->raycast->pos_pl_y = m->map->start_y;
 	load_map(m);
 	load_player(m);
 	load_game(m);
 	draw_minimap(m);
-	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
-	mlx_image_to_window(m->mlx_cub, m->mini_i, 0, 0);
+	mlx_image_to_window(m->mlx_cub, m->images->scene_i, 0, 0);
+	mlx_image_to_window(m->mlx_cub, m->images->mini_i, 0, 0);
 	return (0);
 }
 

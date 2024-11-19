@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/19 12:30:48 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/19 13:15:09 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ SRCS = \
 	paint.c \
 	player.c \
 	player_utils.c \
-	raycasting.c \
-	reutils.c
+	raycasting.c
 
 SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
