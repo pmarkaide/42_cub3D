@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 10:36:22 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:51:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,8 @@ void			correct_player_pos_in_edge(t_macro *macro);
 int32_t			mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
 void			put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y);
 int				get_rgba(int r, int g, int b, int a);
+void			move_wsda(t_macro *macro);
+void			move_rotate(t_macro *macro);
+void			stop_at_wall(t_macro *macro, int x, int y);
 
 #endif

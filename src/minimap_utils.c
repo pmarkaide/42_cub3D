@@ -63,5 +63,3 @@ void	correct_player_pos_in_edge(t_macro *macro)
 	else if (macro->pos_pl_y >= (int)macro->map->h_map * 32 - 64)
 		macro->pos_pl_y = macro->map->h_map * 32 - 64;
 }
-
-
