@@ -68,9 +68,10 @@ static int	map_chars_are_valid(char **grid, size_t height)
 	return (1);
 }
 
-static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j, size_t width)
+static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j,
+		size_t width)
 {
-	size_t		height;
+	size_t	height;
 	char	**map;
 	int		err;
 
@@ -97,10 +98,10 @@ static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j, size_t wid
 
 static int	is_valid_wall_structure(t_macro *macro)
 {
-	size_t		i;
-	size_t		j;
+	size_t	i;
+	size_t	j;
 	char	**map;
-	size_t		width;
+	size_t	width;
 
 	i = 0;
 	map = macro->map->grid;

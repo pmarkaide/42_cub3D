@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 09:17:02 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:33:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,35 +50,48 @@ static int	detect_section(char *line)
 		section = 2;
 	else
 		section = 3;
-	return (section);/*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
+	return (section);
 }
 
-static int	read_file(char *file, t_macro *macro)
+static char **handle_lines(t_macro *macro, int fd)
 {
 	char	*line;
-	int		fd;
 	int		section;
 	t_list	*head;
-
+	
 	head = NULL;
-	fd = open(file, O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	if(!line)
+		return(NULL);
+	while (line)
 	{
 		section = detect_section(line);
 		if (parse_line(line, macro, section, &head))
 		{
-			close(fd);
 			free(line);
 			ft_lstclear(&head, free);
-			return (1);
+			return (NULL);
 		}
 		free(line);
+		line = get_next_line(fd);
 	}
-	close(fd);
-	if (!head)
-		return (1);
 	macro->map->grid = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
+	return(macro->map->grid);
+}
+
+static int	read_file(char *file, t_macro *macro)
+{
+	int		fd;
+
+	fd = open(file, O_RDONLY);
+	handle_lines(macro, fd);		
+	if(!macro->map->grid)
+	{
+		ft_printf(2, "Error\nMalloc failed\n");
+		return(NULL);
+	}
+	close(fd);
 	return (0);
 }
 
