@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:16:48 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	init_game(t_macro *m)
 	m->images->mini_i = mlx_new_image(m->mlx_cub, m->map->w_map * 32,
 			m->map->h_map * 32);
 	if (!m->mlx_cub || !m->images->scene_i || !m->images->mini_i)
-		return (write(2, "Error\nFailed to initialize mlx or create images\n",
-				48), 1);
+		return (write(2, "Error\nFailed to initialize game\n", 33), 1);
 	load_images_into_struct(m);
 	m->ray->pos_pl_x = m->map->start_x;
 	m->ray->pos_pl_y = m->map->start_y;
