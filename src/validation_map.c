@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 09:19:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:28:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	map_chars_are_valid(char **grid, size_t height)
 	return (1);
 }
 
-static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j,
+static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j,
 		size_t width)
 {
 	size_t	height;
@@ -76,8 +76,8 @@ static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j,
 	int		err;
 
 	err = 0;
-	height = macro->map->h_map;
-	map = macro->map->grid;
+	height = m->map->h_map;
+	map = m->map->grid;
 	if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
 		err = 1;
 	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
@@ -96,7 +96,7 @@ static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j,
 	return (1);
 }
 
-static int	is_valid_wall_structure(t_macro *macro)
+static int	is_valid_wall_structure(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
@@ -104,8 +104,8 @@ static int	is_valid_wall_structure(t_macro *macro)
 	size_t	width;
 
 	i = 0;
-	map = macro->map->grid;
-	while (i < macro->map->h_map)
+	map = m->map->grid;
+	while (i < m->map->h_map)
 	{
 		j = 0;
 		width = ft_strlen(map[i]);
@@ -113,7 +113,7 @@ static int	is_valid_wall_structure(t_macro *macro)
 		{
 			if (ft_strchr("0NSEW", map[i][j]))
 			{
-				if (!is_surrounded_by_walls(macro, i, j, width))
+				if (!is_surrounded_by_walls(m, i, j, width))
 					return (0);
 			}
 			j++;
@@ -123,12 +123,12 @@ static int	is_valid_wall_structure(t_macro *macro)
 	return (1);
 }
 
-int	validate_map(t_macro *macro)
+int	validate_map(t_macro *m)
 {
-	calculate_map_dimensions(macro);
-	if (!map_chars_are_valid(macro->map->grid, macro->map->h_map))
+	calculate_map_dimensions(m);
+	if (!map_chars_are_valid(m->map->grid, m->map->h_map))
 		return (1);
-	if (!is_valid_wall_structure(macro))
+	if (!is_valid_wall_structure(m))
 		return (1);
 	return (0);
 }

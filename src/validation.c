@@ -6,21 +6,21 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:25:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	validate_textures(t_macro *macro)
+static int	validate_textures(t_macro *m)
 {
-	if (check_file_contents(macro->map->no))
+	if (check_file_contents(m->map->no))
 		return (1);
-	if (check_file_contents(macro->map->so))
+	if (check_file_contents(m->map->so))
 		return (1);
-	if (check_file_contents(macro->map->we))
+	if (check_file_contents(m->map->we))
 		return (1);
-	if (check_file_contents(macro->map->ea))
+	if (check_file_contents(m->map->ea))
 		return (1);
 	return (0);
 }
@@ -72,14 +72,14 @@ static void	fill_with_spaces(char **map, size_t width)
 	}
 }
 
-int	validation(t_macro *macro)
+int	validation(t_macro *m)
 {
-	if (validate_textures(macro))
+	if (validate_textures(m))
 		return (1);
-	if (validate_colors(macro->map->f, macro->map->c))
+	if (validate_colors(m->map->f, m->map->c))
 		return (1);
-	if (validate_map(macro))
+	if (validate_map(m))
 		return (1);
-	fill_with_spaces(macro->map->grid, macro->map->w_map);
+	fill_with_spaces(m->map->grid, m->map->w_map);
 	return (0);
 }

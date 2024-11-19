@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:46:15 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 10:48:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:23:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y)
 	}
 }
 
-void	correct_player_pos_in_edge(t_macro *macro)
+void	correct_player_pos_in_edge(t_macro *m)
 {
-	if (macro->pos_pl_x < 32)
-		macro->pos_pl_x = 32;
-	else if (macro->pos_pl_x >= (int)macro->map->w_map * 32 - 64)
-		macro->pos_pl_x = macro->map->w_map * 32 - 64;
-	if (macro->pos_pl_y < 32)
-		macro->pos_pl_y = 32;
-	else if (macro->pos_pl_y >= (int)macro->map->h_map * 32 - 64)
-		macro->pos_pl_y = macro->map->h_map * 32 - 64;
+	if (m->pos_pl_x < 32)
+		m->pos_pl_x = 32;
+	else if (m->pos_pl_x >= (int)m->map->w_map * 32 - 64)
+		m->pos_pl_x = m->map->w_map * 32 - 64;
+	if (m->pos_pl_y < 32)
+		m->pos_pl_y = 32;
+	else if (m->pos_pl_y >= (int)m->map->h_map * 32 - 64)
+		m->pos_pl_y = m->map->h_map * 32 - 64;
 }

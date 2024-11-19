@@ -6,39 +6,39 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:54:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:26:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_macro	*init_macro(t_macro *macro)
+t_macro	*init_macro(t_macro *m)
 {
-	macro = malloc(sizeof(t_macro));
-	if (!macro)
+	m = malloc(sizeof(t_macro));
+	if (!m)
 		return (NULL);
-	bzero(macro, sizeof(t_macro));
-	macro->map = malloc(sizeof(t_map));
-	if (!macro->map)
+	bzero(m, sizeof(t_macro));
+	m->map = malloc(sizeof(t_map));
+	if (!m->map)
 	{
-		free(macro);
+		free(m);
 		return (NULL);
 	}
-	bzero(macro->map, sizeof(t_map));
-	macro->map->no = NULL;
-	macro->map->so = NULL;
-	macro->map->we = NULL;
-	macro->map->ea = NULL;
-	macro->map->grid = NULL;
-	macro->minimap = malloc(sizeof(t_minimap));
-	if (!macro->minimap)
+	bzero(m->map, sizeof(t_map));
+	m->map->no = NULL;
+	m->map->so = NULL;
+	m->map->we = NULL;
+	m->map->ea = NULL;
+	m->map->grid = NULL;
+	m->minimap = malloc(sizeof(t_minimap));
+	if (!m->minimap)
 	{
-		free(macro->map);
-		free(macro);
+		free(m->map);
+		free(m);
 		return (NULL);
 	}
-	macro->mini_i = NULL;
-	return (macro);
+	m->mini_i = NULL;
+	return (m);
 }
 
 void	adjust_image_transparency(mlx_texture_t *texture, float alpha_factor)
@@ -63,51 +63,50 @@ void	adjust_image_transparency(mlx_texture_t *texture, float alpha_factor)
 	}
 }
 
-mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
+mlx_image_t	*load_png_into_image(t_macro *m, char *file)
 {
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
 	texture = mlx_load_png(file);
 	if (!texture)
-		free_and_exit(macro);
+		free_and_exit(m);
 	adjust_image_transparency(texture, 0.5f);
-	img = mlx_texture_to_image(macro->mlx_cub, texture);
+	img = mlx_texture_to_image(m->mlx_cub, texture);
 	if (!img)
-		free_and_exit(macro);
+		free_and_exit(m);
 	mlx_delete_texture(texture);
 	return (img);
 }
 
-void	unload_images_from_struct(t_macro *macro)
+void	unload_images_from_struct(t_macro *m)
 {
-	if (macro->minimap->background)
+	if (m->minimap->background)
 	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->background);
-		macro->minimap->background = NULL;
+		mlx_delete_image(m->mlx_cub, m->minimap->background);
+		m->minimap->background = NULL;
 	}
-	if (macro->minimap->wall)
+	if (m->minimap->wall)
 	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
-		macro->minimap->wall = NULL;
+		mlx_delete_image(m->mlx_cub, m->minimap->wall);
+		m->minimap->wall = NULL;
 	}
-	if (macro->minimap->player)
+	if (m->minimap->player)
 	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->player);
-		macro->minimap->player = NULL;
+		mlx_delete_image(m->mlx_cub, m->minimap->player);
+		m->minimap->player = NULL;
 	}
 }
 
-void	load_images_into_struct(t_macro *macro)
+void	load_images_into_struct(t_macro *m)
 {
-	macro->minimap->background = load_png_into_image(macro,
-			"textures/background.png");
-	if (!macro->minimap->background)
-		free_and_exit(macro);
-	macro->minimap->wall = load_png_into_image(macro, "textures/wall.png");
-	if (!macro->minimap->wall)
-		free_and_exit(macro);
-	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
-	if (!macro->minimap->player)
-		free_and_exit(macro);
+	m->minimap->background = load_png_into_image(m,"textures/background.png");
+	if (!m->minimap->background)
+		free_and_exit(m);
+	m->minimap->wall = load_png_into_image(m, "textures/wall.png");
+	if (!m->minimap->wall)
+		free_and_exit(m);
+	m->minimap->player = load_png_into_image(m, "textures/player.png");
+	if (!m->minimap->player)
+		free_and_exit(m);
 }

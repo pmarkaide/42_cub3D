@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 10:51:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:30:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,24 +111,23 @@ typedef struct s_macro
 	int			key_right;
 }				t_macro;
 
-t_macro			*init_macro(t_macro *macro);
-void			free_and_exit(t_macro *macro);
-void			free_map(t_macro *macro);
-void			free_macro(t_macro *macro);
-int				validation(t_macro *macro);
-int				validate_map(t_macro *macro);
+t_macro			*init_macro(t_macro *m);
+void			free_and_exit(t_macro *m);
+void			free_map(t_macro *m);
+void			free_macro(t_macro *m);
+int				validation(t_macro *m);
+int				validate_map(t_macro *m);
 int				check_file_contents(char *file);
 void			clean_trailing_char(char *str, const char *set);
 int				save_texture_path(char **texture, char *path);
-int				parse_line(char *line, t_macro *macro, int section,
+int				parse_line(char *line, t_macro *m, int section,
 					t_list **head);
-void			read_input(char *file, t_macro *macro);
-void			calculate_map_dimensions(t_macro *macro);
+void			read_input(char *file, t_macro *m);
+void			calculate_map_dimensions(t_macro *m);
 void			quit_hook(void *param);
-void			load_images_into_struct(t_macro *macro);
-void			unload_images_from_struct(t_macro *macro);
-void			draw_minimap(t_macro *macro);
-void			init_mini_image(t_macro *macro);
+void			load_images_into_struct(t_macro *m);
+void			unload_images_from_struct(t_macro *m);
+void			draw_minimap(t_macro *m);
 
 /* _utils */
 void			print_map_struct(t_map *map);
@@ -137,23 +136,22 @@ void			print_map_struct(t_map *map);
 // char** 	parse_map(const char* filename, int* rows, int* cols);
 void			ft_hook(mlx_key_data_t keydata, void *param);
 void			load_game(void *param);
-void			print_map(t_macro *macro);
-void			calculate_wall_distance(t_macro *macro);
-void			draw_wall_slice(t_macro *macro, int x);
-void			paint_wall(t_macro *macro);
-void			paint_background(t_macro *macro);
-void			calculate_ray_direction(t_macro *macro, int x);
-void			calculate_step_and_side_dist(t_macro *macro);
-void			perform_dda(t_macro *macro);
-void			load_player(t_macro *macro);
-void			player_in_map(t_macro *macro);
-void			load_map(t_macro *macro);
-void			correct_player_pos_in_edge(t_macro *macro);
+void			calculate_wall_distance(t_macro *m);
+void			draw_wall_slice(t_macro *m, int x);
+void			paint_wall(t_macro *m);
+void			paint_background(t_macro *m);
+void			calculate_ray_direction(t_macro *m, int x);
+void			calculate_step_and_side_dist(t_macro *m);
+void			perform_dda(t_macro *m);
+void			load_player(t_macro *m);
+void			player_in_map(t_macro *m);
+void			load_map(t_macro *m);
+void			correct_player_pos_in_edge(t_macro *m);
 int32_t			mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
 void			put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y);
 int				get_rgba(int r, int g, int b, int a);
-void			move_wsda(t_macro *macro);
-void			move_rotate(t_macro *macro);
-void			stop_at_wall(t_macro *macro, int x, int y);
+void			move_wsda(t_macro *m);
+void			move_rotate(t_macro *m);
+void			stop_at_wall(t_macro *m, int x, int y);
 
 #endif

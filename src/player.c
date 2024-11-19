@@ -6,64 +6,64 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/19 10:51:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:29:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	move(t_macro *macro)
+void	move(t_macro *m)
 {
-	move_wsda(macro);
-	move_rotate(macro);
-	stop_at_wall(macro, macro->pos_pl_x, macro->pos_pl_y);
+	move_wsda(m);
+	move_rotate(m);
+	stop_at_wall(m, m->pos_pl_x, m->pos_pl_y);
 }
 
 void	load_game(void *param)
 {
-	t_macro	*macro;
+	t_macro	*m;
 
-	macro = (t_macro *)param;
-	move(macro);
-	paint_background(macro);
-	paint_wall(macro);
-	draw_minimap(macro);
+	m = (t_macro *)param;
+	move(m);
+	paint_background(m);
+	paint_wall(m);
+	draw_minimap(m);
 }
 
-void	load_player(t_macro *macro)
+void	load_player(t_macro *m)
 {
-	macro->pos_pl_x = macro->start_x * BLOCK + BLOCK / 2;
-	macro->pos_pl_y = macro->start_y * BLOCK + BLOCK / 2;
-	macro->play_view = M_PI * ANGLE_VIEW / 180;
-	if (macro->orientation == 'N')
-		macro->play_angle = 3 * M_PI / 2;
-	else if (macro->orientation == 'E')
-		macro->play_angle = 0;
-	else if (macro->orientation == 'S')
-		macro->play_angle = M_PI / 2;
-	else if (macro->orientation == 'W')
-		macro->play_angle = M_PI;
+	m->pos_pl_x = m->start_x * BLOCK + BLOCK / 2;
+	m->pos_pl_y = m->start_y * BLOCK + BLOCK / 2;
+	m->play_view = M_PI * ANGLE_VIEW / 180;
+	if (m->orientation == 'N')
+		m->play_angle = 3 * M_PI / 2;
+	else if (m->orientation == 'E')
+		m->play_angle = 0;
+	else if (m->orientation == 'S')
+		m->play_angle = M_PI / 2;
+	else if (m->orientation == 'W')
+		m->play_angle = M_PI;
 }
 
-void	player_in_map(t_macro *macro)
+void	player_in_map(t_macro *m)
 {
 	int	y;
 	int	x;
 
 	y = 0;
-	while (macro->map->grid[y] != NULL)
+	while (m->map->grid[y] != NULL)
 	{
 		x = 0;
-		while (macro->map->grid[y][x])
+		while (m->map->grid[y][x])
 		{
-			if (macro->map->grid[y][x] == 'N' || macro->map->grid[y][x] == 'S'
-				|| macro->map->grid[y][x] == 'E'
-				|| macro->map->grid[y][x] == 'W')
+			if (m->map->grid[y][x] == 'N' || m->map->grid[y][x] == 'S'
+				|| m->map->grid[y][x] == 'E'
+				|| m->map->grid[y][x] == 'W')
 			{
-				macro->start_x = x;
-				macro->start_y = y;
-				macro->orientation = macro->map->grid[y][x];
-				macro->map->grid[y][x] = '0';
+				m->start_x = x;
+				m->start_y = y;
+				m->orientation = m->map->grid[y][x];
+				m->map->grid[y][x] = '0';
 				break ;
 			}
 			x++;
@@ -72,11 +72,11 @@ void	player_in_map(t_macro *macro)
 	}
 }
 
-void	load_map(t_macro *macro)
+void	load_map(t_macro *m)
 {
-	macro->floor = get_rgba(macro->map->f[0], macro->map->f[1],
-			macro->map->f[2], 255);
-	macro->ceiling = get_rgba(macro->map->c[0], macro->map->c[1],
-			macro->map->c[2], 255);
-	player_in_map(macro);
+	m->floor = get_rgba(m->map->f[0], m->map->f[1],
+			m->map->f[2], 255);
+	m->ceiling = get_rgba(m->map->c[0], m->map->c[1],
+			m->map->c[2], 255);
+	player_in_map(m);
 }

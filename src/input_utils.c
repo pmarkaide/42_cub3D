@@ -6,13 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:23:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	calculate_map_dimensions(t_macro *macro)
+void	calculate_map_dimensions(t_macro *m)
 {
 	int		height;
 	int		width;
@@ -21,7 +21,7 @@ void	calculate_map_dimensions(t_macro *macro)
 
 	height = 0;
 	width = 0;
-	map = macro->map->grid;
+	map = m->map->grid;
 	while (map[height])
 	{
 		current_width = ft_strlen(map[height]);
@@ -29,8 +29,8 @@ void	calculate_map_dimensions(t_macro *macro)
 			width = current_width;
 		height++;
 	}
-	macro->map->w_map = width;
-	macro->map->h_map = height;
+	m->map->w_map = width;
+	m->map->h_map = height;
 }
 
 int	check_file_contents(char *file)

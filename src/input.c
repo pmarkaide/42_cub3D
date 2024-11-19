@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 09:51:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:28:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	detect_section(char *line)
 	return (section);
 }
 
-static char	**handle_lines(t_macro *macro, int fd)
+static char	**handle_lines(t_macro *m, int fd)
 {
 	char	*line;
 	int		section;
@@ -66,7 +66,7 @@ static char	**handle_lines(t_macro *macro, int fd)
 	while (line)
 	{
 		section = detect_section(line);
-		if (parse_line(line, macro, section, &head))
+		if (parse_line(line, m, section, &head))
 		{
 			free(line);
 			ft_lstclear(&head, free);
@@ -75,12 +75,12 @@ static char	**handle_lines(t_macro *macro, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	macro->map->grid = ft_lst_to_array(&head);
+	m->map->grid = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
-	return (macro->map->grid);
+	return (m->map->grid);
 }
 
-static int	read_file(char *file, t_macro *macro)
+static int	read_file(char *file, t_macro *m)
 {
 	int	fd;
 
@@ -90,7 +90,7 @@ static int	read_file(char *file, t_macro *macro)
 		ft_printf(2, "Error\nFailed to open file\n");
 		return (1);
 	}
-	if (!handle_lines(macro, fd))
+	if (!handle_lines(m, fd))
 	{
 		close(fd);
 		ft_printf(2, "Error\nFailed to parse file\n");
@@ -100,13 +100,13 @@ static int	read_file(char *file, t_macro *macro)
 	return (0);
 }
 
-void	read_input(char *file, t_macro *macro)
+void	read_input(char *file, t_macro *m)
 {
 	if (eval_file(file, ".cub"))
-		free_and_exit(macro);
-	if (read_file(file, macro))
-		free_and_exit(macro);
-	if (validation(macro))
-		free_and_exit(macro);
-	print_map_struct(macro->map);
+		free_and_exit(m);
+	if (read_file(file, m))
+		free_and_exit(m);
+	if (validation(m))
+		free_and_exit(m);
+	print_map_struct(m->map);
 }

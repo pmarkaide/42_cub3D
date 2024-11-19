@@ -6,45 +6,45 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:54:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:25:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	free_map(t_macro *macro)
+void	free_map(t_macro *m)
 {
 	int	i;
 
 	i = -1;
-	if (macro->map)
+	if (m->map)
 	{
-		if (macro->map->no)
-			free(macro->map->no);
-		if (macro->map->so)
-			free(macro->map->so);
-		if (macro->map->we)
-			free(macro->map->we);
-		if (macro->map->ea)
-			free(macro->map->ea);
-		if (macro->map->grid)
+		if (m->map->no)
+			free(m->map->no);
+		if (m->map->so)
+			free(m->map->so);
+		if (m->map->we)
+			free(m->map->we);
+		if (m->map->ea)
+			free(m->map->ea);
+		if (m->map->grid)
 		{
-			while (++i < (int)macro->map->h_map)
-				free(macro->map->grid[i]);
-			free(macro->map->grid);
+			while (++i < (int)m->map->h_map)
+				free(m->map->grid[i]);
+			free(m->map->grid);
 		}
-		free(macro->map);
+		free(m->map);
 	}
 }
 
-void	free_macro(t_macro *macro)
+void	free_macro(t_macro *m)
 {
-	free_map(macro);
-	free(macro);
+	free_map(m);
+	free(m);
 }
 
-void	free_and_exit(t_macro *macro)
+void	free_and_exit(t_macro *m)
 {
-	free_macro(macro);
+	free_macro(m);
 	exit(1);
 }
