@@ -4,110 +4,106 @@
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:54:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:40:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_macro	*init_macro(t_macro *macro)
+static void	initialize_to_zero(t_macro *m)
 {
-	macro = malloc(sizeof(t_macro));
-	if (!macro)
-		return (NULL);
-	bzero(macro, sizeof(t_macro));
-	macro->map = malloc(sizeof(t_map));
-	if (!macro->map)
-	{
-		free(macro);
-		return (NULL);
-	}
-	bzero(macro->map, sizeof(t_map));
-	macro->map->no = NULL;
-	macro->map->so = NULL;
-	macro->map->we = NULL;
-	macro->map->ea = NULL;
-	macro->map->grid = NULL;
-	macro->minimap = malloc(sizeof(t_minimap));
-	if (!macro->minimap)
-	{
-		free(macro->map);
-		free(macro);
-		return (NULL);
-	}
-	macro->mini_i = NULL;
-	return (macro);
-}
-
-void	adjust_image_transparency(mlx_texture_t *texture, float alpha_factor)
-{
-	uint32_t	y;
-	uint32_t	x;
-	uint8_t		*pixel;
-
-	if (!texture || alpha_factor < 0.0f || alpha_factor > 1.0f)
+	if (!m)
 		return ;
-	y = 0;
-	while (y < texture->height)
-	{
-		x = 0;
-		while (x < texture->width)
-		{
-			pixel = &texture->pixels[(y * texture->width + x) * 4];
-			pixel[3] = (uint8_t)(pixel[3] * alpha_factor);
-			x++;
-		}
-		y++;
-	}
+	if (m->map)
+		ft_bzero(m->map, sizeof(t_map));
+	if (m->images)
+		ft_bzero(m->images, sizeof(t_images));
+	if (m->ray)
+		ft_bzero(m->ray, sizeof(t_ray));
+	if (m->keys)
+		ft_bzero(m->keys, sizeof(t_keys));
+	m->map->no = NULL;
+	m->map->so = NULL;
+	m->map->we = NULL;
+	m->map->ea = NULL;
+	m->map->grid = NULL;
+	m->images->mini_i = NULL;
+	m->images->scene_i = NULL;
+	m->images->wall = NULL;
+	m->images->background = NULL;
+	m->images->player = NULL;
 }
 
-mlx_image_t	*load_png_into_image(t_macro *macro, char *file)
+static int	malloc_structs(t_macro *m)
+{
+	m->map = malloc(sizeof(t_map));
+	if (!m->map)
+		return (0);
+	m->images = malloc(sizeof(t_images));
+	if (!m->images)
+	{
+		free(m->map);
+		return (0);
+	}
+	m->ray = malloc(sizeof(t_ray));
+	if (!m->ray)
+	{
+		free(m->images);
+		free(m->map);
+		return (0);
+	}
+	m->keys = malloc(sizeof(t_keys));
+	if (!m->keys)
+	{
+		free(m->ray);
+		free(m->images);
+		free(m->map);
+		return (0);
+	}
+	return (1);
+}
+
+t_macro	*init_macro(t_macro *m)
+{
+	m = malloc(sizeof(t_macro));
+	if (!m)
+		return (NULL);
+	if (!malloc_structs(m))
+	{
+		free(m);
+		return (NULL);
+	}
+	initialize_to_zero(m);
+	return (m);
+}
+
+mlx_image_t	*load_png_into_image(t_macro *m, char *file)
 {
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
 	texture = mlx_load_png(file);
 	if (!texture)
-		free_and_exit(macro);
+		free_and_exit(m);
 	adjust_image_transparency(texture, 0.5f);
-	img = mlx_texture_to_image(macro->mlx_cub, texture);
+	img = mlx_texture_to_image(m->mlx_cub, texture);
 	if (!img)
-		free_and_exit(macro);
+		free_and_exit(m);
 	mlx_delete_texture(texture);
 	return (img);
 }
 
-void	unload_images_from_struct(t_macro *macro)
+void	load_images_into_struct(t_macro *m)
 {
-	if (macro->minimap->background)
-	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->background);
-		macro->minimap->background = NULL;
-	}
-	if (macro->minimap->wall)
-	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->wall);
-		macro->minimap->wall = NULL;
-	}
-	if (macro->minimap->player)
-	{
-		mlx_delete_image(macro->mlx_cub, macro->minimap->player);
-		macro->minimap->player = NULL;
-	}
-}
-
-void	load_images_into_struct(t_macro *macro)
-{
-	macro->minimap->background = load_png_into_image(macro,
-			"textures/background.png");
-	if (!macro->minimap->background)
-		free_and_exit(macro);
-	macro->minimap->wall = load_png_into_image(macro, "textures/wall.png");
-	if (!macro->minimap->wall)
-		free_and_exit(macro);
-	macro->minimap->player = load_png_into_image(macro, "textures/player.png");
-	if (!macro->minimap->player)
-		free_and_exit(macro);
+	m->images->background = load_png_into_image(m, "textures/background.png");
+	if (!m->images->background)
+		free_and_exit(m);
+	m->images->wall = load_png_into_image(m, "textures/wall.png");
+	if (!m->images->wall)
+		free_and_exit(m);
+	m->images->player = load_png_into_image(m, "textures/player.png");
+	if (!m->images->player)
+		free_and_exit(m);
 }

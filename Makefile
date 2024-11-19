@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/19 10:44:03 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/19 15:05:25 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,11 @@ SRCS = \
 	hooks.c \
 	minimap.c \
 	minimap_utils.c \
+	image_utils.c \
 	paint.c \
 	player.c \
-	raycasting.c \
-	reutils.c
+	player_utils.c \
+	raycasting.c
 
 SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))

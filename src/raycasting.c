@@ -1,76 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raying.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:30:02 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:14:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-void	calculate_ray_direction(t_macro *macro, int x)
+void	calculate_ray_direction(t_macro *m, int x)
 {
-	macro->camera_x = 2 * x / (double)macro->width - 1;
-	macro->ray_dir_x = cos(macro->play_angle) + macro->camera_x
-		* cos(macro->play_angle + M_PI / 2);
-	macro->ray_dir_y = sin(macro->play_angle) + macro->camera_x
-		* sin(macro->play_angle + M_PI / 2);
-	macro->map_x = (int)(macro->pos_pl_x / BLOCK);
-	macro->map_y = (int)(macro->pos_pl_y / BLOCK);
-	macro->delta_dist_x = fabs(1 / macro->ray_dir_x);
-	macro->delta_dist_y = fabs(1 / macro->ray_dir_y);
-	macro->hit = 0;
+	m->ray->camera_x = 2 * x / (double)m->width - 1;
+	m->ray->ray_dir_x = cos(m->ray->play_angle) + m->ray->camera_x
+		* cos(m->ray->play_angle + M_PI / 2);
+	m->ray->ray_dir_y = sin(m->ray->play_angle) + m->ray->camera_x
+		* sin(m->ray->play_angle + M_PI / 2);
+	m->ray->map_x = (int)(m->ray->pos_pl_x / BLOCK);
+	m->ray->map_y = (int)(m->ray->pos_pl_y / BLOCK);
+	m->ray->delta_dist_x = fabs(1 / m->ray->ray_dir_x);
+	m->ray->delta_dist_y = fabs(1 / m->ray->ray_dir_y);
+	m->ray->hit = 0;
 }
 
-void	calculate_step_and_side_dist(t_macro *macro)
+void	calculate_step_and_side_dist(t_macro *m)
 {
-	if (macro->ray_dir_x < 0)
+	if (m->ray->ray_dir_x < 0)
 	{
-		macro->step_x = -1;
-		macro->side_dist_x = (macro->pos_pl_x / BLOCK - macro->map_x)
-			* macro->delta_dist_x;
+		m->ray->step_x = -1;
+		m->ray->side_dist_x = (m->ray->pos_pl_x / BLOCK - m->ray->map_x)
+			* m->ray->delta_dist_x;
 	}
 	else
 	{
-		macro->step_x = 1;
-		macro->side_dist_x = (macro->map_x + 1.0 - macro->pos_pl_x / BLOCK)
-			* macro->delta_dist_x;
+		m->ray->step_x = 1;
+		m->ray->side_dist_x = (m->ray->map_x + 1.0 - m->ray->pos_pl_x / BLOCK)
+			* m->ray->delta_dist_x;
 	}
-	if (macro->ray_dir_y < 0)
+	if (m->ray->ray_dir_y < 0)
 	{
-		macro->step_y = -1;
-		macro->side_dist_y = (macro->pos_pl_y / BLOCK - macro->map_y)
-			* macro->delta_dist_y;
+		m->ray->step_y = -1;
+		m->ray->side_dist_y = (m->ray->pos_pl_y / BLOCK - m->ray->map_y)
+			* m->ray->delta_dist_y;
 	}
 	else
 	{
-		macro->step_y = 1;
-		macro->side_dist_y = (macro->map_y + 1.0 - macro->pos_pl_y / BLOCK)
-			* macro->delta_dist_y;
+		m->ray->step_y = 1;
+		m->ray->side_dist_y = (m->ray->map_y + 1.0 - m->ray->pos_pl_y / BLOCK)
+			* m->ray->delta_dist_y;
 	}
 }
 
-void	perform_dda(t_macro *macro)
+void	perform_dda(t_macro *m)
 {
-	while (macro->hit == 0)
+	while (m->ray->hit == 0)
 	{
-		if (macro->side_dist_x < macro->side_dist_y)
+		if (m->ray->side_dist_x < m->ray->side_dist_y)
 		{
-			macro->side_dist_x += macro->delta_dist_x;
-			macro->map_x += macro->step_x;
-			macro->side = 0;
+			m->ray->side_dist_x += m->ray->delta_dist_x;
+			m->ray->map_x += m->ray->step_x;
+			m->ray->side = 0;
 		}
 		else
 		{
-			macro->side_dist_y += macro->delta_dist_y;
-			macro->map_y += macro->step_y;
-			macro->side = 1;
+			m->ray->side_dist_y += m->ray->delta_dist_y;
+			m->ray->map_y += m->ray->step_y;
+			m->ray->side = 1;
 		}
-		if (macro->map->grid[macro->map_y][macro->map_x] == '1')
-			macro->hit = 1;
+		if (m->map->grid[m->ray->map_y][m->ray->map_x] == '1')
+			m->ray->hit = 1;
 	}
 }

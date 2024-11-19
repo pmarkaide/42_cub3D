@@ -6,13 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 16:38:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:00:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	parse_textures(char *line, t_macro *macro)
+static int	parse_textures(char *line, t_macro *m)
 {
 	int		err;
 	char	*skipped;
@@ -23,17 +23,17 @@ static int	parse_textures(char *line, t_macro *macro)
 	path = ft_skipws(skipped + 2);
 	clean_trailing_char(path, " \t\n");
 	if (ft_strncmp(skipped, "NO ", 3) == 0)
-		err = save_texture_path(&(macro->map->no), path);
+		err = save_texture_path(&(m->map->no), path);
 	else if (ft_strncmp(skipped, "SO ", 3) == 0)
-		err = save_texture_path(&(macro->map->so), path);
+		err = save_texture_path(&(m->map->so), path);
 	else if (ft_strncmp(skipped, "WE ", 3) == 0)
-		err = save_texture_path(&(macro->map->we), path);
+		err = save_texture_path(&(m->map->we), path);
 	else if (ft_strncmp(skipped, "EA ", 3) == 0)
-		err = save_texture_path(&(macro->map->ea), path);
+		err = save_texture_path(&(m->map->ea), path);
 	return (err);
 }
 
-static int	parse_colors(char *line, t_macro *macro)
+static int	parse_colors(char *line, t_macro *m)
 {
 	char	*skipped;
 	int		i;
@@ -44,9 +44,9 @@ static int	parse_colors(char *line, t_macro *macro)
 	while (++i < 3)
 	{
 		if (ft_skipws(line)[0] == 'F')
-			macro->map->f[i] = ft_atoi(skipped);
+			m->map->f[i] = ft_atoi(skipped);
 		else if (ft_skipws(line)[0] == 'C')
-			macro->map->c[i] = ft_atoi(skipped);
+			m->map->c[i] = ft_atoi(skipped);
 		skipped = ft_strchr(skipped, ',');
 		if (skipped)
 			skipped++;
@@ -54,17 +54,17 @@ static int	parse_colors(char *line, t_macro *macro)
 	return (0);
 }
 
-static int	premap_ready(t_macro *macro)
+static int	premap_ready(t_macro *m)
 {
 	int	i;
 
 	i = 0;
-	if (macro->map->no == NULL || macro->map->so == NULL
-		|| macro->map->we == NULL || macro->map->ea == NULL)
+	if (m->map->no == NULL || m->map->so == NULL || m->map->we == NULL
+		|| m->map->ea == NULL)
 		return (0);
 	while (i < 3)
 	{
-		if (macro->map->f[i] == -1 || macro->map->c[i] == -1)
+		if (m->map->f[i] == -1 || m->map->c[i] == -1)
 			return (0);
 		i++;
 	}
@@ -83,7 +83,7 @@ static int	parse_map(char *line, t_list **head)
 	return (0);
 }
 
-int	parse_line(char *line, t_macro *macro, int section, t_list **head)
+int	parse_line(char *line, t_macro *m, int section, t_list **head)
 {
 	int	err;
 
@@ -91,12 +91,12 @@ int	parse_line(char *line, t_macro *macro, int section, t_list **head)
 	if (section == 0)
 		return (0);
 	if (section == 1)
-		err = parse_textures(line, macro);
+		err = parse_textures(line, m);
 	if (section == 2)
-		err = parse_colors(line, macro);
+		err = parse_colors(line, m);
 	if (section == 3)
 	{
-		if (!premap_ready(macro))
+		if (!premap_ready(m))
 		{
 			ft_printf(2,
 				"Error\nExpected sections of the file are incorrect\n");

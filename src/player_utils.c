@@ -6,60 +6,60 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 10:51:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	stop_at_wall(t_macro *macro, int x, int y)
+void	stop_at_wall(t_macro *m, int x, int y)
 {
-	if (macro->map->grid[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
+	if (m->map->grid[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
 	{
-		macro->pos_pl_x = x;
-		macro->pos_pl_y = y;
+		m->ray->pos_pl_x = x;
+		m->ray->pos_pl_y = y;
 	}
 }
 
-void	move_wsda(t_macro *macro)
+void	move_wsda(t_macro *m)
 {
 	int	*x;
 	int	*y;
 
-	x = &macro->pos_pl_x;
-	y = &macro->pos_pl_y;
-	if (macro->key_w)
+	x = &m->ray->pos_pl_x;
+	y = &m->ray->pos_pl_y;
+	if (m->keys->key_w)
 	{
-		*x += (int)(WALK_SPEED * cos(macro->play_angle));
-		*y += (int)(WALK_SPEED * sin(macro->play_angle));
+		*x += (int)(WALK_SPEED * cos(m->ray->play_angle));
+		*y += (int)(WALK_SPEED * sin(m->ray->play_angle));
 	}
-	if (macro->key_a)
+	if (m->keys->key_a)
 	{
-		*x -= (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
-		*y -= (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
+		*x -= (int)(WALK_SPEED * cos(m->ray->play_angle + M_PI / 2));
+		*y -= (int)(WALK_SPEED * sin(m->ray->play_angle + M_PI / 2));
 	}
-	if (macro->key_s)
+	if (m->keys->key_s)
 	{
-		*x -= (int)(WALK_SPEED * cos(macro->play_angle));
-		*y -= (int)(WALK_SPEED * sin(macro->play_angle));
+		*x -= (int)(WALK_SPEED * cos(m->ray->play_angle));
+		*y -= (int)(WALK_SPEED * sin(m->ray->play_angle));
 	}
-	if (macro->key_d)
+	if (m->keys->key_d)
 	{
-		*x += (int)(WALK_SPEED * cos(macro->play_angle + M_PI / 2));
-		*y += (int)(WALK_SPEED * sin(macro->play_angle + M_PI / 2));
+		*x += (int)(WALK_SPEED * cos(m->ray->play_angle + M_PI / 2));
+		*y += (int)(WALK_SPEED * sin(m->ray->play_angle + M_PI / 2));
 	}
 }
 
-void	move_rotate(t_macro *macro)
+void	move_rotate(t_macro *m)
 {
-	if (macro->key_left)
+	if (m->keys->key_left)
 	{
-		macro->play_angle -= ROT_SPEED;
-		macro->play_angle = fmod(macro->play_angle + 2 * M_PI, 2 * M_PI);
+		m->ray->play_angle -= ROT_SPEED;
+		m->ray->play_angle = fmod(m->ray->play_angle + 2 * M_PI, 2 * M_PI);
 	}
-	if (macro->key_right)
+	if (m->keys->key_right)
 	{
-		macro->play_angle += ROT_SPEED;
-		macro->play_angle = fmod(macro->play_angle, 2 * M_PI);
+		m->ray->play_angle += ROT_SPEED;
+		m->ray->play_angle = fmod(m->ray->play_angle, 2 * M_PI);
 	}
 }
