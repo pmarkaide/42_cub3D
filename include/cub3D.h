@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 12:30:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:43:33 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ typedef struct s_minimap
 	mlx_image_t	*wall;
 	mlx_image_t	*background;
 	mlx_image_t	*player;
-	int			vision_distance;
-	float		vision_angle;
 }				t_minimap;
 typedef struct s_macro
 {
@@ -64,8 +62,6 @@ typedef struct s_macro
 	t_minimap	*minimap;
 	mlx_image_t	*mini_i;
 	mlx_image_t	*scene_i;
-	int			play_x;
-	int			play_y;
 	int			width;
 	int			height;
 	char		orientation;
@@ -78,12 +74,7 @@ typedef struct s_macro
 	int			pos_pl_y;
 	float		play_view;
 	double		play_angle;
-	char		play_facing;
-	int			w_map;
-	int			h_map;
 	double		distance;
-	double		line_angle;
-	mlx_image_t	*img;
 	mlx_t		*mlx_cub;
 	double		camera_x;
 	double		ray_dir_x;
@@ -120,20 +111,14 @@ int				validate_map(t_macro *m);
 int				check_file_contents(char *file);
 void			clean_trailing_char(char *str, const char *set);
 int				save_texture_path(char **texture, char *path);
-int				parse_line(char *line, t_macro *m, int section,
-					t_list **head);
+int				parse_line(char *line, t_macro *m, int section, t_list **head);
 void			read_input(char *file, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
 void			quit_hook(void *param);
 void			load_images_into_struct(t_macro *m);
 void			unload_images_from_struct(t_macro *m);
 void			draw_minimap(t_macro *m);
-
-/* _utils */
 void			print_map_struct(t_map *map);
-
-/* Merged functions */
-// char** 	parse_map(const char* filename, int* rows, int* cols);
 void			ft_hook(mlx_key_data_t keydata, void *param);
 void			load_game(void *param);
 void			calculate_wall_distance(t_macro *m);

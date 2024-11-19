@@ -6,11 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/19 12:28:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:39:05 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
 void	quit_hook(void *param)
 {
@@ -27,13 +27,13 @@ void	quit_hook(void *param)
 
 void	release_all(mlx_key_data_t keydata, t_macro *m)
 {
-	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE))
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
 		m->key_w = 0;
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
+	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
 		m->key_a = 0;
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
+	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
 		m->key_s = 0;
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
+	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
 		m->key_d = 0;
 	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
 		m->key_left = 0;
@@ -46,14 +46,13 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 	t_macro	*m;
 
 	m = (t_macro *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS
-			|| keydata.action == MLX_REPEAT))
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(m->mlx_cub);
-	else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS))
+	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		m->key_w = 1;
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
+	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
 		m->key_a = 1;
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
+	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
 		m->key_s = 1;
 	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
 		m->key_d = 1;
