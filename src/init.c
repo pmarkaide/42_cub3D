@@ -4,70 +4,79 @@
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:53:48 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:40:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	initialize_to_zero(t_macro *m)
+{
+	if (!m)
+		return ;
+	if (m->map)
+		ft_bzero(m->map, sizeof(t_map));
+	if (m->images)
+		ft_bzero(m->images, sizeof(t_images));
+	if (m->ray)
+		ft_bzero(m->ray, sizeof(t_ray));
+	if (m->keys)
+		ft_bzero(m->keys, sizeof(t_keys));
+	m->map->no = NULL;
+	m->map->so = NULL;
+	m->map->we = NULL;
+	m->map->ea = NULL;
+	m->map->grid = NULL;
+	m->images->mini_i = NULL;
+	m->images->scene_i = NULL;
+	m->images->wall = NULL;
+	m->images->background = NULL;
+	m->images->player = NULL;
+}
+
+static int	malloc_structs(t_macro *m)
+{
+	m->map = malloc(sizeof(t_map));
+	if (!m->map)
+		return (0);
+	m->images = malloc(sizeof(t_images));
+	if (!m->images)
+	{
+		free(m->map);
+		return (0);
+	}
+	m->ray = malloc(sizeof(t_ray));
+	if (!m->ray)
+	{
+		free(m->images);
+		free(m->map);
+		return (0);
+	}
+	m->keys = malloc(sizeof(t_keys));
+	if (!m->keys)
+	{
+		free(m->ray);
+		free(m->images);
+		free(m->map);
+		return (0);
+	}
+	return (1);
+}
 
 t_macro	*init_macro(t_macro *m)
 {
 	m = malloc(sizeof(t_macro));
 	if (!m)
 		return (NULL);
-	ft_bzero(m, sizeof(t_macro));
-	m->map = malloc(sizeof(t_map));
-	if (!m->map)
+	if (!malloc_structs(m))
 	{
 		free(m);
 		return (NULL);
 	}
-	ft_bzero(m->map, sizeof(t_map));
-	m->map->no = NULL;
-	m->map->so = NULL;
-	m->map->we = NULL;
-	m->map->ea = NULL;
-	m->map->grid = NULL;
-	m->images = malloc(sizeof(t_images));
-	if (!m->images)
-	{
-		free(m->map);
-		free(m);
-		return (NULL);
-	}
-	ft_bzero(m->images, sizeof(t_images));
-	m->images->mini_i = NULL;
-	m->images->scene_i = NULL;
-	m->images->wall = NULL;
-	m->images->background = NULL;
-	m->images->player = NULL;
-	ft_bzero(&m->keys, sizeof(t_keys));
-	ft_bzero(&m->raycast, sizeof(t_raycast));
+	initialize_to_zero(m);
 	return (m);
-}
-
-void	adjust_image_transparency(mlx_texture_t *texture, float alpha_factor)
-{
-	uint32_t	y;
-	uint32_t	x;
-	uint8_t		*pixel;
-
-	if (!texture || alpha_factor < 0.0f || alpha_factor > 1.0f)
-		return ;
-	y = 0;
-	while (y < texture->height)
-	{
-		x = 0;
-		while (x < texture->width)
-		{
-			pixel = &texture->pixels[(y * texture->width + x) * 4];
-			pixel[3] = (uint8_t)(pixel[3] * alpha_factor);
-			x++;
-		}
-		y++;
-	}
 }
 
 mlx_image_t	*load_png_into_image(t_macro *m, char *file)
@@ -86,28 +95,9 @@ mlx_image_t	*load_png_into_image(t_macro *m, char *file)
 	return (img);
 }
 
-void	unload_images_from_struct(t_macro *m)
-{
-	if (m->images->background)
-	{
-		mlx_delete_image(m->mlx_cub, m->images->background);
-		m->images->background = NULL;
-	}
-	if (m->images->wall)
-	{
-		mlx_delete_image(m->mlx_cub, m->images->wall);
-		m->images->wall = NULL;
-	}
-	if (m->images->player)
-	{
-		mlx_delete_image(m->mlx_cub, m->images->player);
-		m->images->player = NULL;
-	}
-}
-
 void	load_images_into_struct(t_macro *m)
 {
-	m->images->background = load_png_into_image(m,"textures/background.png");
+	m->images->background = load_png_into_image(m, "textures/background.png");
 	if (!m->images->background)
 		free_and_exit(m);
 	m->images->wall = load_png_into_image(m, "textures/wall.png");

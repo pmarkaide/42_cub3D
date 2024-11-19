@@ -6,60 +6,58 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:46:15 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:21:44 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:07:18 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	get_rgba(int r, int g, int b, int a)
+void	correct_player_pos_in_edge(t_macro *m)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	if (m->ray->pos_pl_x < 32)
+		m->ray->pos_pl_x = 32;
+	else if (m->ray->pos_pl_x >= (int)m->map->w_map * 32 - 64)
+		m->ray->pos_pl_x = m->map->w_map * 32 - 64;
+	if (m->ray->pos_pl_y < 32)
+		m->ray->pos_pl_y = 32;
+	else if (m->ray->pos_pl_y >= (int)m->map->h_map * 32 - 64)
+		m->ray->pos_pl_y = m->map->h_map * 32 - 64;
 }
 
-int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
+void	calculate_ray_steps_x(t_macro *m, double ray_dir_x)
 {
-	uint8_t	*pixelstart;
+	float	center_x;
 
-	if (x > image->width || y > image->height)
-		return (0xFF000000);
-	pixelstart = image->pixels + (y * image->width + x) * sizeof(uint32_t);
-	return (get_rgba(*(pixelstart), *(pixelstart + 1), *(pixelstart + 2),
-			*(pixelstart + 3)));
-}
-
-static int	put_pixel_valid(mlx_image_t *img, uint32_t x, uint32_t y)
-{
-	return (x < img->width && y < img->height && mlx_get_pixel(img, x, y) != 0);
-}
-
-void	put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < src->width)
+	center_x = m->ray->pos_pl_x + BLOCK / 2;
+	if (ray_dir_x < 0)
 	{
-		j = 0;
-		while (j < src->height)
-		{
-			if (put_pixel_valid(src, i, j))
-				mlx_put_pixel(dst, x + i, y + j, mlx_get_pixel(src, i, j));
-			j++;
-		}
-		i++;
+		m->ray->step_x = -1;
+		m->ray->side_dist_x = (center_x / BLOCK - m->ray->map_x)
+			* m->ray->delta_dist_x;
+	}
+	else
+	{
+		m->ray->step_x = 1;
+		m->ray->side_dist_x = (m->ray->map_x + 1.0 - center_x / BLOCK)
+			* m->ray->delta_dist_x;
 	}
 }
 
-void	correct_player_pos_in_edge(t_macro *m)
+void	calculate_ray_steps_y(t_macro *m, double ray_dir_y)
 {
-	if (m->raycast->pos_pl_x < 32)
-		m->raycast->pos_pl_x = 32;
-	else if (m->raycast->pos_pl_x >= (int)m->map->w_map * 32 - 64)
-		m->raycast->pos_pl_x = m->map->w_map * 32 - 64;
-	if (m->raycast->pos_pl_y < 32)
-		m->raycast->pos_pl_y = 32;
-	else if (m->raycast->pos_pl_y >= (int)m->map->h_map * 32 - 64)
-		m->raycast->pos_pl_y = m->map->h_map * 32 - 64;
+	float	center_y;
+
+	center_y = m->ray->pos_pl_y + BLOCK / 2;
+	if (ray_dir_y < 0)
+	{
+		m->ray->step_y = -1;
+		m->ray->side_dist_y = (center_y / BLOCK - m->ray->map_y)
+			* m->ray->delta_dist_y;
+	}
+	else
+	{
+		m->ray->step_y = 1;
+		m->ray->side_dist_y = (m->ray->map_y + 1.0 - center_y / BLOCK)
+			* m->ray->delta_dist_y;
+	}
 }

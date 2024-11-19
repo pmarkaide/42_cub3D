@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/19 13:13:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	move(t_macro *m)
 {
 	move_wsda(m);
 	move_rotate(m);
-	stop_at_wall(m, m->raycast->pos_pl_x, m->raycast->pos_pl_y);
+	stop_at_wall(m, m->ray->pos_pl_x, m->ray->pos_pl_y);
 }
 
 void	load_game(void *param)
@@ -32,17 +32,17 @@ void	load_game(void *param)
 
 void	load_player(t_macro *m)
 {
-	m->raycast->pos_pl_x = m->map->start_x * BLOCK + BLOCK / 2;
-	m->raycast->pos_pl_y = m->map->start_y * BLOCK + BLOCK / 2;
-	m->raycast->play_view = M_PI * ANGLE_VIEW / 180;
+	m->ray->pos_pl_x = m->map->start_x * BLOCK + BLOCK / 2;
+	m->ray->pos_pl_y = m->map->start_y * BLOCK + BLOCK / 2;
+	m->ray->play_view = M_PI * ANGLE_VIEW / 180;
 	if (m->map->orientation == 'N')
-		m->raycast->play_angle = 3 * M_PI / 2;
+		m->ray->play_angle = 3 * M_PI / 2;
 	else if (m->map->orientation == 'E')
-		m->raycast->play_angle = 0;
+		m->ray->play_angle = 0;
 	else if (m->map->orientation == 'S')
-		m->raycast->play_angle = M_PI / 2;
+		m->ray->play_angle = M_PI / 2;
 	else if (m->map->orientation == 'W')
-		m->raycast->play_angle = M_PI;
+		m->ray->play_angle = M_PI;
 }
 
 void	player_in_map(t_macro *m)
@@ -57,8 +57,7 @@ void	player_in_map(t_macro *m)
 		while (m->map->grid[y][x])
 		{
 			if (m->map->grid[y][x] == 'N' || m->map->grid[y][x] == 'S'
-				|| m->map->grid[y][x] == 'E'
-				|| m->map->grid[y][x] == 'W')
+				|| m->map->grid[y][x] == 'E' || m->map->grid[y][x] == 'W')
 			{
 				m->map->start_x = x;
 				m->map->start_y = y;
@@ -74,9 +73,7 @@ void	player_in_map(t_macro *m)
 
 void	load_map(t_macro *m)
 {
-	m->raycast->floor = get_rgba(m->map->f[0], m->map->f[1],
-			m->map->f[2], 255);
-	m->raycast->ceiling = get_rgba(m->map->c[0], m->map->c[1],
-			m->map->c[2], 255);
+	m->ray->floor = get_rgba(m->map->f[0], m->map->f[1], m->map->f[2], 255);
+	m->ray->ceiling = get_rgba(m->map->c[0], m->map->c[1], m->map->c[2], 255);
 	player_in_map(m);
 }

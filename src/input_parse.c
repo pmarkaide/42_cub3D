@@ -59,8 +59,8 @@ static int	premap_ready(t_macro *m)
 	int	i;
 
 	i = 0;
-	if (m->map->no == NULL || m->map->so == NULL
-		|| m->map->we == NULL || m->map->ea == NULL)
+	if (m->map->no == NULL || m->map->so == NULL || m->map->we == NULL
+		|| m->map->ea == NULL)
 		return (0);
 	while (i < 3)
 	{

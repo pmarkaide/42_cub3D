@@ -6,53 +6,52 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:09:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:26:25 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	check_unique_starting_position(char **grid, size_t width, size_t height)
+static int	check_unique_starting_position(t_macro *m)
 {
 	size_t	i;
-	int		j;
+	size_t	j;
 	int		count;
 
 	i = 0;
 	count = 0;
-	while (i < height)
+	while (i < m->map->h_map)
 	{
 		j = 0;
-		while (j < width)
+		while (j < m->map->w_map)
 		{
-			if (ft_strchr("NSWE", grid[i][j]))
+			if (ft_strchr("NSWE", m->map->grid[i][j]))
+			{
 				count++;
+				m->map->start_x = j;
+				m->map->start_y = i;
+				m->map->orientation = m->map->grid[i][j];
+			}
 			j++;
 		}
 		i++;
 	}
-	if (count != 1)
-	{
-		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
-		return (0);
-	}
-	return (1);
+	return (count == 1);
 }
 
-static int	map_chars_are_valid(char **grid, size_t width, size_t height)
+static int	map_chars_are_valid(t_macro *m)
 {
 	size_t	i;
-	int		j;
+	size_t	j;
 
 	i = 0;
-	if (!check_unique_starting_position(grid, width, height))
-		return (0);
-	while (i < height)
+	while (i < m->map->h_map)
 	{
 		j = 0;
-		while (j < width)
+		while (j < m->map->w_map)
 		{
-			if (grid[i][j] && ft_strchr("10NSWE ", grid[i][j]) == NULL)
+			if (m->map->grid[i][j] && ft_strchr("10NSWE ",
+					m->map->grid[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character in map\n");
 				return (0);
@@ -66,20 +65,18 @@ static int	map_chars_are_valid(char **grid, size_t width, size_t height)
 
 static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 {
-	char	**grid;
-	int		err;
-	size_t	width;
+	int	err;
 
 	err = 0;
-	grid = m->map->grid;
-	width = m->map->w_map;
-	if (grid[i - 1][j] == ' ' || grid[i + 1][j] == ' ')
+	if (i == 0 || j == 0 || i == m->map->h_map - 1 || j == m->map->w_map - 1)
 		err = 1;
-	if (grid[i][j - 1] == ' ' || grid[i][j + 1] == ' ')
+	if (m->map->grid[i - 1][j] == ' ' || m->map->grid[i + 1][j] == ' ')
 		err = 1;
-	if (grid[i - 1][j - 1] == ' ' || grid[i - 1][j + 1] == ' ')
+	if (m->map->grid[i][j - 1] == ' ' || m->map->grid[i][j + 1] == ' ')
 		err = 1;
-	if (grid[i + 1][j - 1] == ' ' || grid[i + 1][j + 1] == ' ')
+	if (m->map->grid[i - 1][j - 1] == ' ' || m->map->grid[i - 1][j + 1] == ' ')
+		err = 1;
+	if (m->map->grid[i + 1][j - 1] == ' ' || m->map->grid[i + 1][j + 1] == ' ')
 		err = 1;
 	if (err)
 	{
@@ -93,20 +90,16 @@ static int	is_valid_wall_structure(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
-	char	**map;
-	size_t	width;
 
 	i = 0;
-	map = m->map->grid;
 	while (i < m->map->h_map)
 	{
 		j = 0;
-		width = ft_strlen(map[i]);
-		while (j < width)
+		while (j < m->map->w_map)
 		{
-			if (ft_strchr("0NSEW", map[i][j]))
+			if (ft_strchr("0NSEW", m->map->grid[i][j]))
 			{
-				if (!is_surrounded_by_walls(m, i, j, width))
+				if (!is_surrounded_by_walls(m, i, j))
 					return (0);
 			}
 			j++;
@@ -118,8 +111,13 @@ static int	is_valid_wall_structure(t_macro *m)
 
 int	validate_map(t_macro *m)
 {
-	if (!map_chars_are_valid(m->map->grid, m->map->w_map, m->map->h_map))
+	if (!map_chars_are_valid(m))
 		return (1);
+	if (!check_unique_starting_position(m))
+	{
+		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
+		return (1);
+	}
 	if (!is_valid_wall_structure(m))
 		return (1);
 	return (0);

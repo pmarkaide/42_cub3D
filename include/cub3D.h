@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:03:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:07:18 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,42 +64,42 @@ typedef struct s_images
 
 typedef struct s_keys
 {
-	int	key_w;
-	int	key_a;
-	int	key_s;
-	int	key_d;
-	int	key_left;
-	int	key_right;
+	int			key_w;
+	int			key_a;
+	int			key_s;
+	int			key_d;
+	int			key_left;
+	int			key_right;
 }				t_keys;
 
-typedef struct s_raycast
+typedef struct s_ray
 {
-	double	camera_x;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		step_x;
-	int		step_y;
-	int		hit;
-	int		side;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-	int32_t	wall_color;
-	int32_t	floor;
-	int32_t	ceiling;
-	float	play_view;
-	double	play_angle;
-	int		pos_pl_x;
-	int		pos_pl_y;
-	double	distance;
-}				t_raycast;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	int32_t		wall_color;
+	int32_t		floor;
+	int32_t		ceiling;
+	float		play_view;
+	double		play_angle;
+	int			pos_pl_x;
+	int			pos_pl_y;
+	double		distance;
+}				t_ray;
 
 typedef struct s_macro
 {
@@ -107,7 +107,7 @@ typedef struct s_macro
 	t_map		*map;
 	t_images	*images;
 	t_keys		*keys;
-	t_raycast	*raycast;
+	t_ray		*ray;
 	int			width;
 	int			height;
 }				t_macro;
@@ -128,10 +128,12 @@ void			quit_hook(void *param);
 void			release_all(mlx_key_data_t keydata, t_macro *m);
 void			ft_hook(mlx_key_data_t keydata, void *param);
 void			load_images_into_struct(t_macro *m);
-void			unload_images_from_struct(t_macro *m);
-void			initialize_vision_ray(t_macro *m, int x, double *ray_dir_x, double *ray_dir_y);
-void			calculate_ray_steps(t_macro *m, double ray_dir_x, double ray_dir_y);
-void			draw_ray(t_macro *m, float ray_length, double ray_dir_x, double ray_dir_y);
+void			initialize_vision_ray(t_macro *m, int x, double *ray_dir_x,
+					double *ray_dir_y);
+void			calculate_ray_steps(t_macro *m, double ray_dir_x,
+					double ray_dir_y);
+void			draw_ray(t_macro *m, float ray_length, double ray_dir_x,
+					double ray_dir_y);
 void			draw_vision_cone(t_macro *m);
 void			draw_minimap(t_macro *m);
 void			print_map_struct(t_map *map);
@@ -157,5 +159,8 @@ int				get_rgba(int r, int g, int b, int a);
 void			move_wsda(t_macro *m);
 void			move_rotate(t_macro *m);
 void			stop_at_wall(t_macro *m, int x, int y);
+void			adjust_image_transparency(mlx_texture_t *texture, float alpha_factor);
+void			calculate_ray_steps_x(t_macro *m, double ray_dir_x);
+void			calculate_ray_steps_y(t_macro *m, double ray_dir_y);
 
 #endif

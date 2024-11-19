@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:22:37 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:00:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:02:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,27 @@ void	put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y)
 			j++;
 		}
 		i++;
+	}
+}
+
+void	adjust_image_transparency(mlx_texture_t *texture, float alpha_factor)
+{
+	uint32_t	y;
+	uint32_t	x;
+	uint8_t		*pixel;
+
+	if (!texture || alpha_factor < 0.0f || alpha_factor > 1.0f)
+		return ;
+	y = 0;
+	while (y < texture->height)
+	{
+		x = 0;
+		while (x < texture->width)
+		{
+			pixel = &texture->pixels[(y * texture->width + x) * 4];
+			pixel[3] = (uint8_t)(pixel[3] * alpha_factor);
+			x++;
+		}
+		y++;
 	}
 }

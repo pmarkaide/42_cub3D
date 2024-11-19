@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:18:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	init_game(t_macro *m)
 		return (write(2, "Error\nFailed to initialize mlx or create images\n",
 				48), 1);
 	load_images_into_struct(m);
-	m->raycast->pos_pl_x = m->map->start_x;
-	m->raycast->pos_pl_y = m->map->start_y;
+	m->ray->pos_pl_x = m->map->start_x;
+	m->ray->pos_pl_y = m->map->start_y;
 	load_map(m);
 	load_player(m);
 	load_game(m);
