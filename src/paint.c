@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:26:44 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/15 15:24:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:20:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	paint_wall(t_macro *macro)
 void	paint_background(t_macro *macro)
 {
 	int	y;
-	int	x;
 	int	x;
 
 	y = 0;

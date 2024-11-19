@@ -4,9 +4,9 @@
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
-/*                             /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */                   +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:17:02 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	eval_file(char *file, char *ext)
 {
 	char	*dot;
 
-	if (ft_strcmp(ext, ".cub") /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */== 0)
+	if (ft_strcmp(ext, ".cub") == 0)
 	{
 		dot = ft_strrchr(file, '.');
 		if (dot == NULL || (dot != NULL && ft_strcmp(dot, ".cub")))

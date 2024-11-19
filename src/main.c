@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 12:21:09 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:15:25 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	init_game(t_macro *macro)
 {
 	mlx_t	*first;
 
-	python3 - m first = mlx_init(800, 600, "Loading...", 0);
+	first = mlx_init(800, 600, "Loading...", 0);
 	mlx_get_monitor_size(0, &macro->width, &macro->height);
 	mlx_terminate(first);
 	macro->width *= RATIO_SCREEN;

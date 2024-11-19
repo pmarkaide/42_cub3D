@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:05:47 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:16:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:15:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	print_map_struct(t_map *map)
 	printf("  Height: %zu\n", map->h_map);
 	printf("\nMap Layout:\n");
 	i = 0;
-	while (map->map[i])
+	while (map->grid[i])
 	{
-		printf("  %s\n", map->map[i]);
+		printf("  %s\n", map->grid[i]);
 		i++;
 	}
 	printf("\n");

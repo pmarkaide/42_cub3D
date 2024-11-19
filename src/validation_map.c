@@ -6,13 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 16:09:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:19:00 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	check_unique_starting_position(char **grid, int height)
+static int	check_unique_starting_position(char **grid, size_t height)
 {
 	size_t	i;
 	int		j;
@@ -41,7 +41,7 @@ static int	check_unique_starting_position(char **grid, int height)
 	return (1);
 }
 
-static int	map_chars_are_valid(char **grid, int height)
+static int	map_chars_are_valid(char **grid, size_t height)
 {
 	size_t	i;
 	int		j;
@@ -68,9 +68,9 @@ static int	map_chars_are_valid(char **grid, int height)
 	return (1);
 }
 
-static int	is_surrounded_by_walls(t_macro *macro, int i, int j, int width)
+static int	is_surrounded_by_walls(t_macro *macro, size_t i, size_t j, size_t width)
 {
-	int		height;
+	size_t		height;
 	char	**map;
 	int		err;
 
@@ -97,10 +97,10 @@ static int	is_surrounded_by_walls(t_macro *macro, int i, int j, int width)
 
 static int	is_valid_wall_structure(t_macro *macro)
 {
-	int		i;
-	int		j;
+	size_t		i;
+	size_t		j;
 	char	**map;
-	int		width;
+	size_t		width;
 
 	i = 0;
 	map = macro->map->grid;
