@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/04 16:08:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	calculate_map_dimensions(t_macro *macro)
 
 	height = 0;
 	width = 0;
-	map = macro->map->map;
+	map = macro->map->grid;
 	while (map[height])
 	{
 		current_width = ft_strlen(map[height]);

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 11:14:17 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:38:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	parse_line(char *line, t_macro *macro, int section, t_list **head)
 		if (!premap_ready(macro))
 		{
 			ft_printf(2,
-				"Error\nMap section found before textures and colors are fully defined\n");
+				"Error\nExpected sections of the file are incorrect\n");
 			return (1);
 		}
 		err = parse_map(line, head);

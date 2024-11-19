@@ -71,7 +71,7 @@ void				ft_print_char_array(char **array);
 void				ft_print_int_array(int **array);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_char_array_len(char **array);
-char 				*ft_skipws(char *line);
+char				*ft_skipws(char *line);
 
 typedef struct s_list
 {

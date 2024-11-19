@@ -32,7 +32,7 @@ int	ft_putformat(int fd, char specifier, va_list args)
 	else if (specifier == 's')
 		p = ft_error_w(p, ft_putstr_fd(va_arg(args, char *), fd));
 	else if (specifier == 'd' || specifier == 'i')
-		p = ft_error_w(p, ft_putnbr_fd(va_arg(args, int),fd));
+		p = ft_error_w(p, ft_putnbr_fd(va_arg(args, int), fd));
 	else if (specifier == 'u')
 		p = ft_error_w(p, ft_putnbr_fd_uns(va_arg(args, unsigned long), fd));
 	else if (specifier == 'x')

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/07 20:59:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	fill_with_spaces(char **map, size_t width)
 		{
 			new_line = malloc(width + 1);
 			if (!new_line)
-				return;
+				return ;
 			ft_memcpy(new_line, map[i], len);
 			ft_memset(new_line + len, ' ', width - len);
 			new_line[width] = '\0';
@@ -80,6 +80,6 @@ int	validation(t_macro *macro)
 		return (1);
 	if (validate_map(macro))
 		return (1);
-	fill_with_spaces(macro->map->map, macro->map->w_map);
+	fill_with_spaces(macro->map->grid, macro->map->w_map);
 	return (0);
 }

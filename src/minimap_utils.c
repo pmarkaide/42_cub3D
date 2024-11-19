@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_utils.c                                      :+:      :+:    :+:   */
+/*   minimap_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:22:37 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/18 12:24:47 by pmarkaid         ###   ########.fr       */
+/*   Created: 2024/11/19 10:46:15 by pmarkaid          #+#    #+#             */
+/*   Updated: 2024/11/19 10:48:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,16 @@ void	put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y)
 		}
 		i++;
 	}
+}
+
+void	correct_player_pos_in_edge(t_macro *macro)
+{
+	if (macro->pos_pl_x < 32)
+		macro->pos_pl_x = 32;
+	else if (macro->pos_pl_x >= (int)macro->map->w_map * 32 - 64)
+		macro->pos_pl_x = macro->map->w_map * 32 - 64;
+	if (macro->pos_pl_y < 32)
+		macro->pos_pl_y = 32;
+	else if (macro->pos_pl_y >= (int)macro->map->h_map * 32 - 64)
+		macro->pos_pl_y = macro->map->h_map * 32 - 64;
 }
