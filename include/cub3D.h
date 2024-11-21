@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 16:30:48 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:20:46 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@
 # define RATIO_SCREEN 0.75 // ratio screen
 # define ROT_SPEED 0.05    // rotation speed
 # define WALK_SPEED 5      // walk speed
+# define TWO_PI (2 * M_PI)
+# define A_DEG 180 / M_PI
+# define A_RAD M_PI / 180
+
+typedef struct s_text
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+}	t_text;
 
 typedef struct s_map
 {
@@ -109,6 +120,7 @@ typedef struct s_macro
 	t_ray		*ray;
 	int			width;
 	int			height;
+	t_text		*tex;
 }				t_macro;
 
 void			adjust_image_transparency(mlx_texture_t *texture,
@@ -160,5 +172,6 @@ void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
 char			**create_visited_array(size_t height, size_t width);
 void			free_visited_array(char **visited, size_t height);
+void			stop_at_edge(t_macro *m);
 
 #endif

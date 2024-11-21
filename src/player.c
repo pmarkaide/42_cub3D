@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:20:38 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@ void	move(t_macro *m)
 {
 	move_wsda(m);
 	move_rotate(m);
-	stop_at_wall(m, m->ray->pos_pl_x, m->ray->pos_pl_y);
+	//stop_at_wall(m, m->ray->pos_pl_x, m->ray->pos_pl_y);
+	stop_at_edge(m);
 }
 
 void	load_game(void *param)
 {
-	t_macro	*m;
-
-	m = (t_macro *)param;
-	move(m);
-	paint_background(m);
-	paint_wall(m);
-	draw_minimap(m);
+    t_macro *macro;
+    
+    macro = (t_macro*)param;
+    move(macro);
+    paint_background(macro);
+    paint_wall(macro);
+    //draw_minimap(macro);
 }
 
 void	load_player(t_macro *m)
@@ -75,5 +76,9 @@ void	load_map(t_macro *m)
 {
 	m->ray->floor = get_rgba(m->map->f[0], m->map->f[1], m->map->f[2], 255);
 	m->ray->ceiling = get_rgba(m->map->c[0], m->map->c[1], m->map->c[2], 255);
+	m->tex->no = mlx_load_png(m->map->no);
+    m->tex->so = mlx_load_png(m->map->so);
+    m->tex->we = mlx_load_png(m->map->we);
+    m->tex->ea = mlx_load_png(m->map->ea);
 	player_in_map(m);
 }

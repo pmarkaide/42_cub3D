@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:20:32 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	stop_at_edge(t_macro *m)
+{
+	if (m->ray->pos_pl_x < 0)
+		m->ray->pos_pl_x = 0;
+	if (m->ray->pos_pl_y < 0)
+		m->ray->pos_pl_y = 0;
+	if (m->ray->pos_pl_x > (int)(m->map->w_map * BLOCK))
+		m->ray->pos_pl_x = (int)(m->map->w_map * BLOCK);
+	if (m->ray->pos_pl_y > (int)(m->map->h_map * BLOCK))
+		m->ray->pos_pl_y = (int)(m->map->h_map * BLOCK);	
+}
 
 void	stop_at_wall(t_macro *m, int x, int y)
 {

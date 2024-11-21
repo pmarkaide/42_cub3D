@@ -70,6 +70,12 @@ t_macro	*init_macro(t_macro *m)
 	m = malloc(sizeof(t_macro));
 	if (!m)
 		return (NULL);
+	m->tex = malloc(sizeof(t_text));
+	if (!m->tex)
+	{
+		free(m);
+		return (NULL);
+	}
 	if (!malloc_structs(m))
 	{
 		free(m);

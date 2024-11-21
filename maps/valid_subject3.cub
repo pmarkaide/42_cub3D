@@ -1,7 +1,7 @@
-NO textures/north_texture
-SO textures/south_texture
-WE textures/west_texture
-EA textures/east_texture
+NO textures/N.png
+SO textures/S.png
+WE textures/W.png
+EA textures/E.png
 
 F 220,100,20
 C 225,30,100
