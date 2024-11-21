@@ -6,13 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:00:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:13:36 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	eval_file(char *file, char *ext)
+static int	eval_extension(char *file, char *ext, t_macro *m)
 {
 	char	*dot;
 
@@ -22,10 +22,10 @@ static int	eval_file(char *file, char *ext)
 		if (dot == NULL || (dot != NULL && ft_strcmp(dot, ".cub")))
 		{
 			ft_printf(2, "Error\nWrong file extension\n");
-			return (1);
+			free_macro(m);
 		}
 	}
-	return (check_file_contents(file));
+	return (0);
 }
 
 static int	detect_section(char *line)
@@ -53,16 +53,12 @@ static int	detect_section(char *line)
 	return (section);
 }
 
-static char	**handle_lines(t_macro *m, int fd)
+static int	handle_lines(t_macro *m, int fd, char *line)
 {
-	char	*line;
 	int		section;
 	t_list	*head;
 
 	head = NULL;
-	line = get_next_line(fd);
-	if (!line)
-		return (NULL);
 	while (line)
 	{
 		section = detect_section(line);
@@ -70,43 +66,42 @@ static char	**handle_lines(t_macro *m, int fd)
 		{
 			free(line);
 			ft_lstclear(&head, free);
-			return (NULL);
+			return (1);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	m->map->grid = ft_lst_to_array(&head);
 	ft_lstclear(&head, free);
-	return (m->map->grid);
+	return (0);
 }
 
-static int	read_file(char *file, t_macro *m)
+static void	read_file(char *file, t_macro *m)
 {
-	int	fd;
+	char	*line;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	line = get_next_line(fd);
+	if (!line)
 	{
-		ft_printf(2, "Error\nFailed to open file\n");
-		return (1);
+		ft_printf(2, "Error\nEmpty file\n");
+		close(fd);
+		free_macro(m);
 	}
-	if (!handle_lines(m, fd))
+	if (handle_lines(m, fd, line))
 	{
 		close(fd);
-		ft_printf(2, "Error\nFailed to parse file\n");
-		return (1);
+		free_macro(m);
 	}
 	close(fd);
-	return (0);
 }
 
 void	read_input(char *file, t_macro *m)
 {
-	if (eval_file(file, ".cub"))
-		free_and_exit(m);
-	if (read_file(file, m))
-		free_and_exit(m);
-	if (validation(m))
-		free_and_exit(m);
+	eval_extension(file, ".cub", m);
+	check_file_contents(file, m);
+	read_file(file, m);
+	validation(m);
 	print_map_struct(m->map);
 }

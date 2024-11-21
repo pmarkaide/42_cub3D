@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:00:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:47:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 
 static int	parse_textures(char *line, t_macro *m)
 {
-	int		err;
 	char	*skipped;
-	char	*path;
+	char	*cleaned_path;
+	int		err;
 
 	err = 0;
 	skipped = ft_skipws(line);
-	path = ft_skipws(skipped + 2);
-	clean_trailing_char(path, " \t\n");
+	cleaned_path = ft_skipws(skipped + 2);
+	if (!cleaned_path)
+	{
+		ft_printf(2, "Error\nMemory allocation failed\n");
+		return (1);
+	}
+	clean_trailing_char(cleaned_path, " \t\n");
 	if (ft_strncmp(skipped, "NO ", 3) == 0)
-		err = save_texture_path(&(m->map->no), path);
+		err = save_texture_path(&(m->map->no), cleaned_path);
 	else if (ft_strncmp(skipped, "SO ", 3) == 0)
-		err = save_texture_path(&(m->map->so), path);
+		err = save_texture_path(&(m->map->so), cleaned_path);
 	else if (ft_strncmp(skipped, "WE ", 3) == 0)
-		err = save_texture_path(&(m->map->we), path);
+		err = save_texture_path(&(m->map->we), cleaned_path);
 	else if (ft_strncmp(skipped, "EA ", 3) == 0)
-		err = save_texture_path(&(m->map->ea), path);
+		err = save_texture_path(&(m->map->ea), cleaned_path);
 	return (err);
 }
 
@@ -78,7 +83,11 @@ static int	parse_map(char *line, t_list **head)
 	clean_trailing_char(line, "\n");
 	new = ft_lstnew(ft_strdup(line));
 	if (!new)
+	{
+		ft_printf(2, "Error\nMemory allocation failed\n");
+		ft_lstclear(head, free);
 		return (1);
+	}
 	ft_lstadd_back(head, new);
 	return (0);
 }

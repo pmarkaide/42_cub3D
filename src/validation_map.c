@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:26:25 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:49:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static int	check_unique_starting_position(t_macro *m)
 		}
 		i++;
 	}
-	return (count == 1);
+	return (count);
 }
 
-static int	map_chars_are_valid(t_macro *m)
+static void	map_chars_are_valid(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
@@ -54,13 +54,13 @@ static int	map_chars_are_valid(t_macro *m)
 					m->map->grid[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character in map\n");
-				return (0);
+				free_macro(m);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (1);
+	return ;
 }
 
 static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
@@ -86,7 +86,7 @@ static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 	return (1);
 }
 
-static int	is_valid_wall_structure(t_macro *m)
+static void	is_valid_wall_structure(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
@@ -100,25 +100,23 @@ static int	is_valid_wall_structure(t_macro *m)
 			if (ft_strchr("0NSEW", m->map->grid[i][j]))
 			{
 				if (!is_surrounded_by_walls(m, i, j))
-					return (0);
+					free_macro(m);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (1);
+	return ;
 }
 
 int	validate_map(t_macro *m)
 {
-	if (!map_chars_are_valid(m))
-		return (1);
-	if (!check_unique_starting_position(m))
+	map_chars_are_valid(m);
+	if (check_unique_starting_position(m) != 1)
 	{
 		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
-		return (1);
+		free_macro(m);
 	}
-	if (!is_valid_wall_structure(m))
-		return (1);
+	is_valid_wall_structure(m);
 	return (0);
 }

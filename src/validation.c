@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:05:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:51:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,30 @@
 
 static int	validate_textures(t_macro *m)
 {
-	if (check_file_contents(m->map->no))
+	if (check_file_contents(m->map->no, m))
+	{
+		free_macro(m);
 		return (1);
-	if (check_file_contents(m->map->so))
+	}
+	if (check_file_contents(m->map->so, m))
+	{
+		free_macro(m);
 		return (1);
-	if (check_file_contents(m->map->we))
+	}
+	if (check_file_contents(m->map->we, m))
+	{
+		free_macro(m);
 		return (1);
-	if (check_file_contents(m->map->ea))
+	}
+	if (check_file_contents(m->map->ea, m))
+	{
+		free_macro(m);
 		return (1);
+	}
 	return (0);
 }
 
-static int	validate_colors(int *f, int *c)
+static int	validate_colors(int *f, int *c, t_macro *m)
 {
 	int	i;
 
@@ -35,11 +47,13 @@ static int	validate_colors(int *f, int *c)
 		if (f[i] < 0 || f[i] > 255)
 		{
 			ft_printf(2, "Error\nFloor color value %d out of range\n", f[i]);
+			free_macro(m);
 			return (1);
 		}
 		if (c[i] < 0 || c[i] > 255)
 		{
 			ft_printf(2, "Error\nCeiling color value %d out of range\n", c[i]);
+			free_macro(m);
 			return (1);
 		}
 		i++;
@@ -74,9 +88,14 @@ void	fill_with_spaces(char **map, size_t width)
 
 int	validation(t_macro *m)
 {
+	if (!m->map->grid)
+	{
+		ft_printf(2, "Error\nMap malloc failed\n");
+		free_macro(m);
+	}
 	if (validate_textures(m))
 		return (1);
-	if (validate_colors(m->map->f, m->map->c))
+	if (validate_colors(m->map->f, m->map->c, m))
 		return (1);
 	calculate_map_dimensions(m);
 	fill_with_spaces(m->map->grid, m->map->w_map);
