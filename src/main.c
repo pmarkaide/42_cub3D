@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 13:02:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:34:13 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,7 @@ int	main(int argc, char **argv)
 	if (!m)
 		return (write(2, "Error\nMalloc failed\n", 20), 1);
 	read_input(argv[1], m);
-	if (validate_map(m))
-	{
-		printf("Error\nInvalid map\n");
-		free_macro(m);
-		return (1);
-	}
+	validate_map(m);
 	if (init_game(m))
 		return (1);
 	mlx_loop_hook(m->mlx_cub, &load_game, m);
