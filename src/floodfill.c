@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 17:00:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:04:23 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_valid_position(t_macro *m, char** visited, size_t x, size_t y)
 		return (0);
 	if (y >= m->map->w_map)
 		return (0);
-	if (m->map->grid[x][y] == '1')
+	if (m->map->grid[x][y] == ' ')
 		return (0);
 	if (visited[x][y])
 		return (0);
@@ -106,7 +106,6 @@ int	check_path(t_macro *m, char **visited)
 	char	**grid;
 
 	grid = m->map->grid;
-	m->map->grid[m->map->start_y][m->map->start_x] = '0';
 	flood_fill(m, visited, m->map->start_y, m->map->start_x);
 	print_arrays(m, visited);
 	i = 0;
