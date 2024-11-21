@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 15:18:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:25:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(m->mlx_cub, &load_game, m);
 	mlx_key_hook(m->mlx_cub, &ft_hook, m);
 	mlx_loop(m->mlx_cub);
-	mlx_terminate(m->mlx_cub);
 	return (0);
 }

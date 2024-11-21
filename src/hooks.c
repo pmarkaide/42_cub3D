@@ -6,24 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/19 13:21:04 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:23:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	quit_hook(void *param)
-{
-	t_macro	*m;
-
-	if (!param)
-		return ;
-	m = (t_macro *)param;
-	if (!m->mlx_cub || !m->keys)
-		return ;
-	if (mlx_is_key_down(m->mlx_cub, MLX_KEY_ESCAPE))
-		free_and_exit(m);
-}
 
 void	release_all(mlx_key_data_t keydata, t_macro *m)
 {
@@ -47,7 +34,7 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 
 	m = (t_macro *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(m->mlx_cub);
+		free_and_exit(m);
 	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		m->keys->key_w = 1;
 	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)

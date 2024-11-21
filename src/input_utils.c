@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:03:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:39:35 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_file_contents(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf(2, "LOL\nCannot open file %s:%s\n", file, strerror(errno));
+		ft_printf(2, "\nCannot open file %s:%s\n", file, strerror(errno));
 		return (1);
 	}
 	bytes_read = read(fd, buffer, 1);
@@ -70,16 +70,19 @@ void	clean_trailing_char(char *str, const char *set)
 
 int	save_texture_path(char **texture, char *path)
 {
+	char	*temp;
+
 	if (*texture != NULL)
 	{
 		ft_printf(2, "Error\nDuplicate texture path\n");
 		return (1);
 	}
-	*texture = ft_strdup(path);
-	if (*texture == NULL)
+	temp = ft_strdup(path);
+	if (temp == NULL)
 	{
 		ft_printf(2, "Error\nMemory allocation failed\n");
 		return (1);
 	}
+	*texture = temp;
 	return (0);
 }

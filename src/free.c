@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 13:00:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:29:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,41 @@ void	free_map(t_macro *m)
 			free(m->map->grid);
 		}
 		free(m->map);
+		m->map = NULL;
 	}
 }
 
-void	free_macro(t_macro *m)
+void	free_images(t_macro *m)
 {
-	free_map(m);
-	free(m);
+	if (m->images)
+	{
+		if (m->images->mini_i)
+			mlx_delete_image(m->mlx_cub, m->images->mini_i);
+		if (m->images->scene_i)
+			mlx_delete_image(m->mlx_cub, m->images->scene_i);
+		if (m->images->wall)
+			mlx_delete_image(m->mlx_cub, m->images->wall);
+		if (m->images->background)
+			mlx_delete_image(m->mlx_cub, m->images->background);
+		if (m->images->player)
+			mlx_delete_image(m->mlx_cub, m->images->player);
+		free(m->images);
+	}
 }
 
 void	free_and_exit(t_macro *m)
 {
-	free_macro(m);
+	if(m->mlx_cub)
+	{
+		mlx_close_window(m->mlx_cub);
+		mlx_terminate(m->mlx_cub);
+	}
+	free_map(m);
+	free_images(m);
+	if (m->ray)
+		free(m->ray);
+	if (m->keys)
+		free(m->keys);
+	free(m);
 	exit(1);
 }
