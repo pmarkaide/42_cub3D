@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 13:27:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:30:48 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ void			release_all(mlx_key_data_t keydata, t_macro *m);
 int				save_texture_path(char **texture, char *path);
 void			stop_at_wall(t_macro *m, int x, int y);
 int				validate_map(t_macro *m);
-int				validation(t_macro *m);
+void			validation(t_macro *m);
+int				check_path(t_macro *macro, char **visited);
+char			**create_visited_array(size_t height, size_t width);
+void			free_visited_array(char **visited, size_t height);
 
 #endif

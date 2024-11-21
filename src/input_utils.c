@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 14:50:09 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:05:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	calculate_map_dimensions(t_macro *m)
 
 	height = 0;
 	width = 0;
+	if (!m->map->grid)
+	{
+		ft_printf(2, "Error\nMap malloc failed\n");
+		free_macro(m);
+	}
 	map = m->map->grid;
 	while (map[height])
 	{
