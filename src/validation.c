@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 17:01:20 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:43:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	validation(t_macro *m)
 	calculate_map_dimensions(m);
 	fill_with_spaces(m->map->grid, m->map->w_map);
 	validate_map(m);
-	//substitute_spaces_with_zeros(m->map->grid, m->map->w_map);
 	visited = create_visited_array(m->map->h_map, m->map->w_map);
 	if (!visited)
 	{
@@ -103,4 +102,5 @@ void	validation(t_macro *m)
 		free_macro(m);
 	}
 	free_visited_array(visited, m->map->h_map);
+	substitute_spaces_with_zeros(m->map->grid, m->map->w_map);
 }
