@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/20 16:35:25 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:02:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ static int	read_file(char *file, t_macro *m)
 void	read_input(char *file, t_macro *m)
 {
 	if (eval_file(file, ".cub"))
-		free_and_exit(m);
+		free_macro(m);
 	if (read_file(file, m))
-		free_and_exit(m);
+		free_macro(m);
 	if (validation(m))
-		free_and_exit(m);
+		free_macro(m);
 	print_map_struct(m->map);
 }

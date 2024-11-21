@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/21 09:23:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:01:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 
 	m = (t_macro *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		free_and_exit(m);
+		free_all(m);
 	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		m->keys->key_w = 1;
 	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)

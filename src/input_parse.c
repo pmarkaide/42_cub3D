@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 09:07:59 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 10:25:39 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	parse_textures(char *line, t_macro *m)
 	char	*cleaned_path;
 	int		err;
 
+	err = 0;
 	skipped = ft_skipws(line);
 	cleaned_path = ft_skipws(skipped + 2);
 	if (!cleaned_path)

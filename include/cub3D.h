@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 15:14:05 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:01:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void			draw_ray(t_macro *m, float ray_length, double ray_dir_x,
 					double ray_dir_y);
 void			draw_vision_cone(t_macro *m);
 void			draw_wall_slice(t_macro *m, int x);
-void			free_and_exit(t_macro *m);
+void			free_all(t_macro *m);
 void			free_macro(t_macro *m);
 void			free_map(t_macro *m);
 void			ft_hook(mlx_key_data_t keydata, void *param);

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 09:25:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:02:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	if (validate_map(m))
 	{
 		printf("Error\nInvalid map\n");
-		free_and_exit(m);
+		free_macro(m);
 		return (1);
 	}
 	if (init_game(m))
