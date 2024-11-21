@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 13:01:06 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:27:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_macro
 
 void			adjust_image_transparency(mlx_texture_t *texture,
 					float alpha_factor);
-int				check_file_contents(char *file);
+int				check_file_contents(char *file, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
 void			calculate_ray_direction(t_macro *m, int x);
 void			calculate_ray_steps(t_macro *m, double ray_dir_x,
@@ -131,7 +131,6 @@ void			draw_vision_cone(t_macro *m);
 void			draw_wall_slice(t_macro *m, int x);
 void			free_all(t_macro *m);
 void			free_macro(t_macro *m);
-void			free_map(t_macro *m);
 void			ft_hook(mlx_key_data_t keydata, void *param);
 int				get_rgba(int r, int g, int b, int a);
 t_macro			*init_macro(t_macro *m);

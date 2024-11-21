@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 10:25:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:47:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ static int	parse_map(char *line, t_list **head)
 	clean_trailing_char(line, "\n");
 	new = ft_lstnew(ft_strdup(line));
 	if (!new)
+	{
+		ft_printf(2, "Error\nMemory allocation failed\n");
+		ft_lstclear(head, free);
 		return (1);
+	}
 	ft_lstadd_back(head, new);
 	return (0);
 }

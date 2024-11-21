@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 13:03:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:50:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	calculate_map_dimensions(t_macro *m)
 	m->map->h_map = height;
 }
 
-int	check_file_contents(char *file)
+int	check_file_contents(char *file, t_macro *m)
 {
 	int		fd;
 	char	buffer[1];
@@ -43,7 +43,7 @@ int	check_file_contents(char *file)
 	if (fd == -1)
 	{
 		ft_printf(2, "Cannot open file %s: %s\n", file, strerror(errno));
-		return (1);
+		free_macro(m);
 	}
 	bytes_read = read(fd, buffer, 1);
 	close(fd);
@@ -51,7 +51,7 @@ int	check_file_contents(char *file)
 	{
 		ft_printf(2, "Error\nFile %s is empty or unreadable: %s\n", file,
 			strerror(errno));
-		return (1);
+		free_macro(m);
 	}
 	return (0);
 }

@@ -58,7 +58,7 @@ static void	free_images(t_macro *m)
 
 void	free_macro(t_macro *m)
 {
-	if(m)
+	if (m)
 	{
 		free_map(m);
 		free_images(m);
@@ -73,9 +73,9 @@ void	free_macro(t_macro *m)
 
 void	free_all(t_macro *m)
 {
-	if(m)
+	if (m)
 	{
-		if(m->mlx_cub)
+		if (m->mlx_cub)
 		{
 			mlx_close_window(m->mlx_cub);
 			mlx_terminate(m->mlx_cub);
