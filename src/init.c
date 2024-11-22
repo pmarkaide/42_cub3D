@@ -14,7 +14,7 @@
 
 static void	initialize_to_zero(t_macro *m)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!m)
@@ -31,7 +31,7 @@ static void	initialize_to_zero(t_macro *m)
 	m->map->so = NULL;
 	m->map->we = NULL;
 	m->map->ea = NULL;
-	while(++i < 3)
+	while (++i < 3)
 	{
 		m->map->f[i] = -1;
 		m->map->c[i] = -1;

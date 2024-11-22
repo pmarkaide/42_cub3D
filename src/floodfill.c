@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-int	is_valid_position(t_macro *m, char** visited, size_t x, size_t y)
+int	is_valid_position(t_macro *m, char **visited, size_t x, size_t y)
 {
 	if (x >= m->map->h_map)
 		return (0);
@@ -25,19 +25,19 @@ int	is_valid_position(t_macro *m, char** visited, size_t x, size_t y)
 	return (1);
 }
 
-void	flood_fill(t_macro *m, char** visited, size_t x, size_t y)
+void	flood_fill(t_macro *m, char **visited, size_t x, size_t y)
 {
 	if (!is_valid_position(m, visited, x, y))
-		return;
+		return ;
 	visited[x][y] = 1;
-	 if (x > 0)
-        flood_fill(m, visited, x - 1, y);
-    if (x < m->map->h_map - 1)
-        flood_fill(m, visited, x + 1, y);
-    if (y > 0)
-        flood_fill(m, visited, x, y - 1);
-    if (y < m->map->w_map - 1)
-        flood_fill(m, visited, x, y + 1);
+	if (x > 0)
+		flood_fill(m, visited, x - 1, y);
+	if (x < m->map->h_map - 1)
+		flood_fill(m, visited, x + 1, y);
+	if (y > 0)
+		flood_fill(m, visited, x, y - 1);
+	if (y < m->map->w_map - 1)
+		flood_fill(m, visited, x, y + 1);
 }
 
 char	**create_visited_array(size_t height, size_t width)

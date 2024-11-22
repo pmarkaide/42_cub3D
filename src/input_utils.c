@@ -6,59 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 13:40:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:04:53 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static int	check_overflow(long nb, char next_char, int neg)
-{
-	if (neg > 0)
-	{
-		if (nb > LONG_MAX / 10)
-			return (1);
-		if (nb == LONG_MAX / 10 && next_char - '0' > LONG_MAX % 10)
-			return (1);
-	}
-	else
-	{
-		if (nb > -(long)(LONG_MIN / 10))
-			return (1);
-		if (nb == -(long)(LONG_MIN / 10) && next_char - '0' > -(LONG_MIN % 10))
-			return (1);
-	}
-	return (0);
-}
-
-int	nbr_to_int(char *str, int *error)
-{
-	long	nb;
-	int		neg;
-
-	nb = 0;
-	neg = 1;
-	while (*str && (ft_isspace(*str)))
-		str++;
-	if (*str == '-')
-		neg = -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	if (!*str || !ft_isdigit(*str))
-		*error = 1;
-	while (*str && ft_isdigit(*str))
-	{
-		if (check_overflow(nb, *str, neg))
-			*error = 1;
-		nb = 10 * nb + *str++ - '0';
-	}
-	if (*str != '\0')
-		*error = 1;
-	nb *= neg;
-	if (nb < INT_MIN || nb > INT_MAX)
-		*error = 1;
-	return ((int)nb);
-}
 
 void	calculate_map_dimensions(t_macro *m)
 {
@@ -140,9 +92,9 @@ int	save_texture_path(char **texture, char *path)
 	return (0);
 }
 
-int map_line_is_correct(char *line)
+int	map_line_is_correct(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)

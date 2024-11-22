@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 13:43:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:08:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,72 +38,25 @@ static int	parse_textures(char *line, t_macro *m)
 	return (err);
 }
 
-int is_valid_CF_format(char *line)
-{
-    int i = 0;
-    if (!ft_isdigit(line[i]))
-        return 0;
-    while (ft_isdigit(line[i]))
-        i++;
-    if (line[i] != ',')
-        return 0;
-    i++;
-    if (!ft_isdigit(line[i]))
-        return 0;
-    while (ft_isdigit(line[i]))
-        i++;
-    if (line[i] != ',')
-        return 0;
-    i++;
-    if (!ft_isdigit(line[i]))
-        return 0;
-    while (ft_isdigit(line[i]))
-        i++;
-    return 1;
-}
-
 static int	parse_colors(char *line, t_macro *m)
 {
 	char	*skipped;
-	int		count;
-	int		i;
 	int		err;
-	int 	*color;
+	int		*color;
 
-	i = 0;
-	count = 0;
 	err = 0;
+	color = NULL;
 	skipped = ft_skipws(line);
 	skipped = ft_skipws(skipped + 1);
 	clean_trailing_char(skipped, " \t\n");
-	if(!is_valid_CF_format(skipped))
-		return(1);
+	if (!is_valid_CF_format(skipped))
+		return (1);
 	if (ft_skipws(line)[0] == 'F')
 		color = m->map->f;
 	else if (ft_skipws(line)[0] == 'C')
 		color = m->map->c;
-	while (++i < 3)
-	{
-		int len = ft_strlenc(skipped, ',');
-		char *temp = (char *)malloc((len + 1) * sizeof(char));
-		if (!temp)
-		{
-			ft_printf(2, "Error\nMalloc failed\n");
-			free_macro(m);
-		}
-		ft_strncpy(temp, skipped, len);
-		temp[len] = '\0';
-		color[count] = nbr_to_int(temp, &err);
-		free(temp);
-		{
-			ft_printf(2, "Error\nInteger overflow or underflow\n");
-			free_macro(m);
-		}
-		skipped = ft_strchr(skipped, ',');
-		if (skipped)
-			skipped++;
-		count++;
-	}
+	if (parse_color_values(skipped, color, &err, m))
+		return (1);
 	return (0);
 }
 

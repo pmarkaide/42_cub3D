@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 13:42:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:10:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include "MLX42.h"    // mlx42
 # include <errno.h>    // errno
 # include <fcntl.h>    // open
+# include <limits.h>   // LONG_MAX, INT_MAX
 # include <math.h>     // math
 # include <stdio.h>    // printf, perror
 # include <stdlib.h>   // malloc, free, exit
 # include <string.h>   // strerror
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // close, read, write
-# include <limits.h>   // LONG_MAX, INT_MAX
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -159,9 +159,11 @@ void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
 char			**create_visited_array(size_t height, size_t width);
 void			free_visited_array(char **visited, size_t height);
-int 			map_line_is_correct(char *line);
+int				map_line_is_correct(char *line);
 void			clean_trailing_char(char *str, const char *set);
-int				nbr_to_int(char *str, int *error);
 void			correct_player_pos_in_edge(t_macro *m);
+int				is_valid_CF_format(char *line);
+int				parse_color_values(char *skipped, int *color, int *err,
+					t_macro *m);
 
 #endif

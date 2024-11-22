@@ -12,7 +12,6 @@
 
 #include "cub3D.h"
 
-
 static void	validate_colors(int *f, int *c, t_macro *m)
 {
 	int	i;
@@ -32,7 +31,7 @@ static void	validate_colors(int *f, int *c, t_macro *m)
 		}
 		i++;
 	}
-	return;
+	return ;
 }
 
 void	fill_with_spaces(char **map, size_t width)
@@ -60,27 +59,30 @@ void	fill_with_spaces(char **map, size_t width)
 	}
 }
 
-void substitute_spaces_with_zeros(char **grid, int width)
+void	substitute_spaces_with_zeros(char **grid, int width)
 {
-    int i = 0;
-    while (grid[i] != NULL)
-    {
-        int j = 0;
-        while (j < width)
-        {
-            if (grid[i][j] == ' ')
-            {
-                grid[i][j] = '0';
-            }
-            j++;
-        }
-        i++;
-    }
+	int	i;
+	int	j;
+
+	i = 0;
+	while (grid[i] != NULL)
+	{
+		j = 0;
+		while (j < width)
+		{
+			if (grid[i][j] == ' ')
+			{
+				grid[i][j] = '0';
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void	validation(t_macro *m)
 {
-	char **visited;
+	char	**visited;
 
 	check_file_contents(m->map->no, m);
 	check_file_contents(m->map->so, m);
