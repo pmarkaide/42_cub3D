@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 16:30:48 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:08:08 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,7 @@ void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
 char			**create_visited_array(size_t height, size_t width);
 void			free_visited_array(char **visited, size_t height);
+
+int 			map_line_is_correct(char *line);
 
 #endif

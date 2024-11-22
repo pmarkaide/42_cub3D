@@ -14,6 +14,9 @@
 
 static void	initialize_to_zero(t_macro *m)
 {
+	int i;
+
+	i = -1;
 	if (!m)
 		return ;
 	if (m->map)
@@ -28,6 +31,11 @@ static void	initialize_to_zero(t_macro *m)
 	m->map->so = NULL;
 	m->map->we = NULL;
 	m->map->ea = NULL;
+	while(++i < 3)
+	{
+		m->map->f[i] = -1;
+		m->map->c[i] = -1;
+	}
 	m->map->grid = NULL;
 	m->images->mini_i = NULL;
 	m->images->scene_i = NULL;

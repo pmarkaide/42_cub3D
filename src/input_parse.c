@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 14:47:04 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:17:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,15 @@ int	parse_line(char *line, t_macro *m, int section, t_list **head)
 		err = parse_colors(line, m);
 	if (section == 3)
 	{
-		if (!premap_ready(m))
+		if (!premap_ready(m) && !map_line_is_correct(line))
 		{
-			ft_printf(2,
-				"Error\nExpected sections of the file are incorrect\n");
+			ft_printf(2, "Error\nAbnormal section found\n");
+			return (1);
+		}
+		else if (!premap_ready(m) && map_line_is_correct(line))
+		{
+			ft_printf(2, "Error\n");
+			ft_printf(2, "Map starting before other sections are processed\n");
 			return (1);
 		}
 		err = parse_map(line, head);

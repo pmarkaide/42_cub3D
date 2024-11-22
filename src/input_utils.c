@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 16:05:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:17:13 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,20 @@ int	save_texture_path(char **texture, char *path)
 	}
 	*texture = temp;
 	return (0);
+}
+
+int map_line_is_correct(char *line)
+{
+	int i;
+
+	i = 0;
+	if (!line)
+		return (0);
+	while (line[i])
+	{
+		if (ft_strchr("10NSWE \n", line[i]) == NULL)
+			return (0);
+		i++;
+	}
+	return (1);
 }
