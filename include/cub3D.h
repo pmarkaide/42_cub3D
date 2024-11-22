@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 11:08:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:42:32 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <string.h>   // strerror
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // close, read, write
+# include <limits.h>   // LONG_MAX, INT_MAX
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -122,8 +123,6 @@ void			calculate_ray_steps_x(t_macro *m, double ray_dir_x);
 void			calculate_ray_steps_y(t_macro *m, double ray_dir_y);
 void			calculate_step_and_side_dist(t_macro *m);
 void			calculate_wall_distance(t_macro *m);
-void			clean_trailing_char(char *str, const char *set);
-void			correct_player_pos_in_edge(t_macro *m);
 void			draw_minimap(t_macro *m);
 void			draw_ray(t_macro *m, float ray_length, double ray_dir_x,
 					double ray_dir_y);
@@ -160,7 +159,9 @@ void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
 char			**create_visited_array(size_t height, size_t width);
 void			free_visited_array(char **visited, size_t height);
-
 int 			map_line_is_correct(char *line);
+void			clean_trailing_char(char *str, const char *set);
+int				nbr_to_int(char *str, int *error);
+void			correct_player_pos_in_edge(t_macro *m);
 
 #endif
