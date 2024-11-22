@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:51:42 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 14:09:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:58:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	is_valid_CF_format(char *line)
 		return (0);
 	while (ft_isdigit(line[i]))
 		i++;
+	if(line[i] != '\0')
+		return(0);
 	return (1);
 }
 

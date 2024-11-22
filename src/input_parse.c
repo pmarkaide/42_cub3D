@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 14:08:42 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:03:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,19 @@ static int	parse_colors(char *line, t_macro *m)
 	skipped = ft_skipws(skipped + 1);
 	clean_trailing_char(skipped, " \t\n");
 	if (!is_valid_CF_format(skipped))
+	{
+		ft_printf(2,"Error\nFC format is incorrect\n");
 		return (1);
+	}
 	if (ft_skipws(line)[0] == 'F')
 		color = m->map->f;
 	else if (ft_skipws(line)[0] == 'C')
 		color = m->map->c;
+	if (color[0] != -1 && color[1] != -1 && color[2] != -1)
+	{
+		ft_printf(2,"Error\nFC section duplicated\n");
+		return (1);
+	}
 	if (parse_color_values(skipped, color, &err, m))
 		return (1);
 	return (0);
