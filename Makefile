@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/22 13:56:15 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/24 13:27:04 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS = \
 	input_parse_fc.c \
 	validation.c \
 	validation_map.c \
+	validation_map_utils.c \
 	hooks.c \
 	minimap.c \
 	minimap_utils.c \

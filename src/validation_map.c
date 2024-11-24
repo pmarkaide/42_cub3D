@@ -6,62 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 12:18:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:33:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static int	check_unique_starting_position(t_macro *m)
-{
-	size_t	i;
-	size_t	j;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (i < m->map->h_map)
-	{
-		j = 0;
-		while (j < m->map->w_map)
-		{
-			if (ft_strchr("NSWE", m->map->grid[i][j]))
-			{
-				count++;
-				m->map->start_x = j;
-				m->map->start_y = i;
-				m->map->orientation = m->map->grid[i][j];
-			}
-			j++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-static void	map_chars_are_valid(t_macro *m)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < m->map->h_map)
-	{
-		j = 0;
-		while (j < m->map->w_map)
-		{
-			if (m->map->grid[i][j] && ft_strchr("10NSWE ",
-					m->map->grid[i][j]) == NULL)
-			{
-				ft_printf(2, "Error\nInvalid character in map\n");
-				free_macro(m);
-			}
-			j++;
-		}
-		i++;
-	}
-	return ;
-}
 
 static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 {
@@ -74,9 +23,11 @@ static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 		err = 1;
 	else if (m->map->grid[i][j - 1] == ' ' || m->map->grid[i][j + 1] == ' ')
 		err = 1;
-	else if (m->map->grid[i - 1][j - 1] == ' ' || m->map->grid[i - 1][j + 1] == ' ')
+	else if (m->map->grid[i - 1][j - 1] == ' ' || m->map->grid[i - 1][j
+		+ 1] == ' ')
 		err = 1;
-	else if (m->map->grid[i + 1][j - 1] == ' ' || m->map->grid[i + 1][j + 1] == ' ')
+	else if (m->map->grid[i + 1][j - 1] == ' ' || m->map->grid[i + 1][j
+		+ 1] == ' ')
 		err = 1;
 	if (err)
 	{
@@ -109,8 +60,32 @@ static void	is_valid_wall_structure(t_macro *m)
 	return ;
 }
 
-int	validate_map(t_macro *m)
+static void	evaluate_map_islands(t_macro *m)
 {
+	char	**visited;
+
+	visited = create_visited_array(m->map->h_map, m->map->w_map);
+	if (!visited)
+	{
+		ft_printf(2, "Error\nMalloc failed\n");
+		free_macro(m);
+	}
+	if (check_path(m, visited))
+	{
+		free_visited_array(visited, m->map->h_map);
+		free_macro(m);
+	}
+	free_visited_array(visited, m->map->h_map);
+}
+
+void	validate_map(t_macro *m)
+{
+	calculate_map_dimensions(m);
+	if (m->map->h_map > 500 || m->map->w_map > 500)
+	{
+		ft_printf(2, "Error\nMap dimensions exceed 500x500\n");
+		free_all(m);
+	}
 	map_chars_are_valid(m);
 	if (check_unique_starting_position(m) != 1)
 	{
@@ -118,5 +93,5 @@ int	validate_map(t_macro *m)
 		free_macro(m);
 	}
 	is_valid_wall_structure(m);
-	return (0);
+	evaluate_map_islands(m);
 }

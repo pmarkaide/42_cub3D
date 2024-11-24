@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:51:42 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 14:58:34 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:38:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	nbr_to_int(char *str, int *error)
 	return ((int)nb);
 }
 
-int	is_valid_CF_format(char *line)
+int	is_valid_fc_format(char *line)
 {
 	int	i;
 

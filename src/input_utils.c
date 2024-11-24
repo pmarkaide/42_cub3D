@@ -6,37 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 11:38:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:28:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	calculate_map_dimensions(t_macro *m)
-{
-	int		height;
-	int		width;
-	int		current_width;
-	char	**map;
-
-	height = 0;
-	width = 0;
-	if (!m->map->grid)
-	{
-		ft_printf(2, "Error\nMap malloc failed\n");
-		free_macro(m);
-	}
-	map = m->map->grid;
-	while (map[height])
-	{
-		current_width = ft_strlen(map[height]);
-		if (current_width > width)
-			width = current_width;
-		height++;
-	}
-	m->map->w_map = width;
-	m->map->h_map = height;
-}
 
 int	check_file_contents(char *file, t_macro *m)
 {
