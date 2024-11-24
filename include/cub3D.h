@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:28:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:45:17 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,7 @@ void			adjust_image_transparency(mlx_texture_t *texture,
 					float alpha_factor);
 int				check_file_contents(char *file, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
-void			fill_with_spaces(char **map, size_t width);
-void			substitute_spaces_with_zeros(char **grid, int width);
+void			substitute_spaces_with_zeros(t_macro *m);
 void			calculate_ray_direction(t_macro *m, int x);
 void			calculate_ray_steps(t_macro *m, double ray_dir_x,
 					double ray_dir_y);
@@ -151,7 +150,6 @@ void			perform_dda(t_macro *m);
 void			player_in_map(t_macro *m);
 void			print_map_struct(t_map *map);
 void			put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y);
-void			quit_hook(void *param);
 void			read_input(char *file, t_macro *m);
 void			release_all(mlx_key_data_t keydata, t_macro *m);
 int				save_texture_path(char **texture, char *path);
@@ -164,7 +162,7 @@ void			free_visited_array(char **visited, size_t height);
 int				map_line_is_correct(char *line);
 void			clean_trailing_char(char *str, const char *set);
 void			correct_player_pos_in_edge(t_macro *m);
-int				is_valid_CF_format(char *line);
+int				is_valid_fc_format(char *line);
 int				parse_color_values(char *skipped, int *color, int *err,
 					t_macro *m);
 int				check_unique_starting_position(t_macro *m);

@@ -6,24 +6,27 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:03:14 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:02:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	eval_extension(char *file, char *ext, t_macro *m)
+static int	eval_extension(char *file, t_macro *m)
 {
 	char	*dot;
+	int		err;
 
-	if (ft_strcmp(ext, ".cub") == 0)
+	dot = ft_strrchr(file, '.');
+	err = 0;
+	if (dot == NULL || ft_strcmp(dot, ".cub"))
+		err = 1;
+	else if (dot == file || *(dot - 1) == '/')
+		err = 1;
+	if (err)
 	{
-		dot = ft_strrchr(file, '.');
-		if (dot == NULL || (dot != NULL && ft_strcmp(dot, ".cub")))
-		{
-			ft_printf(2, "Error\nWrong file extension\n");
-			free_macro(m);
-		}
+		ft_printf(2, "Error\nWrong file extension\n");
+		free_macro(m);
 	}
 	return (0);
 }
@@ -105,7 +108,7 @@ static void	read_file(char *file, t_macro *m)
 
 void	read_input(char *file, t_macro *m)
 {
-	eval_extension(file, ".cub", m);
+	eval_extension(file, m);
 	check_file_contents(file, m);
 	read_file(file, m);
 	validation(m);

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:28:42 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:01:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	check_file_contents(char *file, t_macro *m)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf(2, "Cannot open file %s: %s\n", file, strerror(errno));
+		ft_printf(2, "Error\n");
+		ft_printf(2,"Cannot open file %s: %s\n", file, strerror(errno));
 		free_macro(m);
 	}
 	bytes_read = read(fd, buffer, 1);
 	close(fd);
 	if (bytes_read <= 0)
 	{
-		ft_printf(2, "Error\nFile %s is empty or unreadable: %s\n", file,
-			strerror(errno));
+		ft_printf(2, "Error\nFile %s is empty or unreadable\n", file);
 		free_macro(m);
 	}
 	return (0);

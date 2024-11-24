@@ -17,16 +17,10 @@ static void	initialize_to_zero(t_macro *m)
 	int	i;
 
 	i = -1;
-	if (!m)
-		return ;
-	if (m->map)
-		ft_bzero(m->map, sizeof(t_map));
-	if (m->images)
-		ft_bzero(m->images, sizeof(t_images));
-	if (m->ray)
-		ft_bzero(m->ray, sizeof(t_ray));
-	if (m->keys)
-		ft_bzero(m->keys, sizeof(t_keys));
+	ft_bzero(m->map, sizeof(t_map));
+	ft_bzero(m->images, sizeof(t_images));
+	ft_bzero(m->ray, sizeof(t_ray));
+	ft_bzero(m->keys, sizeof(t_keys));
 	m->map->no = NULL;
 	m->map->so = NULL;
 	m->map->we = NULL;
