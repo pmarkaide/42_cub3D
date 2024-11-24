@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 12:27:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:12:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	main(int argc, char **argv)
 	if (!m)
 		return (write(2, "Error\nMalloc failed\n", 20), 1);
 	read_input(argv[1], m);
-	// if (init_game(m))
-	// 	return (1);
-	// mlx_loop_hook(m->mlx_cub, &load_game, m);
-	// mlx_key_hook(m->mlx_cub, &ft_hook, m);
-	// mlx_loop(m->mlx_cub);
+	if (init_game(m))
+		return (1);
+	mlx_loop_hook(m->mlx_cub, &load_game, m);
+	mlx_key_hook(m->mlx_cub, &ft_hook, m);
+	mlx_loop(m->mlx_cub);
 	return (0);
 }

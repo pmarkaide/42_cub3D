@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:33:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:32:13 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	validate_map(t_macro *m)
 		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
 		free_macro(m);
 	}
+	fill_with_spaces(m->map->grid, m->map->w_map);
 	is_valid_wall_structure(m);
 	evaluate_map_islands(m);
 }

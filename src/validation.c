@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:37:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:04:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,20 @@ static void	validate_colors(t_macro *m)
 	return ;
 }
 
-static void	validate_textures_files(t_macro *m)
+static void	validate_textures_files(t_macro *m, int mlx)
 {
-	check_file_contents(m->map->no, m);
-	check_file_contents(m->map->so, m);
-	check_file_contents(m->map->we, m);
-	check_file_contents(m->map->ea, m);
+	if(mlx == 0)
+	{
+		check_file_contents(m->map->no, m);
+		check_file_contents(m->map->so, m);
+		check_file_contents(m->map->we, m);
+		check_file_contents(m->map->ea, m);
+	}
 }
 
 void	validation(t_macro *m)
 {
-	validate_textures_files(m);
+	validate_textures_files(m, 0);
 	validate_colors(m);
 	validate_map(m);
 	substitute_spaces_with_zeros(m);

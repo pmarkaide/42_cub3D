@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:37:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:25:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,20 @@ int	check_unique_starting_position(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
+	size_t	line_length;
 	int		count;
 
 	i = 0;
 	count = 0;
 	while (i < m->map->h_map)
 	{
+		line_length = ft_strlen(m->map->grid[i]);
 		j = 0;
-		while (j < m->map->w_map)
+		while (j < line_length)
 		{
 			if (ft_strchr("NSWE", m->map->grid[i][j]))
 			{
+				printf("Found player at %ld, %ld\n", j, i);
 				count++;
 				m->map->start_x = j;
 				m->map->start_y = i;
@@ -119,12 +122,14 @@ void	map_chars_are_valid(t_macro *m)
 {
 	size_t	i;
 	size_t	j;
+	size_t	line_length;
 
 	i = 0;
 	while (i < m->map->h_map)
 	{
+		line_length = ft_strlen(m->map->grid[i]);
 		j = 0;
-		while (j < m->map->w_map)
+		while (j < line_length)
 		{
 			if (m->map->grid[i][j] && ft_strchr("10NSWE ",
 					m->map->grid[i][j]) == NULL)

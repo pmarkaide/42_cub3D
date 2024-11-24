@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:38:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:11:28 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	parse_line(char *line, t_macro *m, int section, t_list **head)
 	int	err;
 
 	err = 0;
-	if (section == 0 && head == NULL)
+	if (section == 0 && *head == NULL)
 		return (0);
 	else if (section == 1)
 		err = parse_textures(line, m);

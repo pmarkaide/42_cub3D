@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 13:45:17 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:31:10 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,6 @@ int				parse_color_values(char *skipped, int *color, int *err,
 					t_macro *m);
 int				check_unique_starting_position(t_macro *m);
 void			map_chars_are_valid(t_macro *m);
+void			fill_with_spaces(char **grid, size_t width);
 
 #endif
