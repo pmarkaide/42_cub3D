@@ -14,20 +14,22 @@
 
 static void	initialize_to_zero(t_macro *m)
 {
-	if (!m)
-		return ;
-	if (m->map)
-		ft_bzero(m->map, sizeof(t_map));
-	if (m->images)
-		ft_bzero(m->images, sizeof(t_images));
-	if (m->ray)
-		ft_bzero(m->ray, sizeof(t_ray));
-	if (m->keys)
-		ft_bzero(m->keys, sizeof(t_keys));
+	int	i;
+
+	i = -1;
+	ft_bzero(m->map, sizeof(t_map));
+	ft_bzero(m->images, sizeof(t_images));
+	ft_bzero(m->ray, sizeof(t_ray));
+	ft_bzero(m->keys, sizeof(t_keys));
 	m->map->no = NULL;
 	m->map->so = NULL;
 	m->map->we = NULL;
 	m->map->ea = NULL;
+	while (++i < 3)
+	{
+		m->map->f[i] = -1;
+		m->map->c[i] = -1;
+	}
 	m->map->grid = NULL;
 	m->images->mini_i = NULL;
 	m->images->scene_i = NULL;

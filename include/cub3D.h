@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 16:30:48 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:31:10 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "MLX42.h"    // mlx42
 # include <errno.h>    // errno
 # include <fcntl.h>    // open
+# include <limits.h>   // LONG_MAX, INT_MAX
 # include <math.h>     // math
 # include <stdio.h>    // printf, perror
 # include <stdlib.h>   // malloc, free, exit
@@ -115,6 +116,7 @@ void			adjust_image_transparency(mlx_texture_t *texture,
 					float alpha_factor);
 int				check_file_contents(char *file, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
+void			substitute_spaces_with_zeros(t_macro *m);
 void			calculate_ray_direction(t_macro *m, int x);
 void			calculate_ray_steps(t_macro *m, double ray_dir_x,
 					double ray_dir_y);
@@ -122,8 +124,6 @@ void			calculate_ray_steps_x(t_macro *m, double ray_dir_x);
 void			calculate_ray_steps_y(t_macro *m, double ray_dir_y);
 void			calculate_step_and_side_dist(t_macro *m);
 void			calculate_wall_distance(t_macro *m);
-void			clean_trailing_char(char *str, const char *set);
-void			correct_player_pos_in_edge(t_macro *m);
 void			draw_minimap(t_macro *m);
 void			draw_ray(t_macro *m, float ray_length, double ray_dir_x,
 					double ray_dir_y);
@@ -150,15 +150,23 @@ void			perform_dda(t_macro *m);
 void			player_in_map(t_macro *m);
 void			print_map_struct(t_map *map);
 void			put_img2img(mlx_image_t *dst, mlx_image_t *src, int x, int y);
-void			quit_hook(void *param);
 void			read_input(char *file, t_macro *m);
 void			release_all(mlx_key_data_t keydata, t_macro *m);
 int				save_texture_path(char **texture, char *path);
 void			stop_at_wall(t_macro *m, int x, int y);
-int				validate_map(t_macro *m);
+void			validate_map(t_macro *m);
 void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
 char			**create_visited_array(size_t height, size_t width);
 void			free_visited_array(char **visited, size_t height);
+int				map_line_is_correct(char *line);
+void			clean_trailing_char(char *str, const char *set);
+void			correct_player_pos_in_edge(t_macro *m);
+int				is_valid_fc_format(char *line);
+int				parse_color_values(char *skipped, int *color, int *err,
+					t_macro *m);
+int				check_unique_starting_position(t_macro *m);
+void			map_chars_are_valid(t_macro *m);
+void			fill_with_spaces(char **grid, size_t width);
 
 #endif
