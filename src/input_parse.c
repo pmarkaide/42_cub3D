@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/22 15:03:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 11:43:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 static int	parse_textures(char *line, t_macro *m)
 {
-	char	*skipped;
-	char	*cleaned_path;
+	char	*clean;
+	char	*adv_line;
 	int		err;
 
 	err = 0;
-	skipped = ft_skipws(line);
-	cleaned_path = ft_skipws(skipped + 2);
-	if (!cleaned_path)
+	clean = ft_strtrim(line, " \t\n");
+	if (!clean)
 	{
 		ft_printf(2, "Error\nMemory allocation failed\n");
 		return (1);
 	}
-	clean_trailing_char(cleaned_path, " \t\n");
-	if (ft_strncmp(skipped, "NO ", 3) == 0)
-		err = save_texture_path(&(m->map->no), cleaned_path);
-	else if (ft_strncmp(skipped, "SO ", 3) == 0)
-		err = save_texture_path(&(m->map->so), cleaned_path);
-	else if (ft_strncmp(skipped, "WE ", 3) == 0)
-		err = save_texture_path(&(m->map->we), cleaned_path);
-	else if (ft_strncmp(skipped, "EA ", 3) == 0)
-		err = save_texture_path(&(m->map->ea), cleaned_path);
+	adv_line = clean + 2;
+	if (ft_strncmp(clean, "NO ", 3) == 0)
+		err = save_texture_path(&(m->map->no), adv_line);
+	else if (ft_strncmp(clean, "SO ", 3) == 0)
+		err = save_texture_path(&(m->map->so), adv_line);
+	else if (ft_strncmp(clean, "WE ", 3) == 0)
+		err = save_texture_path(&(m->map->we), adv_line);
+	else if (ft_strncmp(clean, "EA ", 3) == 0)
+		err = save_texture_path(&(m->map->ea), adv_line);
+	free(clean);
 	return (err);
 }
 
@@ -51,7 +51,7 @@ static int	parse_colors(char *line, t_macro *m)
 	clean_trailing_char(skipped, " \t\n");
 	if (!is_valid_CF_format(skipped))
 	{
-		ft_printf(2,"Error\nFC format is incorrect\n");
+		ft_printf(2, "Error\nFC format is incorrect\n");
 		return (1);
 	}
 	if (ft_skipws(line)[0] == 'F')
@@ -60,7 +60,7 @@ static int	parse_colors(char *line, t_macro *m)
 		color = m->map->c;
 	if (color[0] != -1 && color[1] != -1 && color[2] != -1)
 	{
-		ft_printf(2,"Error\nFC section duplicated\n");
+		ft_printf(2, "Error\nFC section duplicated\n");
 		return (1);
 	}
 	if (parse_color_values(skipped, color, &err, m))

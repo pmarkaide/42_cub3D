@@ -83,8 +83,8 @@ int	is_valid_CF_format(char *line)
 		return (0);
 	while (ft_isdigit(line[i]))
 		i++;
-	if(line[i] != '\0')
-		return(0);
+	if (line[i] != '\0')
+		return (0);
 	return (1);
 }
 
