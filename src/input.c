@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 14:13:36 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:03:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ static int	handle_lines(t_macro *m, int fd, char *line)
 		line = get_next_line(fd);
 	}
 	m->map->grid = ft_lst_to_array(&head);
+	if (m->map->grid == NULL || m->map->grid[0] == NULL)
+	{
+		ft_printf(2, "Error\nEmpty map grid\n");
+		ft_lstclear(&head, free);
+		return (1);
+	}
 	ft_lstclear(&head, free);
 	return (0);
 }

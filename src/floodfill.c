@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 17:04:23 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 12:39:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,6 @@ void	free_visited_array(char **visited, size_t height)
 	free(visited);
 }
 
-void	print_arrays(t_macro *m, char **visited)
-{
-	size_t	i;
-	size_t	j;
-
-	ft_printf(1, "Grid:\n");
-	for (i = 0; i < m->map->h_map; i++)
-	{
-		for (j = 0; j < m->map->w_map; j++)
-			ft_printf(1, "%c ", m->map->grid[i][j]);
-		ft_printf(1, "\n");
-	}
-	ft_printf(1, "\nVisited:\n");
-	for (i = 0; i < m->map->h_map; i++)
-	{
-		for (j = 0; j < m->map->w_map; j++)
-			ft_printf(1, "%d ", visited[i][j]);
-		ft_printf(1, "\n");
-	}
-}
-
 int	check_path(t_macro *m, char **visited)
 {
 	size_t	i;
@@ -107,7 +86,6 @@ int	check_path(t_macro *m, char **visited)
 
 	grid = m->map->grid;
 	flood_fill(m, visited, m->map->start_y, m->map->start_x);
-	print_arrays(m, visited);
 	i = 0;
 	while (i < m->map->h_map)
 	{

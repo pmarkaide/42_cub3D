@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 14:49:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/24 12:18:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 	err = 0;
 	if (i == 0 || j == 0 || i == m->map->h_map - 1 || j == m->map->w_map - 1)
 		err = 1;
-	if (m->map->grid[i - 1][j] == ' ' || m->map->grid[i + 1][j] == ' ')
+	else if (m->map->grid[i - 1][j] == ' ' || m->map->grid[i + 1][j] == ' ')
 		err = 1;
-	if (m->map->grid[i][j - 1] == ' ' || m->map->grid[i][j + 1] == ' ')
+	else if (m->map->grid[i][j - 1] == ' ' || m->map->grid[i][j + 1] == ' ')
 		err = 1;
-	if (m->map->grid[i - 1][j - 1] == ' ' || m->map->grid[i - 1][j + 1] == ' ')
+	else if (m->map->grid[i - 1][j - 1] == ' ' || m->map->grid[i - 1][j + 1] == ' ')
 		err = 1;
-	if (m->map->grid[i + 1][j - 1] == ' ' || m->map->grid[i + 1][j + 1] == ' ')
+	else if (m->map->grid[i + 1][j - 1] == ' ' || m->map->grid[i + 1][j + 1] == ' ')
 		err = 1;
 	if (err)
 	{
