@@ -1,10 +1,10 @@
-NO textures/NN.png
-SO textures/SS.png
-WE textures/WW.png
-EA textures/EE.png
+NO textures/NNN.png
+SO textures/SSS.png
+WE textures/WWW.png
+EA textures/EEE.png
 
-F 220,100,20
-C 225,30,100
+F 117,92,60
+C 14,62,89
 
         1111111111111111111111111
         1000000000110000000000001

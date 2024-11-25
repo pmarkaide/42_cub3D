@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 14:17:52 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	check_unique_starting_position(t_macro *m)
 		{
 			if (ft_strchr("NSWE", m->map->grid[i][j]))
 			{
-				printf("Found player at %d, %d\n", j, i);
 				count++;
 				m->map->start_x = j;
 				m->map->start_y = i;

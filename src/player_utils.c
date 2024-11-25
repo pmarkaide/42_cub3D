@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 16:08:00 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:59:47 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,10 @@ void	move_rotate(t_macro *m)
 		m->ray->play_angle += ROT_SPEED;
 		m->ray->play_angle = fmod(m->ray->play_angle, 2 * M_PI);
 	}
+}
+
+void	move(t_macro *m)
+{
+	get_wsda(m, 0, 0);
+	move_rotate(m);
 }

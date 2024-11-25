@@ -86,32 +86,3 @@ t_macro	*init_macro(t_macro *m)
 	initialize_to_zero(m);
 	return (m);
 }
-
-mlx_image_t	*load_png_into_image(t_macro *m, char *file)
-{
-	mlx_texture_t	*texture;
-	mlx_image_t		*img;
-
-	texture = mlx_load_png(file);
-	if (!texture)
-		free_all(m);
-	adjust_image_transparency(texture, 0.5f);
-	img = mlx_texture_to_image(m->mlx_cub, texture);
-	if (!img)
-		free_all(m);
-	mlx_delete_texture(texture);
-	return (img);
-}
-
-// void	load_images_into_struct(t_macro *m)
-// {
-// 	m->images->background = load_png_into_image(m, "textures/background.png");
-// 	if (!m->images->background)
-// 		free_all(m);
-// 	m->images->wall = load_png_into_image(m, "textures/wall.png");
-// 	if (!m->images->wall)
-// 		free_all(m);
-// 	m->images->player = load_png_into_image(m, "textures/player.png");
-// 	if (!m->images->player)
-// 		free_all(m);
-// }

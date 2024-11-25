@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/21 13:04:42 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,8 @@ static void	free_images(t_macro *m)
 {
 	if (m->images)
 	{
-		if (m->images->mini_i)
-			mlx_delete_image(m->mlx_cub, m->images->mini_i);
 		if (m->images->scene_i)
 			mlx_delete_image(m->mlx_cub, m->images->scene_i);
-		if (m->images->wall)
-			mlx_delete_image(m->mlx_cub, m->images->wall);
-		if (m->images->background)
-			mlx_delete_image(m->mlx_cub, m->images->background);
-		if (m->images->player)
-			mlx_delete_image(m->mlx_cub, m->images->player);
 		free(m->images);
 	}
 }
