@@ -42,11 +42,13 @@ void	draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h)
 		y_o = 0;
 	while (t_pix < b_pix)
 	{
-		my_mlx_pixel_put(m, m->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+		my_mlx_pixel_put(m, m->ray->index, t_pix,
+			reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
 		y_o += factor;
 		t_pix++;
 	}
 }
+
 void	draw_floor_ceiling(t_macro *m, int ray, int t_pix, int b_pix)
 {
 	int		i;
@@ -84,9 +86,9 @@ void	do_wall(t_macro *m, int vertical)
 
 void	raycast(t_macro *m)
 {
-	double x_cross;
-	double y_cross;
-	int	vertical;
+	double	x_cross;
+	double	y_cross;
+	int		vertical;
 
 	vertical = 0;
 	m->ray->ray_angle = m->ray->play_angle - (m->ray->play_view / 2);

@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:38:29 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	validate_colors(t_macro *m)
 
 static void	validate_textures_files(t_macro *m, int mlx)
 {
-	if(mlx == 0)
+	if (mlx == 0)
 	{
 		check_file_contents(m->map->no, m);
 		check_file_contents(m->map->so, m);

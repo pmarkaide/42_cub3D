@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:44:08 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	calculate_map_dimensions(t_macro *m)
 
 void	fill_with_spaces(char **map, int width)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*new_line;
 
 	i = 0;
@@ -93,7 +93,7 @@ int	check_unique_starting_position(t_macro *m)
 	int	i;
 	int	j;
 	int	line_length;
-	int		count;
+	int	count;
 
 	i = 0;
 	count = 0;

@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:59:47 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:34:40 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,32 @@ void	move_wsda(t_macro *m, double x, double y)
 	}
 }
 
-void get_wsda(t_macro *m, double x, double y)
+void	get_wsda(t_macro *m, double x, double y)
 {
-    double angle;
-	
+	double	angle;
+
 	angle = m->ray->play_angle;
-    if (m->keys->key_w)
-    {
-        x = WALK_SPEED * cos(angle);
-        y = WALK_SPEED * sin(angle);
-    }
-    else if (m->keys->key_a)
-    {
-        x = WALK_SPEED * sin(angle);
-        y = WALK_SPEED * -cos(angle);
-    }
-    else if (m->keys->key_s)
-    {
-        x = WALK_SPEED * cos(angle + M_PI);
-        y = WALK_SPEED * sin(angle + M_PI);
-    }
-    else if (m->keys->key_d)
-    {
-        x = WALK_SPEED * sin(angle + M_PI);
-        y = WALK_SPEED * cos(angle);
-    }
-    move_wsda(m, x, y);
+	if (m->keys->key_w)
+	{
+		x = WALK_SPEED * cos(angle);
+		y = WALK_SPEED * sin(angle);
+	}
+	else if (m->keys->key_a)
+	{
+		x = WALK_SPEED * sin(angle);
+		y = WALK_SPEED * -cos(angle);
+	}
+	else if (m->keys->key_s)
+	{
+		x = WALK_SPEED * cos(angle + M_PI);
+		y = WALK_SPEED * sin(angle + M_PI);
+	}
+	else if (m->keys->key_d)
+	{
+		x = WALK_SPEED * sin(angle + M_PI);
+		y = WALK_SPEED * cos(angle);
+	}
+	move_wsda(m, x, y);
 }
 
 void	move_rotate(t_macro *m)

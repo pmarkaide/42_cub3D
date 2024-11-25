@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:35:24 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	flood_fill(t_macro *m, char **visited, int x, int y)
 char	**create_visited_array(int height, int width)
 {
 	char	**visited;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	visited = (char **)malloc(sizeof(char *) * height);
 	if (!visited)
@@ -80,8 +80,8 @@ void	free_visited_array(char **visited, int height)
 
 int	check_path(t_macro *m, char **visited)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	**grid;
 
 	grid = m->map->grid;

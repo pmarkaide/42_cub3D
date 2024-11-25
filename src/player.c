@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/25 23:01:46 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:08:44 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,38 +65,45 @@ void	player_in_map(t_macro *m)
 	}
 }
 
-void mirror_vert(mlx_texture_t *texture)
+void	mirror_vert(mlx_texture_t *texture, int left, int right)
 {
-    int width = texture->width;
-    int height = texture->height;
-    uint32_t *pixels = (uint32_t *)texture->pixels;
-    uint32_t temp;
+	uint32_t	*pixels;
+	uint32_t	temp;
+	uint32_t	y;
+	uint32_t	x;
 
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width / 2; x++)
-        {
-            int left_index = y * width + x;
-            int right_index = y * width + (width - 1 - x);
-
-            // Swap the pixels
-            temp = pixels[left_index];
-            pixels[left_index] = pixels[right_index];
-            pixels[right_index] = temp;
-        }
-    }
-
+	pixels = (uint32_t *)texture->pixels;
+	y = 0;
+	while (y < texture->height)
+	{
+		x = 0;
+		while (x < texture->width / 2)
+		{
+			left = y * texture->width + x;
+			right = y * texture->width + (texture->width - 1 - x);
+			temp = pixels[left];
+			pixels[left] = pixels[right];
+			pixels[right] = temp;
+			x++;
+		}
+		y++;
+	}
 }
 
 void	load_map(t_macro *m)
 {
+	int		left;
+	int		right;
+
+	left = 0;
+	right = 0;
 	m->ray->floor = get_rgba(m->map->f[0], m->map->f[1], m->map->f[2], 255);
 	m->ray->ceiling = get_rgba(m->map->c[0], m->map->c[1], m->map->c[2], 255);
 	m->tex->no = mlx_load_png(m->map->no);
-    m->tex->so = mlx_load_png(m->map->so);
-    m->tex->we = mlx_load_png(m->map->we);
-    m->tex->ea = mlx_load_png(m->map->ea);
-	mirror_vert(m->tex->no);
-	mirror_vert(m->tex->ea);
+	m->tex->so = mlx_load_png(m->map->so);
+	m->tex->we = mlx_load_png(m->map->we);
+	m->tex->ea = mlx_load_png(m->map->ea);
+	mirror_vert(m->tex->no, left, right);
+	mirror_vert(m->tex->ea, left, right);
 	player_in_map(m);
 }

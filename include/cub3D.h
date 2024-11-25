@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:23:13 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:03:07 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_map
 	int			f[3];
 	int			c[3];
 	char		**grid;
-	int		w_map;
-	int		h_map;
+	int			w_map;
+	int			h_map;
 	char		orientation;
 	int			start_x;
 	int			start_y;
@@ -125,57 +125,57 @@ typedef struct s_macro
 	int			height;
 }				t_macro;
 
-int	is_valid_position(t_macro *m, char **visited, int x, int y);
-void	flood_fill(t_macro *m, char **visited, int x, int y);
-char	**create_visited_array(int height, int width);
-void	free_visited_array(char **visited, int height);
-int	check_path(t_macro *m, char **visited);
-void	free_macro(t_macro *m);
-void	free_all(t_macro *m);
-void	release_all(mlx_key_data_t keydata, t_macro *m);
-void	ft_hook(mlx_key_data_t keydata, void *param);
-int	get_rgba(int r, int g, int b, int a);
-t_macro	*init_macro(t_macro *m);
-int	is_valid_fc_format(char *line);
-int	parse_color_values(char *skipped, int *color, int *err, t_macro *m);
-int	parse_line(char *line, t_macro *m, int section, t_list **head);
-int	check_file_contents(char *file, t_macro *m);
-void	clean_trailing_char(char *str, const char *set);
-int	save_texture_path(char **texture, char *path);
-int	map_line_is_correct(char *line);
-void	read_input(char *file, t_macro *m);
-int	check_pngs(t_macro *m);
-int	init_game(t_macro *m);
-void	move_wsda(t_macro *m, double x, double y);
-void get_wsda(t_macro *m, double x, double y);
-void	move_rotate(t_macro *m);
-void	move(t_macro *m);
-void	load_game(void *param);
-void	load_player(t_macro *m);
-void	player_in_map(t_macro *m);
-void mirror_vert(mlx_texture_t *texture);
-void	load_map(t_macro *m);
-int	reverse_bytes(int c);
-int	radian_side(double angle, int side);
-int	cross_lines(double angle, float *crossed, float *step, int x_dda);
-int	wall_hit(float x, float y, t_macro *m);
-void	my_mlx_pixel_put(t_macro *m, int x, int y, int color);
-void	draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h);
-void	draw_floor_ceiling(t_macro *m, int ray, int t_pix, int b_pix);
-void	do_wall(t_macro *m, int vertical);
-void	raycast(t_macro *m);
-float	x_dda(t_macro *m, double angle);
-float	y_dda(t_macro *m, double angle);
-float	nor_angle(float angle);
+int				is_valid_position(t_macro *m, char **visited, int x, int y);
+void			flood_fill(t_macro *m, char **visited, int x, int y);
+char			**create_visited_array(int height, int width);
+void			free_visited_array(char **visited, int height);
+int				check_path(t_macro *m, char **visited);
+void			free_macro(t_macro *m);
+void			free_all(t_macro *m);
+void			release_all(mlx_key_data_t keydata, t_macro *m);
+void			ft_hook(mlx_key_data_t keydata, void *param);
+int				get_rgba(int r, int g, int b, int a);
+t_macro			*init_macro(t_macro *m);
+int				is_valid_fc_format(char *line);
+int				parse_color_values(char *skipped, int *color, int *err, t_macro *m);
+int				parse_line(char *line, t_macro *m, int section, t_list **head);
+int				check_file_contents(char *file, t_macro *m);
+void			clean_trailing_char(char *str, const char *set);
+int				save_texture_path(char **texture, char *path);
+int				map_line_is_correct(char *line);
+void			read_input(char *file, t_macro *m);
+int				check_pngs(t_macro *m);
+int				init_game(t_macro *m);
+void			move_wsda(t_macro *m, double x, double y);
+void			get_wsda(t_macro *m, double x, double y);
+void			move_rotate(t_macro *m);
+void			move(t_macro *m);
+void			load_game(void *param);
+void			load_player(t_macro *m);
+void			player_in_map(t_macro *m);
+void			mirror_vert(mlx_texture_t *texture, int left, int right);
+void			load_map(t_macro *m);
+int				reverse_bytes(int c);
+int				radian_side(double angle, int side);
+int				cross_lines(double angle, float *crossed, float *step, int x_dda);
+int				wall_hit(float x, float y, t_macro *m);
+void			my_mlx_pixel_put(t_macro *m, int x, int y, int color);
+void			draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h);
+void			draw_floor_ceiling(t_macro *m, int ray, int t_pix, int b_pix);
+void			do_wall(t_macro *m, int vertical);
+void			raycast(t_macro *m);
+float			x_dda(t_macro *m, double angle);
+float			y_dda(t_macro *m, double angle);
+float			nor_angle(float angle);
 mlx_texture_t	*get_texture(t_macro *m, int flag);
-double	get_x_o(mlx_texture_t	*texture, t_macro *m);
-void	calculate_map_dimensions(t_macro *m);
-void	fill_with_spaces(char **map, int width);
-void	substitute_spaces_with_zeros(t_macro *m);
-int	check_unique_starting_position(t_macro *m);
-void	map_chars_are_valid(t_macro *m);
-void	validate_map(t_macro *m);
-void	validation(t_macro *m);
+double			get_x_o(mlx_texture_t	*texture, t_macro *m);
+void			calculate_map_dimensions(t_macro *m);
+void			fill_with_spaces(char **map, int width);
+void			substitute_spaces_with_zeros(t_macro *m);
+int				check_unique_starting_position(t_macro *m);
+void			map_chars_are_valid(t_macro *m);
+void			validate_map(t_macro *m);
+void			validation(t_macro *m);
 
 
 // int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);

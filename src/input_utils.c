@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:36:21 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_file_contents(char *file, t_macro *m)
 	if (fd == -1)
 	{
 		ft_printf(2, "Error\n");
-		ft_printf(2,"Cannot open file %s: %s\n", file, strerror(errno));
+		ft_printf(2, "Cannot open file %s: %s\n", file, strerror(errno));
 		free_macro(m);
 	}
 	bytes_read = read(fd, buffer, 1);
