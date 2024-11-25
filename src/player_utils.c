@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:34:40 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:17:24 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	get_wsda(t_macro *m, double x, double y)
 	else if (m->keys->key_a)
 	{
 		x = WALK_SPEED * sin(angle);
-		y = WALK_SPEED * -cos(angle);
+		y = WALK_SPEED * cos(angle + M_PI);
 	}
 	else if (m->keys->key_s)
 	{
@@ -58,8 +58,14 @@ void	get_wsda(t_macro *m, double x, double y)
 	move_wsda(m, x, y);
 }
 
-void	move_rotate(t_macro *m)
+void	move(t_macro *m)
 {
+	double	x;
+	double	y;
+
+	x = 0;
+	y = 0;
+	get_wsda(m, x, y);
 	if (m->keys->key_left)
 	{
 		m->ray->play_angle -= ROT_SPEED;
@@ -70,10 +76,4 @@ void	move_rotate(t_macro *m)
 		m->ray->play_angle += ROT_SPEED;
 		m->ray->play_angle = fmod(m->ray->play_angle, 2 * M_PI);
 	}
-}
-
-void	move(t_macro *m)
-{
-	get_wsda(m, 0, 0);
-	move_rotate(m);
 }

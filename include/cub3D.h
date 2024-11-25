@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 00:03:07 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:53:00 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,20 +148,18 @@ int				check_pngs(t_macro *m);
 int				init_game(t_macro *m);
 void			move_wsda(t_macro *m, double x, double y);
 void			get_wsda(t_macro *m, double x, double y);
-void			move_rotate(t_macro *m);
 void			move(t_macro *m);
 void			load_game(void *param);
 void			load_player(t_macro *m);
 void			player_in_map(t_macro *m);
 void			mirror_vert(mlx_texture_t *texture, int left, int right);
 void			load_map(t_macro *m);
-int				reverse_bytes(int c);
+int				make_color(int c);
 int				radian_side(double angle, int side);
 int				cross_lines(double angle, float *crossed, float *step, int x_dda);
 int				wall_hit(float x, float y, t_macro *m);
-void			my_mlx_pixel_put(t_macro *m, int x, int y, int color);
-void			draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h);
-void			draw_floor_ceiling(t_macro *m, int ray, int t_pix, int b_pix);
+void			draw_wall(t_macro *m, int top_wall, int bottom, double wall_h);
+void			paint_background(t_macro *m, int ray);
 void			do_wall(t_macro *m, int vertical);
 void			raycast(t_macro *m);
 float			x_dda(t_macro *m, double angle);

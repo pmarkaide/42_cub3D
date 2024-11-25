@@ -6,13 +6,13 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:01:59 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/25 23:39:23 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:53:00 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	reverse_bytes(int c)
+int	make_color(int c)
 {
 	unsigned int	b;
 

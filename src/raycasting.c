@@ -12,20 +12,7 @@
 
 #include "../include/cub3D.h"
 
-void	my_mlx_pixel_put(t_macro *m, int x, int y, int color)
-{
-	if (x < 0)
-		return ;
-	else if (x >= m->width)
-		return ;
-	if (y < 0)
-		return ;
-	else if (y >= m->height)
-		return ;
-	mlx_put_pixel(m->images->scene_i, x, y, color);
-}
-
-void	draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h)
+void	draw_wall(t_macro *m, int top_wall, int bottom, double wall_h)
 {
 	double			x_o;
 	double			y_o;
@@ -37,51 +24,55 @@ void	draw_wall(t_macro *m, int t_pix, int b_pix, double wall_h)
 	arr = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / wall_h;
 	x_o = get_x_o(texture, m);
-	y_o = (t_pix - (m->height / 2) + (wall_h / 2)) * factor;
+	y_o = (top_wall - (m->height / 2) + (wall_h / 2)) * factor;
 	if (y_o < 0)
 		y_o = 0;
-	while (t_pix < b_pix)
+	while (top_wall < bottom)
 	{
-		my_mlx_pixel_put(m, m->ray->index, t_pix,
-			reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+		if (m->ray->index >= 0 && m->ray->index < m->width
+			&& top_wall >= 0 && top_wall < m->height)
+			mlx_put_pixel(m->images->scene_i, m->ray->index, top_wall++,
+				make_color(arr[(int)y_o * texture->width + (int)x_o]));
 		y_o += factor;
-		t_pix++;
 	}
 }
 
-void	draw_floor_ceiling(t_macro *m, int ray, int t_pix, int b_pix)
+void	paint_background(t_macro *m, int ray)
 {
 	int		i;
-	int		c;
 
-	i = b_pix;
-	c = m->ray->floor;
+	i = m->height / 2;
 	while (i < m->height)
-		my_mlx_pixel_put(m, ray, i++, c);
-	c = m->ray->ceiling;
+	{
+		if (ray >= 0 && ray < m->width && i >= 0 && i < m->height)
+			mlx_put_pixel(m->images->scene_i, ray, i++, m->ray->floor);
+	}
 	i = 0;
-	while (i < t_pix)
-		my_mlx_pixel_put(m, ray, i++, c);
+	while (i <= m->height / 2)
+	{
+		if (ray >= 0 && ray < m->width && i >= 0 && i < m->height)
+			mlx_put_pixel(m->images->scene_i, ray, i++, m->ray->ceiling);
+	}
 }
 
 void	do_wall(t_macro *m, int vertical)
 {
 	double	wall_h;
-	double	b_pix;
-	double	t_pix;
+	double	bottom;
+	double	top_wall;
 
 	m->ray->distance *= cos(nor_angle(m->ray->ray_angle - m->ray->play_angle));
-	wall_h = (BLOCK / m->ray->distance) * ((m->width / 2) / \
-	tan(m->ray->play_view / 2));
-	b_pix = (m->height / 2) + (wall_h / 2);
-	t_pix = (m->height / 2) - (wall_h / 2);
-	if (b_pix > m->height)
-		b_pix = m->height;
-	if (t_pix < 0)
-		t_pix = 0;
+	wall_h = (BLOCK / m->ray->distance) * ((m->width / 2));
+	wall_h /= tan(m->ray->play_view / 2);
+	bottom = (m->height / 2) + (wall_h / 2);
+	top_wall = (m->height / 2) - (wall_h / 2);
+	if (bottom > m->height)
+		bottom = m->height;
+	if (top_wall < 0)
+		top_wall = 0;
 	m->ray->index = vertical;
-	draw_floor_ceiling(m, vertical, b_pix, t_pix);
-	draw_wall(m, t_pix, b_pix, wall_h);
+	paint_background(m, vertical);
+	draw_wall(m, top_wall, bottom, wall_h);
 }
 
 void	raycast(t_macro *m)
