@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:31:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:28:35 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@
 # define BLOCK 32          // size of each block
 # define ANGLE_VIEW 60     // angle view for the player
 # define RATIO_SCREEN 0.75 // ratio screen
-# define ROT_SPEED 0.05    // rotation speed
+# define ROT_SPEED 0.04    // rotation speed
 # define WALK_SPEED 5      // walk speed
+
+typedef struct s_text
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+}	t_text;
 
 typedef struct s_map
 {
@@ -46,8 +54,8 @@ typedef struct s_map
 	int			f[3];
 	int			c[3];
 	char		**grid;
-	size_t		w_map;
-	size_t		h_map;
+	int		w_map;
+	int		h_map;
 	char		orientation;
 	int			start_x;
 	int			start_y;
@@ -74,9 +82,13 @@ typedef struct s_keys
 
 typedef struct s_ray
 {
+	int		index;
+	double		distance;
 	double		camera_x;
-	double		ray_dir_x;
-	double		ray_dir_y;
+	double		ray_dir_vx;
+	double		ray_dir_vy;
+	double		ray_dir_hx;
+	double		ray_dir_hy;
 	int			map_x;
 	int			map_y;
 	double		side_dist_x;
@@ -96,9 +108,9 @@ typedef struct s_ray
 	int32_t		ceiling;
 	float		play_view;
 	double		play_angle;
+	double		ray_angle;
 	int			pos_pl_x;
 	int			pos_pl_y;
-	double		distance;
 }				t_ray;
 
 typedef struct s_macro
@@ -108,6 +120,7 @@ typedef struct s_macro
 	t_images	*images;
 	t_keys		*keys;
 	t_ray		*ray;
+	t_text		*tex;
 	int			width;
 	int			height;
 }				t_macro;
@@ -142,7 +155,8 @@ void			load_map(t_macro *m);
 void			load_player(t_macro *m);
 int32_t			mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
 void			move_rotate(t_macro *m);
-void			move_wsda(t_macro *m);
+void	get_wsda(t_macro *m, double x, double y);
+void	move_wsda(t_macro *m, double x, double y);
 void			paint_background(t_macro *m);
 void			paint_wall(t_macro *m);
 int				parse_line(char *line, t_macro *m, int section, t_list **head);
@@ -157,8 +171,8 @@ void			stop_at_wall(t_macro *m, int x, int y);
 void			validate_map(t_macro *m);
 void			validation(t_macro *m);
 int				check_path(t_macro *macro, char **visited);
-char			**create_visited_array(size_t height, size_t width);
-void			free_visited_array(char **visited, size_t height);
+char			**create_visited_array(int height, int width);
+void			free_visited_array(char **visited, int height);
 int				map_line_is_correct(char *line);
 void			clean_trailing_char(char *str, const char *set);
 void			correct_player_pos_in_edge(t_macro *m);
@@ -167,6 +181,6 @@ int				parse_color_values(char *skipped, int *color, int *err,
 					t_macro *m);
 int				check_unique_starting_position(t_macro *m);
 void			map_chars_are_valid(t_macro *m);
-void			fill_with_spaces(char **grid, size_t width);
+void			fill_with_spaces(char **grid, int width);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:32:13 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:17:30 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
+static int	is_surrounded_by_walls(t_macro *m, int i, int j)
 {
 	int	err;
 
@@ -39,8 +39,8 @@ static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 
 static void	is_valid_wall_structure(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < m->map->h_map)

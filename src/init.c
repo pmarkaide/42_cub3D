@@ -72,6 +72,12 @@ t_macro	*init_macro(t_macro *m)
 	m = malloc(sizeof(t_macro));
 	if (!m)
 		return (NULL);
+	m->tex = malloc(sizeof(t_text));
+	if (!m->tex)
+	{
+		free(m);
+		return (NULL);
+	}
 	if (!malloc_structs(m))
 	{
 		free(m);
@@ -97,15 +103,15 @@ mlx_image_t	*load_png_into_image(t_macro *m, char *file)
 	return (img);
 }
 
-void	load_images_into_struct(t_macro *m)
-{
-	m->images->background = load_png_into_image(m, "textures/background.png");
-	if (!m->images->background)
-		free_all(m);
-	m->images->wall = load_png_into_image(m, "textures/wall.png");
-	if (!m->images->wall)
-		free_all(m);
-	m->images->player = load_png_into_image(m, "textures/player.png");
-	if (!m->images->player)
-		free_all(m);
-}
+// void	load_images_into_struct(t_macro *m)
+// {
+// 	m->images->background = load_png_into_image(m, "textures/background.png");
+// 	if (!m->images->background)
+// 		free_all(m);
+// 	m->images->wall = load_png_into_image(m, "textures/wall.png");
+// 	if (!m->images->wall)
+// 		free_all(m);
+// 	m->images->player = load_png_into_image(m, "textures/player.png");
+// 	if (!m->images->player)
+// 		free_all(m);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:25:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:17:52 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	calculate_map_dimensions(t_macro *m)
 	m->map->h_map = height;
 }
 
-void	fill_with_spaces(char **map, size_t width)
+void	fill_with_spaces(char **map, int width)
 {
-	size_t	i;
-	size_t	len;
+	int	i;
+	int	len;
 	char	*new_line;
 
 	i = 0;
@@ -90,9 +90,9 @@ void	substitute_spaces_with_zeros(t_macro *m)
 
 int	check_unique_starting_position(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
-	size_t	line_length;
+	int	i;
+	int	j;
+	int	line_length;
 	int		count;
 
 	i = 0;
@@ -105,7 +105,7 @@ int	check_unique_starting_position(t_macro *m)
 		{
 			if (ft_strchr("NSWE", m->map->grid[i][j]))
 			{
-				printf("Found player at %ld, %ld\n", j, i);
+				printf("Found player at %d, %d\n", j, i);
 				count++;
 				m->map->start_x = j;
 				m->map->start_y = i;
@@ -120,9 +120,9 @@ int	check_unique_starting_position(t_macro *m)
 
 void	map_chars_are_valid(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
-	size_t	line_length;
+	int	i;
+	int	j;
+	int	line_length;
 
 	i = 0;
 	while (i < m->map->h_map)
