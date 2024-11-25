@@ -6,13 +6,13 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:00:35 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/25 23:47:14 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:40:39 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-float	x_dda(t_macro *m, double angle)
+float	x_dda(t_macro *m, double angle, double dda)
 {
 	float	h_x;
 	float	h_y;
@@ -36,11 +36,11 @@ float	x_dda(t_macro *m, double angle)
 	}
 	m->ray->ray_dir_hx = h_x;
 	m->ray->ray_dir_hy = h_y;
-	return (sqrt(pow(h_x - m->ray->pos_pl_x, 2)
-			+ pow(h_y - m->ray->pos_pl_y, 2)));
+	dda = hypot(h_x - m->ray->pos_pl_x, h_y - m->ray->pos_pl_y);
+	return (dda);
 }
 
-float	y_dda(t_macro *m, double angle)
+float	y_dda(t_macro *m, double angle, double dda)
 {
 	float	v_x;
 	float	v_y;
@@ -52,8 +52,8 @@ float	y_dda(t_macro *m, double angle)
 	y_step = BLOCK * (sin(angle) / cos(angle));
 	v_x = floor(m->ray->pos_pl_x / BLOCK) * BLOCK;
 	pixel = cross_lines(angle, &v_x, &x_step, 0);
-	v_y = m->ray->pos_pl_y + (v_x - m->ray->pos_pl_x)
-		* (sin(angle) / cos(angle));
+	v_y = m->ray->pos_pl_y;
+	v_y += (v_x - m->ray->pos_pl_x) * (sin(angle) / cos(angle));
 	if ((radian_side(angle, 1) && y_step < 0)
 		|| (!radian_side(angle, 1) && y_step > 0))
 		y_step *= -1;
@@ -64,11 +64,11 @@ float	y_dda(t_macro *m, double angle)
 	}
 	m->ray->ray_dir_vx = v_x;
 	m->ray->ray_dir_vy = v_y;
-	return (sqrt(pow(v_x - m->ray->pos_pl_x, 2)
-			+ pow(v_y - m->ray->pos_pl_y, 2)));
+	dda = hypot(v_x - m->ray->pos_pl_x, v_y - m->ray->pos_pl_y);
+	return (dda);
 }
 
-float	nor_angle(float angle)
+float	normalize(float angle)
 {
 	if (angle < 0)
 		angle += (2 * M_PI);
@@ -79,7 +79,7 @@ float	nor_angle(float angle)
 
 mlx_texture_t	*get_texture(t_macro *m, int flag)
 {
-	m->ray->ray_angle = nor_angle(m->ray->ray_angle);
+	m->ray->ray_angle = normalize(m->ray->ray_angle);
 	if (flag == 0)
 	{
 		if (m->ray->ray_angle > M_PI / 2 && m->ray->ray_angle < 3 * (M_PI / 2))
@@ -96,15 +96,17 @@ mlx_texture_t	*get_texture(t_macro *m, int flag)
 	}
 }
 
-double	get_x_o(mlx_texture_t	*texture, t_macro *m)
+double	x_off(mlx_texture_t *texture, t_macro *m)
 {
-	double	x_o;
+	double	x_offset;
+	float	horizontal;
+	float	vertical;
 
+	horizontal = (m->ray->ray_dir_hx * (texture->width / BLOCK));
+	vertical = (m->ray->ray_dir_vy * (texture->width / BLOCK));
 	if (m->ray->hit == 1)
-		x_o = (int)fmodf((m->ray->ray_dir_hx
-					* (texture->width / BLOCK)), texture->width);
+		x_offset = (int)fmodf(horizontal, texture->width);
 	else
-		x_o = (int)fmodf((m->ray->ray_dir_vy
-					* (texture->width / BLOCK)), texture->width);
-	return (x_o);
+		x_offset = (int)fmodf(vertical, texture->width);
+	return (x_offset);
 }

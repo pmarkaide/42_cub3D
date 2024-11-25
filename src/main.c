@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:38:05 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:49:04 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	init_game(t_macro *m)
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	if (!m->mlx_cub)
 		return (write(2, "Error\nFailed to initialize gam2\n", 33), 1); // hacer free
-	m->images->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
-	if (!m->mlx_cub || !m->images->scene_i) // || !m->images->mini_i)
+	m->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
+	if (!m->mlx_cub || !m->scene_i)
 		return (write(2, "Error\nFailed to initialize gam3\n", 33), 1);
 	m->ray->pos_pl_x = m->map->start_x;
 	m->ray->pos_pl_y = m->map->start_y;
@@ -58,7 +58,7 @@ int	init_game(t_macro *m)
 		return (1); // hacer free y salir; igual hay que meter función de exit
 	load_map(m);
 	load_player(m);
-	mlx_image_to_window(m->mlx_cub, m->images->scene_i, 0, 0);
+	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
 	return (0);
 }
 

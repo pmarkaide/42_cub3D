@@ -6,22 +6,23 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:01:59 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 00:53:00 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:36:12 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	make_color(int c)
+int	make_color(int color)
 {
-	unsigned int	b;
+	unsigned char	bytes[4];
+	unsigned int	res;
 
-	b = 0;
-	b |= (c & 0xFF) << 24;
-	b |= (c & 0xFF00) << 8;
-	b |= (c & 0xFF0000) >> 8;
-	b |= (c & 0xFF000000) >> 24;
-	return (b);
+	bytes[0] = (color >> 24) & 0xFF;
+	bytes[1] = (color >> 16) & 0xFF;
+	bytes[2] = (color >> 8) & 0xFF;
+	bytes[3] = color & 0xFF;
+	res = (bytes[3] << 24) | (bytes[2] << 16) | (bytes[1] << 8) | bytes[0];
+	return (res);
 }
 
 int	radian_side(double angle, int side)
@@ -60,19 +61,21 @@ int	cross_lines(double angle, float *crossed, float *step, int x_dda)
 	return (1);
 }
 
-int	wall_hit(float x, float y, t_macro *m)
+int	wall_hit(float x_block, float y_block, t_macro *m)
 {
-	int		x_m;
-	int		y_m;
+	int	x;
+	int	y;
+	int	limit;
 
-	if (x < 0 || y < 0)
+	limit = 0;
+	if (x_block < 0 || y_block < 0)
 		return (0);
-	x_m = floor (x / BLOCK);
-	y_m = floor (y / BLOCK);
-	if ((y_m >= m->map->h_map || x_m >= m->map->w_map))
+	x = floor(x_block / BLOCK);
+	y = floor(y_block / BLOCK);
+	if ((y >= m->map->h_map || x >= m->map->w_map))
 		return (0);
-	if (m->map->grid[y_m] && x_m <= (int)ft_strlen(m->map->grid[y_m]))
-		if (m->map->grid[y_m][x_m] == '1')
-			return (0);
+	limit = (int)ft_strlen(m->map->grid[y]);
+	if (m->map->grid[y] && x <= limit && m->map->grid[y][x] == '1')
+		return (0);
 	return (1);
 }

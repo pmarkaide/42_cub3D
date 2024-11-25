@@ -18,7 +18,6 @@ static void	initialize_to_zero(t_macro *m)
 
 	i = -1;
 	ft_bzero(m->map, sizeof(t_map));
-	ft_bzero(m->images, sizeof(t_images));
 	ft_bzero(m->ray, sizeof(t_ray));
 	ft_bzero(m->keys, sizeof(t_keys));
 	m->map->no = NULL;
@@ -31,11 +30,7 @@ static void	initialize_to_zero(t_macro *m)
 		m->map->c[i] = -1;
 	}
 	m->map->grid = NULL;
-	m->images->mini_i = NULL;
-	m->images->scene_i = NULL;
-	m->images->wall = NULL;
-	m->images->background = NULL;
-	m->images->player = NULL;
+	m->scene_i = NULL;
 }
 
 static int	malloc_structs(t_macro *m)
@@ -43,8 +38,8 @@ static int	malloc_structs(t_macro *m)
 	m->map = malloc(sizeof(t_map));
 	if (!m->map)
 		return (0);
-	m->images = malloc(sizeof(t_images));
-	if (!m->images)
+	m->scene_i = malloc(sizeof(mlx_image_t));
+	if (!m->scene_i)
 	{
 		free(m->map);
 		return (0);
@@ -52,7 +47,7 @@ static int	malloc_structs(t_macro *m)
 	m->ray = malloc(sizeof(t_ray));
 	if (!m->ray)
 	{
-		free(m->images);
+		free(m->scene_i);
 		free(m->map);
 		return (0);
 	}
@@ -60,7 +55,7 @@ static int	malloc_structs(t_macro *m)
 	if (!m->keys)
 	{
 		free(m->ray);
-		free(m->images);
+		free(m->scene_i);
 		free(m->map);
 		return (0);
 	}

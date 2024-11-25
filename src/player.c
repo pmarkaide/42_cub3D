@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 00:08:44 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:46:20 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	load_game(void *param)
 	t_macro	*m;
 
 	m = (t_macro *)param;
-	mlx_delete_image(m->mlx_cub, m->images->scene_i);
-	m->images->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
+	mlx_delete_image(m->mlx_cub, m->scene_i);
+	m->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
 	move(m);
 	raycast(m);
-	mlx_image_to_window(m->mlx_cub, m->images->scene_i, 0, 0);
+	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
 }
 
 void	load_player(t_macro *m)

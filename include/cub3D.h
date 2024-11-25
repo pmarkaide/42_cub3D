@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 00:53:00 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:52:17 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,6 @@ typedef struct s_map
 	int			start_y;
 }				t_map;
 
-typedef struct s_images
-{
-	mlx_image_t	*mini_i;
-	mlx_image_t	*scene_i;
-	mlx_image_t	*wall;
-	mlx_image_t	*background;
-	mlx_image_t	*player;
-}				t_images;
-
 typedef struct s_keys
 {
 	int			key_w;
@@ -82,28 +73,13 @@ typedef struct s_keys
 
 typedef struct s_ray
 {
-	int		index;
+	int			index;
 	double		distance;
-	double		camera_x;
 	double		ray_dir_vx;
 	double		ray_dir_vy;
 	double		ray_dir_hx;
 	double		ray_dir_hy;
-	int			map_x;
-	int			map_y;
-	double		side_dist_x;
-	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
-	double		perp_wall_dist;
-	int			step_x;
-	int			step_y;
 	int			hit;
-	int			side;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-	int32_t		wall_color;
 	int32_t		floor;
 	int32_t		ceiling;
 	float		play_view;
@@ -117,7 +93,7 @@ typedef struct s_macro
 {
 	mlx_t		*mlx_cub;
 	t_map		*map;
-	t_images	*images;
+	mlx_image_t	*scene_i;
 	t_keys		*keys;
 	t_ray		*ray;
 	t_text		*tex;
@@ -156,17 +132,17 @@ void			mirror_vert(mlx_texture_t *texture, int left, int right);
 void			load_map(t_macro *m);
 int				make_color(int c);
 int				radian_side(double angle, int side);
-int				cross_lines(double angle, float *crossed, float *step, int x_dda);
+int				cross_lines(double angle, float *crossed, float *step, int normalize);
 int				wall_hit(float x, float y, t_macro *m);
 void			draw_wall(t_macro *m, int top_wall, int bottom, double wall_h);
 void			paint_background(t_macro *m, int ray);
 void			do_wall(t_macro *m, int vertical);
 void			raycast(t_macro *m);
-float			x_dda(t_macro *m, double angle);
-float			y_dda(t_macro *m, double angle);
-float			nor_angle(float angle);
+float			x_dda(t_macro *m, double angle, double dda);
+float			y_dda(t_macro *m, double angle, double dda);
+float			normalize(float angle);
 mlx_texture_t	*get_texture(t_macro *m, int flag);
-double			get_x_o(mlx_texture_t	*texture, t_macro *m);
+double			x_off(mlx_texture_t	*texture, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
 void			fill_with_spaces(char **map, int width);
 void			substitute_spaces_with_zeros(t_macro *m);
