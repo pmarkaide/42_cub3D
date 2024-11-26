@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 12:44:51 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:01:06 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int				cross_lines(double angle, float *crossed, float *step,
 					int normalize);
 int				wall_hit(float x, float y, t_macro *m);
 void			draw_wall(t_macro *m, int top_wall, int bottom, double wall_h);
-void			paint_background(t_macro *m, int ray);
 void			do_wall(t_macro *m, int vertical);
 void			raycast(t_macro *m);
 float			x_dda(t_macro *m, double angle, double dda);

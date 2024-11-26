@@ -37,21 +37,12 @@ void	draw_wall(t_macro *m, int top_wall, int bottom, double wall_h)
 	}
 }
 
-void	paint_background(t_macro *m, int ray)
+static void	paint_floor(t_macro *m, int vertical, int i)
 {
-	int		i;
-
-	i = m->height / 2;
 	while (i < m->height)
 	{
-		if (ray >= 0 && ray < m->width && i >= 0 && i < m->height)
-			mlx_put_pixel(m->scene_i, ray, i++, m->ray->floor);
-	}
-	i = 0;
-	while (i <= m->height / 2)
-	{
-		if (ray >= 0 && ray < m->width && i >= 0 && i < m->height)
-			mlx_put_pixel(m->scene_i, ray, i++, m->ray->ceiling);
+		if (vertical >= 0 && vertical < m->width && i >= 0 && i < m->height)
+			mlx_put_pixel(m->scene_i, vertical, i++, m->ray->floor);
 	}
 }
 
@@ -60,6 +51,7 @@ void	do_wall(t_macro *m, int vertical)
 	double	wall_h;
 	double	bottom;
 	double	top_wall;
+	int		i;
 
 	m->ray->distance *= cos(normalize(m->ray->ray_angle - m->ray->play_angle));
 	wall_h = (BLOCK / m->ray->distance) * ((m->width / 2));
@@ -71,7 +63,13 @@ void	do_wall(t_macro *m, int vertical)
 	if (top_wall < 0)
 		top_wall = 0;
 	m->ray->index = vertical;
-	paint_background(m, vertical);
+	i = 0;
+	while (i <= m->height / 2)
+	{
+		if (vertical >= 0 && vertical < m->width && i >= 0 && i < m->height)
+			mlx_put_pixel(m->scene_i, vertical, i++, m->ray->ceiling);
+	}
+	paint_floor(m, vertical, i);
 	draw_wall(m, top_wall, bottom, wall_h);
 }
 
