@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 01:46:20 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:59:39 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@ void	player_in_map(t_macro *m)
 	int	x;
 
 	y = 0;
-	while (m->map->grid[y] != NULL)
+	while (m->map->buff[y] != NULL)
 	{
 		x = 0;
-		while (m->map->grid[y][x])
+		while (m->map->buff[y][x])
 		{
-			if (m->map->grid[y][x] == 'N' || m->map->grid[y][x] == 'S'
-				|| m->map->grid[y][x] == 'E' || m->map->grid[y][x] == 'W')
+			if (m->map->buff[y][x] == 'N' || m->map->buff[y][x] == 'S'
+				|| m->map->buff[y][x] == 'E' || m->map->buff[y][x] == 'W')
 			{
 				m->map->start_x = x;
 				m->map->start_y = y;
-				m->map->orientation = m->map->grid[y][x];
-				m->map->grid[y][x] = '0';
+				m->map->orientation = m->map->buff[y][x];
+				m->map->buff[y][x] = '0';
 				break ;
 			}
 			x++;

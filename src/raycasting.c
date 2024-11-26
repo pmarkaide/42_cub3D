@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:46:05 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 13:46:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:54:43 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	do_wall(t_macro *m, int vertical)
 	int		i;
 
 	m->ray->distance *= cos(normalize(m->ray->ray_angle - m->ray->play_angle));
-	wall_h = (BLOCK / m->ray->distance) * ((m->width / 2));
+	wall_h = (BLOCK / m->ray->distance) * ((m->width / 2)) / 2;
 	wall_h /= (sin(m->ray->play_view / 2) / cos(m->ray->play_view / 2));
-	bottom = (m->height / 2) + (wall_h / 2);
-	top_wall = (m->height / 2) - (wall_h / 2);
+	top_wall = (m->height / 2) - (wall_h);
+	bottom = (m->height / 2) + (wall_h);
 	if (bottom > m->height)
 		bottom = m->height;
 	if (top_wall < 0)
@@ -70,7 +70,7 @@ void	do_wall(t_macro *m, int vertical)
 			mlx_put_pixel(m->scene_i, vertical, i++, m->ray->ceiling);
 	}
 	paint_floor(m, vertical, i);
-	draw_wall(m, top_wall, bottom, wall_h);
+	draw_wall(m, top_wall, bottom, 2 * wall_h);
 }
 
 void	raycast(t_macro *m)

@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 13:01:06 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:17:42 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define RATIO_SCREEN 0.75 // ratio screen
 # define ROT_SPEED 0.04    // rotation speed
 # define WALK_SPEED 5      // walk speed
+# define BUFF_AREA 2       // buffer distance
 
 typedef struct s_text
 {
@@ -54,6 +55,7 @@ typedef struct s_map
 	int			f[3];
 	int			c[3];
 	char		**grid;
+	char		**buff;
 	int			w_map;
 	int			h_map;
 	char		orientation;
