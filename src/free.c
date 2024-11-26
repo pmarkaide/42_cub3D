@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 01:47:36 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:59:00 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	free_images(t_macro *m)
 {
 	if (m->scene_i)
 		mlx_delete_image(m->mlx_cub, m->scene_i);
-	free(m->scene_i);
 }
 
 void	free_macro(t_macro *m)
