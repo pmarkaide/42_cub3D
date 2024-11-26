@@ -6,7 +6,7 @@
 #    By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/25 23:25:36 by dbejar-s         ###   ########.fr        #
+#    Updated: 2024/11/26 13:09:15 by dbejar-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -o3 #-g
 LIBS = ./lib/MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
