@@ -75,6 +75,7 @@ t_macro	*init_macro(t_macro *m)
 	}
 	if (!malloc_structs(m))
 	{
+		free(m->tex);
 		free(m);
 		return (NULL);
 	}

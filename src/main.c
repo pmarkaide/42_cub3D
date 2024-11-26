@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 01:49:04 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:25:38 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int	main(int argc, char **argv)
 	mlx_key_hook(m->mlx_cub, &ft_hook, m);
 	mlx_loop_hook(m->mlx_cub, &load_game, m);
 	mlx_loop(m->mlx_cub);
+	free_all(m);
 	return (0);
 }
