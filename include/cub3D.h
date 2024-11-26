@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 01:52:17 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:44:51 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void			ft_hook(mlx_key_data_t keydata, void *param);
 int				get_rgba(int r, int g, int b, int a);
 t_macro			*init_macro(t_macro *m);
 int				is_valid_fc_format(char *line);
-int				parse_color_values(char *skipped, int *color, int *err, t_macro *m);
+int				parse_color_values(char *skipped, int *color, int *err,
+					t_macro *m);
 int				parse_line(char *line, t_macro *m, int section, t_list **head);
 int				check_file_contents(char *file, t_macro *m);
 void			clean_trailing_char(char *str, const char *set);
@@ -132,7 +133,8 @@ void			mirror_vert(mlx_texture_t *texture, int left, int right);
 void			load_map(t_macro *m);
 int				make_color(int c);
 int				radian_side(double angle, int side);
-int				cross_lines(double angle, float *crossed, float *step, int normalize);
+int				cross_lines(double angle, float *crossed, float *step,
+					int normalize);
 int				wall_hit(float x, float y, t_macro *m);
 void			draw_wall(t_macro *m, int top_wall, int bottom, double wall_h);
 void			paint_background(t_macro *m, int ray);
@@ -150,9 +152,5 @@ int				check_unique_starting_position(t_macro *m);
 void			map_chars_are_valid(t_macro *m);
 void			validate_map(t_macro *m);
 void			validation(t_macro *m);
-
-
-// int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
-// void	paint_background(t_macro *m);
 
 #endif
