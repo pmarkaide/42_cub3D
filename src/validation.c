@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 02:07:10 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:05:07 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,15 @@ static int	validate_textures_files(t_macro *m, int mlx)
 int	validation(t_macro *m)
 {
 	if (validate_textures_files(m, 0))
+	{
+		calculate_map_dimensions(m);
 		return (1);
+	}
 	if (validate_colors(m))
+	{
+	 	calculate_map_dimensions(m);
 		return (1);
+	}
 	validate_map(m);
 	substitute_spaces_with_zeros(m);
 	create_buffer_zone(m);
