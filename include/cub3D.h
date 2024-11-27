@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:47:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:59:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void				clean_trailing_char(char *str, const char *set);
 int					save_texture_path(char **texture, char *path);
 int					map_line_is_correct(char *line);
 int					read_input(char *file, t_macro *m);
-int					check_pngs(t_macro *m, int err);
 int					init_game(t_macro *m);
 void				move_wsda(t_macro *m, double x, double y);
 void				get_wsda(t_macro *m, double x, double y);
