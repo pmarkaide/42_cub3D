@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:58:37 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/27 02:06:04 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:02:18 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static void	allocate_buffer(t_macro *m, int new_height, int new_width)
 {
 	int	i;
 
-	m->map->buff = (char **)malloc((new_height + 1) * sizeof(char *));
+	m->map->buff = (char **)ft_calloc(sizeof(char *), (new_height + 1));
 	if (!m->map->buff)
 		exit_malloc(m);
 	i = 0;
 	while (i < new_height)
 	{
-		m->map->buff[i] = (char *)malloc((new_width + 1) * sizeof(char));
+		m->map->buff[i] = (char *)ft_calloc(sizeof(char), (new_width + 1));
 		if (!m->map->buff[i])
 			exit_malloc(m);
 		i++;
