@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 09:29:27 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:38:13 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_map(t_macro *m)
 			free(m->map->ea);
 		if (m->map->grid)
 		{
-			while (++i < (int)(m->map->h_map))
+			while (m->map->grid[++i])
 				free(m->map->grid[i]);
 			free(m->map->grid);
 			m->map->grid = NULL;
