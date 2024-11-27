@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:32:05 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:40:02 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,18 @@
 # include <fcntl.h>    // open
 # include <limits.h>   // LONG_MAX, INT_MAX
 # include <math.h>     // math
-# include <stdio.h>    // printf, perror
 # include <stdlib.h>   // malloc, free, exit
 # include <string.h>   // strerror
-# include <sys/time.h> // gettimeofday
 # include <unistd.h>   // close, read, write
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIDTH 512         // screen width
-# define HEIGHT 512        // screen height
-# define BLOCK 32          // size of each block
+# define BLOCK 24          // size of each block
 # define ANGLE_VIEW 60     // angle view for the player
-# define ROT_SPEED 0.14    // rotation speed
-# define WALK_SPEED 8      // walk speed
+# define ROT_SPEED 0.10    // rotation speed
+# define WALK_SPEED 6      // walk speed
 # define BUFF_AREA 2       // buffer distance
 
 typedef struct s_text
