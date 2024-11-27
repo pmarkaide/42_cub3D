@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:58:37 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/27 09:02:18 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:34:44 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,9 @@ static void	copy_map_to_buffer(t_macro *m)
 
 void	create_buffer_zone(t_macro *m)
 {
-	int	new_height;
-	int	new_width;
-
-	new_height = m->map->h_map + 12;
-	new_width = m->map->w_map + 12;
-	allocate_buffer(m, new_height, new_width);
-	initialize_buffer(m, new_height, new_width);
+	m->map->h_buff = m->map->h_map + 12;
+	m->map->w_buff = m->map->w_map + 12;
+	allocate_buffer(m, m->map->h_buff, m->map->w_buff);
+	initialize_buffer(m, m->map->h_buff, m->map->w_buff);
 	copy_map_to_buffer(m);
-	m->map->h_map = new_height;
-	m->map->w_map = new_width;
 }

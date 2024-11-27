@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:59:24 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:30:05 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct s_map
 	char		**buff;
 	int			w_map;
 	int			h_map;
+	int			h_buff;
+	int			w_buff;
 	char		orientation;
 	int			start_x;
 	int			start_y;

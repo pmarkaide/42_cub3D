@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:51:29 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:29:27 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	free_buff(t_macro *m)
 	i = -1;
 	if (m->map->buff)
 	{
-		while (++i < (int)m->map->h_map)
+		while (++i < (int)m->map->h_buff)
 			free(m->map->buff[i]);
 		free(m->map->buff);
 		m->map->buff = NULL;
@@ -43,7 +43,7 @@ void	free_map(t_macro *m)
 			free(m->map->ea);
 		if (m->map->grid)
 		{
-			while (++i < (int)(m->map->h_map - 12))
+			while (++i < (int)(m->map->h_map))
 				free(m->map->grid[i]);
 			free(m->map->grid);
 			m->map->grid = NULL;

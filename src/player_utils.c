@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:39:44 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:33:19 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	move_wsda(t_macro *m, double x, double y)
 	new_pos_y = roundf(m->ray->pos_pl_y + y);
 	map_pos_x = new_pos_x / BLOCK;
 	map_pos_y = new_pos_y / BLOCK;
-	if ((map_pos_x >= BUFF_AREA) && (map_pos_x < (m->map->w_map - BUFF_AREA))
-		&& map_pos_y >= BUFF_AREA && (map_pos_y < (m->map->h_map - BUFF_AREA)))
+	if ((map_pos_x >= BUFF_AREA) && (map_pos_x < (m->map->w_buff - BUFF_AREA))
+		&& map_pos_y >= BUFF_AREA && (map_pos_y < (m->map->h_buff - BUFF_AREA)))
 	{
 		m->ray->pos_pl_x = new_pos_x;
 		m->ray->pos_pl_y = new_pos_y;

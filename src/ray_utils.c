@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:01:59 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 21:32:48 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:33:35 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	wall_hit(float x_block, float y_block, t_macro *m)
 		return (0);
 	x = floor(x_block / BLOCK);
 	y = floor(y_block / BLOCK);
-	if ((y >= m->map->h_map || x >= m->map->w_map))
+	if ((y >= m->map->h_buff || x >= m->map->w_map))
 		return (0);
 	limit = (int)ft_strlen(m->map->buff[y]);
 	if (m->map->buff[y] && x <= limit && m->map->buff[y][x] == '1')
