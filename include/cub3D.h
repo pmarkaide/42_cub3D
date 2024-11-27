@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:18:18 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:32:05 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@
 # define HEIGHT 512        // screen height
 # define BLOCK 32          // size of each block
 # define ANGLE_VIEW 60     // angle view for the player
-# define RATIO_SCREEN 0.75 // ratio screen
-# define ROT_SPEED 0.12    // rotation speed
-# define WALK_SPEED 7      // walk speed
+# define ROT_SPEED 0.14    // rotation speed
+# define WALK_SPEED 8      // walk speed
 # define BUFF_AREA 2       // buffer distance
 
 typedef struct s_text
@@ -126,7 +125,7 @@ void				clean_trailing_char(char *str, const char *set);
 int					save_texture_path(char **texture, char *path);
 int					map_line_is_correct(char *line);
 int					read_input(char *file, t_macro *m);
-int					check_pngs(t_macro *m);
+int					check_pngs(t_macro *m, int err);
 int					init_game(t_macro *m);
 void				move_wsda(t_macro *m, double x, double y);
 void				get_wsda(t_macro *m, double x, double y);

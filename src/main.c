@@ -6,58 +6,47 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:36:38 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:29:56 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	check_pngs(t_macro *m)
+int	check_pngs(t_macro *m, int err)
 {
 	mlx_texture_t	*tmp;
 
+	err = 0;
 	tmp = mlx_load_png(m->map->no);
 	if (!tmp)
-		return (1);
+		err = 1;
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->so);
 	if (!tmp)
-		return (1);
+		err = 1;
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->we);
 	if (!tmp)
-		return (1);
+		err = 1;
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->ea);
 	if (!tmp)
-		return (1);
+		err = 1;
 	mlx_delete_texture(tmp);
-	return (0);
-}
-
-static int	get_size(t_macro *m)
-{
-	mlx_t	*first;
-
-	first = mlx_init(800, 600, "Loading...", 0);
-	if (!first)
-	{
-		write(2, "Error\nFailed to initialize game\n", 33);
-		return (1);
-	}
-	mlx_get_monitor_size(0, &m->width, &m->height);
-	mlx_terminate(first);
-	return (0);
+	if (err)
+		write(2, "Error\nFailed to load PNGs\n", 26);
+	return (err);
 }
 
 int	init_game(t_macro *m)
 {
-	if (check_pngs(m))
+	int	err;
+
+	err = 0;
+	if (check_pngs(m, err))
 		return (1);
-	if (get_size(m))
-		return (1);
-	m->width *= RATIO_SCREEN;
-	m->height *= RATIO_SCREEN;
+	m->width = 2880;
+	m->height = 1620;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	if (!m->mlx_cub)
 		return (1);
