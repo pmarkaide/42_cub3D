@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 09:30:05 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:00:18 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 # define BLOCK 32          // size of each block
 # define ANGLE_VIEW 60     // angle view for the player
 # define RATIO_SCREEN 0.75 // ratio screen
-# define ROT_SPEED 0.04    // rotation speed
-# define WALK_SPEED 5      // walk speed
+# define ROT_SPEED 0.12    // rotation speed
+# define WALK_SPEED 7      // walk speed
 # define BUFF_AREA 2       // buffer distance
 
 typedef struct s_text
