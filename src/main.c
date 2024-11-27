@@ -6,45 +6,42 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:29:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:55:26 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	check_pngs(t_macro *m, int err)
+static int	check_pngs(t_macro *m)
 {
 	mlx_texture_t	*tmp;
 
-	err = 0;
 	tmp = mlx_load_png(m->map->no);
 	if (!tmp)
-		err = 1;
+		return (1);
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->so);
 	if (!tmp)
-		err = 1;
+		return (1);
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->we);
 	if (!tmp)
-		err = 1;
+		return (1);
 	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(m->map->ea);
 	if (!tmp)
-		err = 1;
+		return (1);
 	mlx_delete_texture(tmp);
-	if (err)
-		write(2, "Error\nFailed to load PNGs\n", 26);
-	return (err);
+	return (0);
 }
 
 int	init_game(t_macro *m)
 {
-	int	err;
-
-	err = 0;
-	if (check_pngs(m, err))
+	if (check_pngs(m))
+	{
+		write(2, "Error\nFailed to load PNGs\n", 26);
 		return (1);
+	}
 	m->width = 2880;
 	m->height = 1620;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
