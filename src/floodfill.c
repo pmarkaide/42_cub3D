@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 12:39:24 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:35:24 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	is_valid_position(t_macro *m, char **visited, size_t x, size_t y)
+int	is_valid_position(t_macro *m, char **visited, int x, int y)
 {
 	if (x >= m->map->h_map)
 		return (0);
@@ -25,7 +25,7 @@ int	is_valid_position(t_macro *m, char **visited, size_t x, size_t y)
 	return (1);
 }
 
-void	flood_fill(t_macro *m, char **visited, size_t x, size_t y)
+void	flood_fill(t_macro *m, char **visited, int x, int y)
 {
 	if (!is_valid_position(m, visited, x, y))
 		return ;
@@ -40,11 +40,11 @@ void	flood_fill(t_macro *m, char **visited, size_t x, size_t y)
 		flood_fill(m, visited, x, y + 1);
 }
 
-char	**create_visited_array(size_t height, size_t width)
+char	**create_visited_array(int height, int width)
 {
 	char	**visited;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	visited = (char **)malloc(sizeof(char *) * height);
 	if (!visited)
@@ -68,9 +68,9 @@ char	**create_visited_array(size_t height, size_t width)
 	return (visited);
 }
 
-void	free_visited_array(char **visited, size_t height)
+void	free_visited_array(char **visited, int height)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < height)
@@ -80,8 +80,8 @@ void	free_visited_array(char **visited, size_t height)
 
 int	check_path(t_macro *m, char **visited)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	char	**grid;
 
 	grid = m->map->grid;

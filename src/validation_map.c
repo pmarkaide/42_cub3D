@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:32:13 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:48:43 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
+static int	is_surrounded_by_walls(t_macro *m, int i, int j)
 {
 	int	err;
 
@@ -39,8 +39,8 @@ static int	is_surrounded_by_walls(t_macro *m, size_t i, size_t j)
 
 static void	is_valid_wall_structure(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < m->map->h_map)
@@ -51,7 +51,7 @@ static void	is_valid_wall_structure(t_macro *m)
 			if (ft_strchr("0NSEW", m->map->grid[i][j]))
 			{
 				if (!is_surrounded_by_walls(m, i, j))
-					free_macro(m);
+					free_all(m);
 			}
 			j++;
 		}
@@ -68,12 +68,12 @@ static void	evaluate_map_islands(t_macro *m)
 	if (!visited)
 	{
 		ft_printf(2, "Error\nMalloc failed\n");
-		free_macro(m);
+		free_all(m);
 	}
 	if (check_path(m, visited))
 	{
 		free_visited_array(visited, m->map->h_map);
-		free_macro(m);
+		free_all(m);
 	}
 	free_visited_array(visited, m->map->h_map);
 }
@@ -90,9 +90,9 @@ void	validate_map(t_macro *m)
 	if (check_unique_starting_position(m) != 1)
 	{
 		ft_printf(2, "Error\nMultiple or none starting positions in map\n");
-		free_macro(m);
+		free_all(m);
 	}
-	fill_with_spaces(m->map->grid, m->map->w_map);
+	fill_with_spaces(m->map->grid, m->map->w_map, m);
 	is_valid_wall_structure(m);
 	evaluate_map_islands(m);
 }

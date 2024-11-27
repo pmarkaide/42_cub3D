@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/24 13:27:04 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/11/27 02:00:13 by dbejar-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRCS = \
 	main.c \
 	init.c \
 	free.c \
-	_utils.c \
 	input.c \
 	input_utils.c \
 	input_parse.c \
@@ -25,20 +24,20 @@ SRCS = \
 	validation_map.c \
 	validation_map_utils.c \
 	hooks.c \
-	minimap.c \
-	minimap_utils.c \
 	image_utils.c \
-	paint.c \
 	player.c \
 	player_utils.c \
 	raycasting.c \
-	floodfill.c
+	floodfill.c \
+	ray_utils.c \
+	buffer_zone.c \
+	textures.c
 
 SRCS_DIR = src
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -o3 -g
 LIBS = ./lib/MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 OBJS = $(SRCS:.c=.o)
 RM = rm -f

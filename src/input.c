@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:02:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:43:31 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	eval_extension(char *file, t_macro *m)
 	{
 		ft_printf(2, "Error\nWrong file extension\n");
 		free_macro(m);
+		return (1);
 	}
 	return (0);
 }
@@ -85,7 +86,7 @@ static int	handle_lines(t_macro *m, int fd, char *line)
 	return (0);
 }
 
-static void	read_file(char *file, t_macro *m)
+static int	read_file(char *file, t_macro *m)
 {
 	char	*line;
 	int		fd;
@@ -96,21 +97,26 @@ static void	read_file(char *file, t_macro *m)
 	{
 		ft_printf(2, "Error\nEmpty file\n");
 		close(fd);
-		free_macro(m);
+		return (1);
 	}
 	if (handle_lines(m, fd, line))
 	{
 		close(fd);
-		free_macro(m);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-void	read_input(char *file, t_macro *m)
+int	read_input(char *file, t_macro *m)
 {
-	eval_extension(file, m);
-	check_file_contents(file, m);
-	read_file(file, m);
-	validation(m);
-	print_map_struct(m->map);
+	if (eval_extension(file, m))
+		return (1);
+	if (check_file_contents(file, m))
+		return (1);
+	if (read_file(file, m))
+		return (1);
+	if (validation(m))
+		return (1);
+	return (0);
 }

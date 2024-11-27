@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   */
-/*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:40:52 by pmarkaid         ###   ########.fr       */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 14:52:15 by dbejar-s          #+#    #+#             */
+/*   Updated: 2024/11/27 01:34:54 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ static void	initialize_to_zero(t_macro *m)
 
 	i = -1;
 	ft_bzero(m->map, sizeof(t_map));
-	ft_bzero(m->images, sizeof(t_images));
 	ft_bzero(m->ray, sizeof(t_ray));
 	ft_bzero(m->keys, sizeof(t_keys));
+	ft_bzero(m->tex, sizeof(t_text));
+	m->mlx_cub = NULL;
+	m->scene_i = NULL;
 	m->map->no = NULL;
 	m->map->so = NULL;
 	m->map->we = NULL;
@@ -31,11 +33,8 @@ static void	initialize_to_zero(t_macro *m)
 		m->map->c[i] = -1;
 	}
 	m->map->grid = NULL;
-	m->images->mini_i = NULL;
-	m->images->scene_i = NULL;
-	m->images->wall = NULL;
-	m->images->background = NULL;
-	m->images->player = NULL;
+	m->map->buff = NULL;
+	m->scene_i = NULL;
 }
 
 static int	malloc_structs(t_macro *m)
@@ -43,16 +42,9 @@ static int	malloc_structs(t_macro *m)
 	m->map = malloc(sizeof(t_map));
 	if (!m->map)
 		return (0);
-	m->images = malloc(sizeof(t_images));
-	if (!m->images)
-	{
-		free(m->map);
-		return (0);
-	}
 	m->ray = malloc(sizeof(t_ray));
 	if (!m->ray)
 	{
-		free(m->images);
 		free(m->map);
 		return (0);
 	}
@@ -60,7 +52,6 @@ static int	malloc_structs(t_macro *m)
 	if (!m->keys)
 	{
 		free(m->ray);
-		free(m->images);
 		free(m->map);
 		return (0);
 	}
@@ -72,40 +63,20 @@ t_macro	*init_macro(t_macro *m)
 	m = malloc(sizeof(t_macro));
 	if (!m)
 		return (NULL);
+	m->tex = malloc(sizeof(t_text));
+	if (!m->tex)
+	{
+		write(2, "Error\nMalloc failed\n", 20);
+		free(m);
+		return (NULL);
+	}
 	if (!malloc_structs(m))
 	{
+		write(2, "Error\nMalloc failed\n", 20);
+		free(m->tex);
 		free(m);
 		return (NULL);
 	}
 	initialize_to_zero(m);
 	return (m);
-}
-
-mlx_image_t	*load_png_into_image(t_macro *m, char *file)
-{
-	mlx_texture_t	*texture;
-	mlx_image_t		*img;
-
-	texture = mlx_load_png(file);
-	if (!texture)
-		free_all(m);
-	adjust_image_transparency(texture, 0.5f);
-	img = mlx_texture_to_image(m->mlx_cub, texture);
-	if (!img)
-		free_all(m);
-	mlx_delete_texture(texture);
-	return (img);
-}
-
-void	load_images_into_struct(t_macro *m)
-{
-	m->images->background = load_png_into_image(m, "textures/background.png");
-	if (!m->images->background)
-		free_all(m);
-	m->images->wall = load_png_into_image(m, "textures/wall.png");
-	if (!m->images->wall)
-		free_all(m);
-	m->images->player = load_png_into_image(m, "textures/player.png");
-	if (!m->images->player)
-		free_all(m);
 }

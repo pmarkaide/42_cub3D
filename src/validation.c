@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:04:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 02:07:10 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	validate_colors(t_macro *m)
+static int	validate_colors(t_macro *m)
 {
 	int	i;
 	int	*f;
@@ -26,33 +26,42 @@ static void	validate_colors(t_macro *m)
 		if (f[i] < 0 || f[i] > 255)
 		{
 			ft_printf(2, "Error\nFloor color value %d out of range\n", f[i]);
-			free_macro(m);
+			return (1);
 		}
 		if (c[i] < 0 || c[i] > 255)
 		{
 			ft_printf(2, "Error\nCeiling color value %d out of range\n", c[i]);
-			free_macro(m);
+			return (1);
 		}
 		i++;
 	}
-	return ;
+	return (0);
 }
 
-static void	validate_textures_files(t_macro *m, int mlx)
+static int	validate_textures_files(t_macro *m, int mlx)
 {
-	if(mlx == 0)
+	if (mlx == 0)
 	{
-		check_file_contents(m->map->no, m);
-		check_file_contents(m->map->so, m);
-		check_file_contents(m->map->we, m);
-		check_file_contents(m->map->ea, m);
+		if (check_file_contents(m->map->no, m))
+			return (1);
+		if (check_file_contents(m->map->so, m))
+			return (1);
+		if (check_file_contents(m->map->we, m))
+			return (1);
+		if (check_file_contents(m->map->ea, m))
+			return (1);
 	}
+	return (0);
 }
 
-void	validation(t_macro *m)
+int	validation(t_macro *m)
 {
-	validate_textures_files(m, 0);
-	validate_colors(m);
+	if (validate_textures_files(m, 0))
+		return (1);
+	if (validate_colors(m))
+		return (1);
 	validate_map(m);
 	substitute_spaces_with_zeros(m);
+	create_buffer_zone(m);
+	return (0);
 }

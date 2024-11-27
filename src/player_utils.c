@@ -3,55 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/19 14:57:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:39:44 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	stop_at_wall(t_macro *m, int x, int y)
+void	move_wsda(t_macro *m, double x, double y)
 {
-	if (m->map->grid[(int)(y / BLOCK)][(int)(x / BLOCK)] != '1')
+	int	map_pos_x;
+	int	map_pos_y;
+	int	new_pos_x;
+	int	new_pos_y;
+
+	new_pos_x = roundf(m->ray->pos_pl_x + x);
+	new_pos_y = roundf(m->ray->pos_pl_y + y);
+	map_pos_x = new_pos_x / BLOCK;
+	map_pos_y = new_pos_y / BLOCK;
+	if ((map_pos_x >= BUFF_AREA) && (map_pos_x < (m->map->w_map - BUFF_AREA))
+		&& map_pos_y >= BUFF_AREA && (map_pos_y < (m->map->h_map - BUFF_AREA)))
 	{
-		m->ray->pos_pl_x = x;
-		m->ray->pos_pl_y = y;
+		m->ray->pos_pl_x = new_pos_x;
+		m->ray->pos_pl_y = new_pos_y;
 	}
 }
 
-void	move_wsda(t_macro *m)
+void	get_wsda(t_macro *m, double x, double y)
 {
-	int	*x;
-	int	*y;
+	double	angle;
 
-	x = &m->ray->pos_pl_x;
-	y = &m->ray->pos_pl_y;
+	angle = m->ray->play_angle;
 	if (m->keys->key_w)
 	{
-		*x += (int)(WALK_SPEED * cos(m->ray->play_angle));
-		*y += (int)(WALK_SPEED * sin(m->ray->play_angle));
+		x = WALK_SPEED * cos(angle);
+		y = WALK_SPEED * sin(angle);
 	}
-	if (m->keys->key_a)
+	else if (m->keys->key_a)
 	{
-		*x -= (int)(WALK_SPEED * cos(m->ray->play_angle + M_PI / 2));
-		*y -= (int)(WALK_SPEED * sin(m->ray->play_angle + M_PI / 2));
+		x = WALK_SPEED * sin(angle);
+		y = WALK_SPEED * cos(angle + M_PI);
 	}
-	if (m->keys->key_s)
+	else if (m->keys->key_s)
 	{
-		*x -= (int)(WALK_SPEED * cos(m->ray->play_angle));
-		*y -= (int)(WALK_SPEED * sin(m->ray->play_angle));
+		x = WALK_SPEED * cos(angle + M_PI);
+		y = WALK_SPEED * sin(angle + M_PI);
 	}
-	if (m->keys->key_d)
+	else if (m->keys->key_d)
 	{
-		*x += (int)(WALK_SPEED * cos(m->ray->play_angle + M_PI / 2));
-		*y += (int)(WALK_SPEED * sin(m->ray->play_angle + M_PI / 2));
+		x = WALK_SPEED * sin(angle + M_PI);
+		y = WALK_SPEED * cos(angle);
 	}
+	move_wsda(m, x, y);
 }
 
-void	move_rotate(t_macro *m)
+void	move(t_macro *m)
 {
+	double	x;
+	double	y;
+
+	x = 0;
+	y = 0;
+	get_wsda(m, x, y);
 	if (m->keys->key_left)
 	{
 		m->ray->play_angle -= ROT_SPEED;

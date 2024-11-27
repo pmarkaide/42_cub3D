@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/24 14:25:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:47:39 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	calculate_map_dimensions(t_macro *m)
 	if (!m->map->grid)
 	{
 		ft_printf(2, "Error\nMap malloc failed\n");
-		free_macro(m);
+		free_all(m);
 	}
 	map = m->map->grid;
 	while (map[height])
@@ -38,10 +38,10 @@ void	calculate_map_dimensions(t_macro *m)
 	m->map->h_map = height;
 }
 
-void	fill_with_spaces(char **map, size_t width)
+void	fill_with_spaces(char **map, int width, t_macro *m)
 {
-	size_t	i;
-	size_t	len;
+	int		i;
+	int		len;
 	char	*new_line;
 
 	i = 0;
@@ -52,7 +52,10 @@ void	fill_with_spaces(char **map, size_t width)
 		{
 			new_line = malloc(width + 1);
 			if (!new_line)
-				return ;
+			{
+				ft_printf(2, "Error\nMalloc failed\n");
+				free_all(m);
+			}
 			ft_memcpy(new_line, map[i], len);
 			ft_memset(new_line + len, ' ', width - len);
 			new_line[width] = '\0';
@@ -90,10 +93,10 @@ void	substitute_spaces_with_zeros(t_macro *m)
 
 int	check_unique_starting_position(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
-	size_t	line_length;
-	int		count;
+	int	i;
+	int	j;
+	int	line_length;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -105,7 +108,6 @@ int	check_unique_starting_position(t_macro *m)
 		{
 			if (ft_strchr("NSWE", m->map->grid[i][j]))
 			{
-				printf("Found player at %ld, %ld\n", j, i);
 				count++;
 				m->map->start_x = j;
 				m->map->start_y = i;
@@ -120,9 +122,9 @@ int	check_unique_starting_position(t_macro *m)
 
 void	map_chars_are_valid(t_macro *m)
 {
-	size_t	i;
-	size_t	j;
-	size_t	line_length;
+	int	i;
+	int	j;
+	int	line_length;
 
 	i = 0;
 	while (i < m->map->h_map)
@@ -135,7 +137,7 @@ void	map_chars_are_valid(t_macro *m)
 					m->map->grid[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character in map\n");
-				free_macro(m);
+				free_all(m);
 			}
 			j++;
 		}
