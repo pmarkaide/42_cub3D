@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 13:25:38 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:36:38 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,50 @@ int	check_pngs(t_macro *m)
 	return (0);
 }
 
-int	init_game(t_macro *m)
+static int	get_size(t_macro *m)
 {
 	mlx_t	*first;
 
 	first = mlx_init(800, 600, "Loading...", 0);
 	if (!first)
-		return (write(2, "Error\nFailed to initialize gam1\n", 33), 1); //hacer free
+	{
+		write(2, "Error\nFailed to initialize game\n", 33);
+		return (1);
+	}
 	mlx_get_monitor_size(0, &m->width, &m->height);
 	mlx_terminate(first);
+	return (0);
+}
+
+int	init_game(t_macro *m)
+{
+	if (check_pngs(m))
+		return (1);
+	if (get_size(m))
+		return (1);
 	m->width *= RATIO_SCREEN;
 	m->height *= RATIO_SCREEN;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	if (!m->mlx_cub)
-		return (write(2, "Error\nFailed to initialize gam2\n", 33), 1); // hacer free
+		return (1);
 	m->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
 	if (!m->mlx_cub || !m->scene_i)
-		return (write(2, "Error\nFailed to initialize gam3\n", 33), 1);
+		return (1);
 	m->ray->pos_pl_x = m->map->start_x;
 	m->ray->pos_pl_y = m->map->start_y;
-	if (check_pngs(m))
-		return (1); // hacer free y salir; igual hay que meter función de exit
 	load_map(m);
 	load_player(m);
 	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
+	return (0);
+}
+
+static int	check_argc(int argc)
+{
+	if (argc != 2)
+	{
+		write(2, "Error\nIncorrect number of arguments\n", 36);
+		return (1);
+	}
 	return (0);
 }
 
@@ -67,14 +87,22 @@ int	main(int argc, char **argv)
 	t_macro	*m;
 
 	m = NULL;
-	if (argc != 2)
-		return (write(2, "Error\nIncorrect number of arguments\n", 36), 1);
+	if (check_argc(argc))
+		return (1);
 	m = init_macro(m);
 	if (!m)
-		return (write(2, "Error\nMalloc failed\n", 20), 1);
-	read_input(argv[1], m);
-	if (init_game(m))
 		return (1);
+	if (read_input(argv[1], m))
+	{
+		free_all(m);
+		return (1);
+	}
+	if (init_game(m))
+	{
+		write(2, "Error\nFailed to initialize game\n", 33);
+		free_all(m);
+		return (1);
+	}
 	mlx_key_hook(m->mlx_cub, &ft_hook, m);
 	mlx_loop_hook(m->mlx_cub, &load_game, m);
 	mlx_loop(m->mlx_cub);

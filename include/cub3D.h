@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 22:17:42 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:59:24 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int				check_file_contents(char *file, t_macro *m);
 void			clean_trailing_char(char *str, const char *set);
 int				save_texture_path(char **texture, char *path);
 int				map_line_is_correct(char *line);
-void			read_input(char *file, t_macro *m);
+int				read_input(char *file, t_macro *m);
 int				check_pngs(t_macro *m);
 int				init_game(t_macro *m);
 void			move_wsda(t_macro *m, double x, double y);
@@ -147,11 +147,15 @@ float			normalize(float angle);
 mlx_texture_t	*get_texture(t_macro *m, int flag);
 double			x_off(mlx_texture_t	*texture, t_macro *m);
 void			calculate_map_dimensions(t_macro *m);
-void			fill_with_spaces(char **map, int width);
+void			fill_with_spaces(char **map, int width, t_macro *m);
 void			substitute_spaces_with_zeros(t_macro *m);
 int				check_unique_starting_position(t_macro *m);
 void			map_chars_are_valid(t_macro *m);
 void			validate_map(t_macro *m);
-void			validation(t_macro *m);
+int				validation(t_macro *m);
+char			*get_skipped(char *line);
+void			free_map(t_macro *m);
+void			exit_malloc(t_macro *m);
+void			create_buffer_zone(t_macro *m);
 
 #endif

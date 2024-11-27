@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:44:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:47:39 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	calculate_map_dimensions(t_macro *m)
 	if (!m->map->grid)
 	{
 		ft_printf(2, "Error\nMap malloc failed\n");
-		free_macro(m);
+		free_all(m);
 	}
 	map = m->map->grid;
 	while (map[height])
@@ -38,7 +38,7 @@ void	calculate_map_dimensions(t_macro *m)
 	m->map->h_map = height;
 }
 
-void	fill_with_spaces(char **map, int width)
+void	fill_with_spaces(char **map, int width, t_macro *m)
 {
 	int		i;
 	int		len;
@@ -52,7 +52,10 @@ void	fill_with_spaces(char **map, int width)
 		{
 			new_line = malloc(width + 1);
 			if (!new_line)
-				return ;
+			{
+				ft_printf(2, "Error\nMalloc failed\n");
+				free_all(m);
+			}
 			ft_memcpy(new_line, map[i], len);
 			ft_memset(new_line + len, ' ', width - len);
 			new_line[width] = '\0';
@@ -134,7 +137,7 @@ void	map_chars_are_valid(t_macro *m)
 					m->map->grid[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character in map\n");
-				free_macro(m);
+				free_all(m);
 			}
 			j++;
 		}

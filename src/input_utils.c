@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:36:21 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:27:31 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ int	check_file_contents(char *file, t_macro *m)
 	char	buffer[1];
 	ssize_t	bytes_read;
 
+	(void)m;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_printf(2, "Error\n");
 		ft_printf(2, "Cannot open file %s: %s\n", file, strerror(errno));
-		free_macro(m);
+		return (1);
 	}
 	bytes_read = read(fd, buffer, 1);
 	close(fd);
 	if (bytes_read <= 0)
 	{
 		ft_printf(2, "Error\nFile %s is empty or unreadable\n", file);
-		free_macro(m);
+		return (1);
 	}
 	return (0);
 }

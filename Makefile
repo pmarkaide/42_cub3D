@@ -6,7 +6,7 @@
 #    By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:57:01 by dbejar-s          #+#    #+#              #
-#    Updated: 2024/11/26 13:26:42 by dbejar-s         ###   ########.fr        #
+#    Updated: 2024/11/27 02:00:13 by dbejar-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = \
 	raycasting.c \
 	floodfill.c \
 	ray_utils.c \
+	buffer_zone.c \
 	textures.c
 
 SRCS_DIR = src

@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:52:15 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 14:52:18 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:34:54 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static void	initialize_to_zero(t_macro *m)
 	ft_bzero(m->map, sizeof(t_map));
 	ft_bzero(m->ray, sizeof(t_ray));
 	ft_bzero(m->keys, sizeof(t_keys));
+	ft_bzero(m->tex, sizeof(t_text));
+	m->mlx_cub = NULL;
+	m->scene_i = NULL;
 	m->map->no = NULL;
 	m->map->so = NULL;
 	m->map->we = NULL;
@@ -30,6 +33,7 @@ static void	initialize_to_zero(t_macro *m)
 		m->map->c[i] = -1;
 	}
 	m->map->grid = NULL;
+	m->map->buff = NULL;
 	m->scene_i = NULL;
 }
 
@@ -38,16 +42,9 @@ static int	malloc_structs(t_macro *m)
 	m->map = malloc(sizeof(t_map));
 	if (!m->map)
 		return (0);
-	m->scene_i = malloc(sizeof(mlx_image_t));
-	if (!m->scene_i)
-	{
-		free(m->map);
-		return (0);
-	}
 	m->ray = malloc(sizeof(t_ray));
 	if (!m->ray)
 	{
-		free(m->scene_i);
 		free(m->map);
 		return (0);
 	}
@@ -55,7 +52,6 @@ static int	malloc_structs(t_macro *m)
 	if (!m->keys)
 	{
 		free(m->ray);
-		free(m->scene_i);
 		free(m->map);
 		return (0);
 	}
@@ -70,11 +66,13 @@ t_macro	*init_macro(t_macro *m)
 	m->tex = malloc(sizeof(t_text));
 	if (!m->tex)
 	{
+		write(2, "Error\nMalloc failed\n", 20);
 		free(m);
 		return (NULL);
 	}
 	if (!malloc_structs(m))
 	{
+		write(2, "Error\nMalloc failed\n", 20);
 		free(m->tex);
 		free(m);
 		return (NULL);

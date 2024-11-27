@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 00:04:55 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:25:55 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static int	parse_colors(char *line, t_macro *m)
 
 	err = 0;
 	color = NULL;
-	skipped = ft_skipws(line);
-	skipped = ft_skipws(skipped + 1);
+	skipped = get_skipped(line);
 	clean_trailing_char(skipped, " \t\n");
 	if (!is_valid_fc_format(skipped))
 	{
