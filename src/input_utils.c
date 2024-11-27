@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:27:31 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:17:39 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,13 @@ int	map_line_is_correct(char *line)
 		i++;
 	}
 	return (1);
+}
+
+void	finish_reading_the_file(int fd, char *line)
+{
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }

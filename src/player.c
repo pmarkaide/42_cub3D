@@ -92,8 +92,8 @@ void	mirror_vert(mlx_texture_t *texture, int left, int right)
 
 void	load_map(t_macro *m)
 {
-	int		left;
-	int		right;
+	int	left;
+	int	right;
 
 	left = 0;
 	right = 0;

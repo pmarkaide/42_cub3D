@@ -29,8 +29,8 @@ void	draw_wall(t_macro *m, int top_wall, int bottom, double wall_h)
 		y_offset = 0;
 	while (top_wall < bottom)
 	{
-		if (m->ray->index >= 0 && m->ray->index < m->width
-			&& top_wall >= 0 && top_wall < m->height)
+		if (m->ray->index >= 0 && m->ray->index < m->width && top_wall >= 0
+			&& top_wall < m->height)
 			mlx_put_pixel(m->scene_i, m->ray->index, top_wall++,
 				make_color(arr[(int)y_offset * tex->width + (int)x_offset]));
 		y_offset += factor;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:43:31 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:15:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	handle_lines(t_macro *m, int fd, char *line)
 		section = detect_section(line);
 		if (parse_line(line, m, section, &head))
 		{
-			free(line);
+			finish_reading_the_file(fd, line);
 			ft_lstclear(&head, free);
 			return (1);
 		}
