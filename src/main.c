@@ -6,7 +6,7 @@
 /*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:55:26 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:20:11 by dbejar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ static int	check_pngs(t_macro *m)
 	return (0);
 }
 
+static void	load_image(t_macro *m)
+{
+	if (mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0) == -1)
+	{
+		write(2, "Error\nFailed to initialize window\n", 33);
+		free_all(m);
+	}
+}
+
 int	init_game(t_macro *m)
 {
 	if (check_pngs(m))
@@ -46,15 +55,21 @@ int	init_game(t_macro *m)
 	m->height = 1620;
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	if (!m->mlx_cub)
+	{
+		write(2, "Error\nFailed to initialize game\n", 33);
 		return (1);
+	}
 	m->scene_i = mlx_new_image(m->mlx_cub, m->width, m->height);
 	if (!m->mlx_cub || !m->scene_i)
+	{
+		write(2, "Error\nFailed to initialize game\n", 33);
 		return (1);
+	}
 	m->ray->pos_pl_x = m->map->start_x;
 	m->ray->pos_pl_y = m->map->start_y;
 	load_map(m);
 	load_player(m);
-	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
+	load_image(m);
 	return (0);
 }
 
@@ -79,16 +94,9 @@ int	main(int argc, char **argv)
 	if (!m)
 		return (1);
 	if (read_input(argv[1], m))
-	{
 		free_all(m);
-		return (1);
-	}
 	if (init_game(m))
-	{
-		write(2, "Error\nFailed to initialize game\n", 33);
 		free_all(m);
-		return (1);
-	}
 	mlx_key_hook(m->mlx_cub, &ft_hook, m);
 	mlx_loop_hook(m->mlx_cub, &load_game, m);
 	mlx_loop(m->mlx_cub);
