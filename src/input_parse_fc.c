@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse_fc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:51:42 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 22:58:56 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:44:35 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Checks for integer overflow or underflow during conversion.
+ * 
+ * @param nb The current number.
+ * @param next_char The next character to be added to the number.
+ * @param neg The sign of the number.
+ * @return 1 if overflow or underflow occurs, 0 otherwise.
+ */
 static int	check_overflow(long nb, char next_char, int neg)
 {
 	if (neg > 0)
@@ -31,6 +39,13 @@ static int	check_overflow(long nb, char next_char, int neg)
 	return (0);
 }
 
+/**
+ * Converts a string to an integer, checking for errors.
+ * 
+ * @param str The input string.
+ * @param error Pointer to an integer to store error status.
+ * @return The converted integer.
+ */
 static int	nbr_to_int(char *str, int *error)
 {
 	long	nb;
@@ -60,6 +75,14 @@ static int	nbr_to_int(char *str, int *error)
 	return ((int)nb);
 }
 
+/**
+ * Validates the format of the floor/ceiling color integers.
+ * 
+ * Only allowed format is: 255,255,255
+ * 
+ * @param line The input string.
+ * @return 1 if the format is valid, 0 otherwise.
+ */
 int	is_valid_fc_format(char *line)
 {
 	int	i;
@@ -88,6 +111,13 @@ int	is_valid_fc_format(char *line)
 	return (1);
 }
 
+/**
+ * Extracts a number string from the input, up to the next comma.
+ * 
+ * @param skipped The input string.
+ * @param m Pointer to the macro structure.
+ * @return A pointer to the extracted number string.
+ */
 static char	*extract_number_string(char *skipped, t_macro *m)
 {
 	int		len;
@@ -105,6 +135,15 @@ static char	*extract_number_string(char *skipped, t_macro *m)
 	return (temp);
 }
 
+/**
+ * Stores the color values from the input string.
+ * 
+ * @param skipped The input string.
+ * @param color Array to store the parsed color values.
+ * @param err Pointer to an integer to store error status.
+ * @param m Pointer to the macro structure.
+ * @return 0 if parsing is successful.
+ */
 int	parse_color_values(char *skipped, int *color, int *err, t_macro *m)
 {
 	int		count;

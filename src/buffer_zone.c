@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:58:37 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/12/10 21:28:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:17:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ static void	copy_map_to_buffer(t_macro *m)
 }
 
 /**
- * Creates a buffer zone around the original map.
+ * Creates a buffer zone around the original map,
+ * with 2 empty tiles an a wall in each side.
+ * This wall cannot be crossed by the player.
  * 
  * @param m Pointer to the macro structure containing map information.
  */

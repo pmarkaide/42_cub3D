@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/25 23:35:24 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:22:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Checks if the given position is valid for flood fill.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param visited 2D array to keep track of visited positions.
+ * @param x The x-coordinate of the position.
+ * @param y The y-coordinate of the position.
+ * @return 1 if the position is valid, 0 otherwise.
+ */
 int	is_valid_position(t_macro *m, char **visited, int x, int y)
 {
 	if (x >= m->map->h_map)
@@ -25,6 +34,14 @@ int	is_valid_position(t_macro *m, char **visited, int x, int y)
 	return (1);
 }
 
+/**
+ * Performs flood fill algorithm starting from the given position.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param visited 2D array to keep track of visited positions.
+ * @param x The starting x-coordinate.
+ * @param y The starting y-coordinate.
+ */
 void	flood_fill(t_macro *m, char **visited, int x, int y)
 {
 	if (!is_valid_position(m, visited, x, y))
@@ -40,6 +57,13 @@ void	flood_fill(t_macro *m, char **visited, int x, int y)
 		flood_fill(m, visited, x, y + 1);
 }
 
+/**
+ * Creates a 2D array to keep track of visited positions.
+ * 
+ * @param height The height of the map.
+ * @param width The width of the map.
+ * @return A pointer to the 2D array, or NULL if memory allocation fails.
+ */
 char	**create_visited_array(int height, int width)
 {
 	char	**visited;
@@ -68,6 +92,12 @@ char	**create_visited_array(int height, int width)
 	return (visited);
 }
 
+/**
+ * Frees the memory allocated for the visited array.
+ * 
+ * @param visited The 2D array to be freed.
+ * @param height The height of the array.
+ */
 void	free_visited_array(char **visited, int height)
 {
 	int	i;
@@ -78,6 +108,14 @@ void	free_visited_array(char **visited, int height)
 	free(visited);
 }
 
+/**
+ * Checks the existence of islands in the map,
+ * defined as maps areas not connected to the spawing point map area.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param visited 2D array to keep track of visited positions.
+ * @return 0 if no islands found, 1 otherwise.
+ */
 int	check_path(t_macro *m, char **visited)
 {
 	int		i;
