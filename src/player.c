@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 07:01:36 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 22:59:57 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:07:56 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Main game loop. At each keystroke, deletes the old image,
+ * calculates the new position of the player and do the raycasting.
+ * Then the image is rendered into the window.
+ * 
+ * @param param Pointer to the macro structure containing game information.
+ */
 void	load_game(void *param)
 {
 	t_macro	*m;
@@ -24,6 +31,11 @@ void	load_game(void *param)
 	mlx_image_to_window(m->mlx_cub, m->scene_i, 0, 0);
 }
 
+/**
+ * Initializes the player's position and view angle at spawn point.
+ * 
+ * @param m Pointer to the macro structure containing player and map information.
+ */
 void	load_player(t_macro *m)
 {
 	m->ray->pos_pl_x = (m->map->start_x * BLOCK) + (BLOCK / 2);
@@ -39,6 +51,11 @@ void	load_player(t_macro *m)
 		m->ray->play_angle = M_PI;
 }
 
+/**
+ * Finds the player's initial position and orientation in the map.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	player_in_map(t_macro *m)
 {
 	int	y;
@@ -65,6 +82,13 @@ void	player_in_map(t_macro *m)
 	}
 }
 
+/**
+ * Mirrors the texture vertically.
+ * 
+ * @param texture Pointer to the texture to be mirrored.
+ * @param left Index of the left pixel.
+ * @param right Index of the right pixel.
+ */
 void	mirror_vert(mlx_texture_t *texture, int left, int right)
 {
 	uint32_t	*pixels;
@@ -90,6 +114,11 @@ void	mirror_vert(mlx_texture_t *texture, int left, int right)
 	}
 }
 
+/**
+ * Loads the map textures and initializes the player's position.
+ * 
+ * @param m Pointer to the macro structure containing map and texture information.
+ */
 void	load_map(t_macro *m)
 {
 	int	left;

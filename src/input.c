@@ -6,12 +6,19 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:57:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:15:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:00:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Evaluates the file extension to ensure it is a .cub file.
+ * 
+ * @param file The file path.
+ * @param m Pointer to the macro structure.
+ * @return 0 if the extension is valid, 1 otherwise.
+ */
 static int	eval_extension(char *file, t_macro *m)
 {
 	char	*dot;
@@ -32,6 +39,12 @@ static int	eval_extension(char *file, t_macro *m)
 	return (0);
 }
 
+/**
+ * Detects the section type of the input line based on the leading key value.
+ * 
+ * @param line The input string.
+ * @return The section type as an integer.
+ */
 static int	detect_section(char *line)
 {
 	char	*skipped;
@@ -57,6 +70,15 @@ static int	detect_section(char *line)
 	return (section);
 }
 
+/**
+ * Read a line from the map file and detect which section corresponds to.
+ * Based on that, it calls the appropiate function that parse this section line.
+ * 
+ * @param m Pointer to the macro structure.
+ * @param fd The file descriptor.
+ * @param line The input string.
+ * @return 0 if parsing is successful, 1 otherwise.
+ */
 static int	handle_lines(t_macro *m, int fd, char *line)
 {
 	int		section;
@@ -86,6 +108,15 @@ static int	handle_lines(t_macro *m, int fd, char *line)
 	return (0);
 }
 
+/**
+ * Reads the input file and processes its contents.
+ * The main function is handle_lines.
+ * This is just a caller due to line liminations.
+ * 
+ * @param file The file path.
+ * @param m Pointer to the macro structure.
+ * @return 0 if reading is successful, 1 otherwise.
+ */
 static int	read_file(char *file, t_macro *m)
 {
 	char	*line;
@@ -108,6 +139,15 @@ static int	read_file(char *file, t_macro *m)
 	return (0);
 }
 
+/**
+ * Reads and validates the input file.
+ * 
+ * A positive result will store all the map file info into the macro struct.
+ * 
+ * @param file The file path.
+ * @param m Pointer to the macro structure.
+ * @return 0 if the input is valid, 1 otherwise.
+ */
 int	read_input(char *file, t_macro *m)
 {
 	if (eval_extension(file, m))

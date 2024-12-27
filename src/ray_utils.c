@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ray_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:01:59 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/27 11:00:08 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:11:36 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Converts an integer color value to a different format.
+ * 
+ * @param color The integer representing the color.
+ * @return The converted color value.
+ */
 int	make_color(int color)
 {
 	unsigned char	bytes[4];
@@ -25,6 +31,13 @@ int	make_color(int color)
 	return (res);
 }
 
+/**
+ * Determines the side of the angle in radians.
+ * 
+ * @param angle The angle in radians.
+ * @param side The side to check (0 for vertical, 1 for horizontal).
+ * @return 1 if the angle is on the specified side, 0 otherwise.
+ */
 int	radian_side(double angle, int side)
 {
 	if (side)
@@ -40,6 +53,15 @@ int	radian_side(double angle, int side)
 	return (0);
 }
 
+/**
+ * Calculates the crossing lines for the DDA algorithm.
+ * 
+ * @param angle The angle in radians.
+ * @param crossed Pointer to the crossed value.
+ * @param step Pointer to the step value.
+ * @param x_dda Flag indicating if the DDA is for the x-axis.
+ * @return The direction of the crossing line.
+ */
 int	cross_lines(double angle, float *crossed, float *step, int x_dda)
 {
 	if (x_dda)
@@ -61,6 +83,14 @@ int	cross_lines(double angle, float *crossed, float *step, int x_dda)
 	return (1);
 }
 
+/**
+ * Checks if a wall is hit at the specified block coordinates.
+ * 
+ * @param x_block The x-coordinate of the block.
+ * @param y_block The y-coordinate of the block.
+ * @param m Pointer to the macro structure containing map information.
+ * @return 1 if a wall is hit, 0 otherwise.
+ */
 int	wall_hit(float x_block, float y_block, t_macro *m)
 {
 	int	x;
