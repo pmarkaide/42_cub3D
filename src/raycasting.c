@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:46:05 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 20:54:43 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:17:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
+/**
+ * Draws the wall textures.
+ * 
+ * @param m Pointer to the macro structure containing map and ray information.
+ * @param top_wall The top coordinate of the wall.
+ * @param bottom The bottom coordinate of the wall.
+ * @param wall_h The height of the wall.
+ */
 void	draw_wall(t_macro *m, int top_wall, int bottom, double wall_h)
 {
 	double			x_offset;
@@ -37,6 +45,13 @@ void	draw_wall(t_macro *m, int top_wall, int bottom, double wall_h)
 	}
 }
 
+/**
+ * Paints the floor on the screen using vertical lines
+ * 
+ * @param m Pointer to the macro structure containing map and ray information.
+ * @param vertical The vertical coordinate.
+ * @param i The starting coordinate for painting.
+ */
 static void	paint_floor(t_macro *m, int vertical, int i)
 {
 	while (i < m->height)
@@ -46,6 +61,12 @@ static void	paint_floor(t_macro *m, int vertical, int i)
 	}
 }
 
+/**
+ * Calculates the wall size and call the function to draw textures on them
+ * 
+ * @param m Pointer to the macro structure containing map and ray information.
+ * @param vertical The vertical coordinate.
+ */
 void	do_wall(t_macro *m, int vertical)
 {
 	double	wall_h;
@@ -73,6 +94,12 @@ void	do_wall(t_macro *m, int vertical)
 	draw_wall(m, top_wall, bottom, 2 * wall_h);
 }
 
+/**
+ * Performs the raycasting algorithm to render the 3D view.
+ * Based on DDA algorithm.
+ * 
+ * @param m Pointer to the macro structure containing map and ray information.
+ */
 void	raycast(t_macro *m)
 {
 	double	x_cross;

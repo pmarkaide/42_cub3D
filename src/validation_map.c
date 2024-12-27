@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 01:48:43 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:36:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Check that the 0 position is not in touch with a space character
+ * in all 8 directions
+ *  
+ * @param m Pointer to the macro structure containing map information.
+ * @param i The x-coordinate of the position.
+ * @param j The y-coordinate of the position.
+ * @return 1 if the position is surrounded by walls, 0 otherwise.
+ */
 static int	is_surrounded_by_walls(t_macro *m, int i, int j)
 {
 	int	err;
@@ -37,6 +46,11 @@ static int	is_surrounded_by_walls(t_macro *m, int i, int j)
 	return (1);
 }
 
+/**
+ * Validates that the map is surrounded by walls
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 static void	is_valid_wall_structure(t_macro *m)
 {
 	int	i;
@@ -60,6 +74,11 @@ static void	is_valid_wall_structure(t_macro *m)
 	return ;
 }
 
+/**
+ * Evaluates the map for isolated areas (islands).
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 static void	evaluate_map_islands(t_macro *m)
 {
 	char	**visited;
@@ -78,6 +97,13 @@ static void	evaluate_map_islands(t_macro *m)
 	free_visited_array(visited, m->map->h_map);
 }
 
+/**
+ * Validates the map correctness:
+ * 
+ * Dimensions, characters, starting position, wall structure, and islands.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	validate_map(t_macro *m)
 {
 	calculate_map_dimensions(m);

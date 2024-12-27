@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:00:35 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 01:40:39 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:17:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Calculates the distance to the nearest horizontal wall hit using DDA.
+ * 
+ * @param m Pointer to the macro structure containing ray information.
+ * @param angle The angle of the ray.
+ * @param dda The initial DDA value.
+ * @return The distance to the nearest horizontal wall hit.
+ */
 float	x_dda(t_macro *m, double angle, double dda)
 {
 	float	h_x;
@@ -40,6 +48,14 @@ float	x_dda(t_macro *m, double angle, double dda)
 	return (dda);
 }
 
+/**
+ * Calculates the distance to the nearest vertical wall hit using DDA.
+ * 
+ * @param m Pointer to the macro structure containing ray information.
+ * @param angle The angle of the ray.
+ * @param dda The initial DDA value.
+ * @return The distance to the nearest vertical wall hit.
+ */
 float	y_dda(t_macro *m, double angle, double dda)
 {
 	float	v_x;
@@ -68,6 +84,12 @@ float	y_dda(t_macro *m, double angle, double dda)
 	return (dda);
 }
 
+/**
+ * Normalizes the given angle to the range [0, 2*PI].
+ * 
+ * @param angle The angle to normalize.
+ * @return The normalized angle.
+ */
 float	normalize(float angle)
 {
 	if (angle < 0)
@@ -77,6 +99,13 @@ float	normalize(float angle)
 	return (angle);
 }
 
+/**
+ * Retrieves the texture based on the hit direction.
+ * 
+ * @param m Pointer to the macro structure containing texture information.
+ * @param flag The hit direction (1 for north/south, 0 for east/west).
+ * @return A pointer to the corresponding texture.
+ */
 mlx_texture_t	*get_texture(t_macro *m, int flag)
 {
 	m->ray->ray_angle = normalize(m->ray->ray_angle);
@@ -96,6 +125,13 @@ mlx_texture_t	*get_texture(t_macro *m, int flag)
 	}
 }
 
+/**
+ * Calculates the x-offset for the texture mapping.
+ * 
+ * @param texture Pointer to the texture.
+ * @param m Pointer to the macro structure containing ray information.
+ * @return The x-offset for the texture mapping.
+ */
 double	x_off(mlx_texture_t *texture, t_macro *m)
 {
 	double	x_offset;
