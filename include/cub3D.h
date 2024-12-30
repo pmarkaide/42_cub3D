@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/30 20:02:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:17:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define ROT_SPEED 0.20    // rotation speed
 # define WALK_SPEED 10     // walk speed
 # define BUFF_AREA 2       // buffer distance
+# define RATIO_SCREEN 0.75  // screen ratio
 
 typedef struct s_text
 {
@@ -153,7 +154,6 @@ void				validate_map(t_macro *m);
 int					validation(t_macro *m);
 char				*get_skipped(char *line);
 void				free_map(t_macro *m);
-void				exit_malloc(t_macro *m);
 void				create_buffer_zone(t_macro *m);
 void				finish_reading_the_file(int fd, char *line);
 

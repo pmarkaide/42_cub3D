@@ -6,11 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/10 21:26:28 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:19:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+// #define RATIO_SCREEN 0.75 // Removed this line
 
 /**
  * Checks if the PNG files are actual PNG files and can be loaded
@@ -42,6 +44,23 @@ static int	check_pngs(t_macro *m)
 }
 
 /**
+ * Adjusts the screen size to be 75% of the monitor size.
+ * 
+ * @param m Pointer to the macro structure containing screen dimensions.
+ */
+static void	adjust_screen_size(t_macro *m)
+{
+	mlx_t	*first;
+
+	first = mlx_init(800, 600, "Loading...", 0);
+	mlx_get_monitor_size(0, &m->width, &m->height);
+	ft_printf(1, "width %d height %d \n", m->width, m->height);
+	mlx_terminate(first);
+	m->width *= RATIO_SCREEN;
+	m->height *= RATIO_SCREEN;
+}
+
+/**
  * Loads the main game image into the window.
  * 
  * @param m Pointer to the macro structure containing mlx and image information.
@@ -68,8 +87,7 @@ int	init_game(t_macro *m)
 		write(2, "Error\nFailed to load PNGs\n", 26);
 		return (1);
 	}
-	m->width = 2880;
-	m->height = 1620;
+	adjust_screen_size(m);
 	m->mlx_cub = mlx_init(m->width, m->height, "cub3D", 0);
 	if (!m->mlx_cub)
 	{
