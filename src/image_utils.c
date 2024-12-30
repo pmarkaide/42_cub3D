@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:22:37 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/27 20:44:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:05:59 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,4 @@ char	*get_skipped(char *line)
 	skipped = ft_skipws(line);
 	skipped = ft_skipws(skipped + 1);
 	return (skipped);
-}
-
-/**
- * Prints an error message and frees all allocated memory.
- * 
- * @param m Pointer to the macro structure.
- */
-void	exit_malloc(t_macro *m)
-{
-	ft_printf(2, "Error\nMalloc failed\n");
-	free_all(m);
 }

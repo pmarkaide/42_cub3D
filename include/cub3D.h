@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 14:00:52 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:02:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int					is_valid_position(t_macro *m, char **visited, int x, int y);
 void				flood_fill(t_macro *m, char **visited, int x, int y);
 char				**create_visited_array(int height, int width);
 void				free_visited_array(char **visited, int height);
-int					check_path(t_macro *m, char **visited);
+int					check_islands(t_macro *m, char **visited);
 void				free_macro(t_macro *m);
 void				free_all(t_macro *m);
 void				release_all(mlx_key_data_t keydata, t_macro *m);

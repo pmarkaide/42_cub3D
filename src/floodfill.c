@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/27 20:22:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:02:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	free_visited_array(char **visited, int height)
  * @param visited 2D array to keep track of visited positions.
  * @return 0 if no islands found, 1 otherwise.
  */
-int	check_path(t_macro *m, char **visited)
+int	check_islands(t_macro *m, char **visited)
 {
 	int		i;
 	int		j;

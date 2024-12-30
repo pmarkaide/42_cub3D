@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:20:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/27 21:36:09 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:02:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	evaluate_map_islands(t_macro *m)
 		ft_printf(2, "Error\nMalloc failed\n");
 		free_all(m);
 	}
-	if (check_path(m, visited))
+	if (check_islands(m, visited))
 	{
 		free_visited_array(visited, m->map->h_map);
 		free_all(m);
