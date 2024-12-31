@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:46:43 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/30 20:23:10 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:40:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define CUB3D_H
 
 # include "../lib/libft/libft.h"
-# include "MLX42.h"    // mlx42
-# include <errno.h>    // errno
-# include <fcntl.h>    // open
-# include <limits.h>   // LONG_MAX, INT_MAX
-# include <math.h>     // math
-# include <stdlib.h>   // malloc, free, exit
-# include <string.h>   // strerror
-# include <unistd.h>   // close, read, write
+# include "MLX42.h"  // mlx42
+# include <errno.h>  // errno
+# include <fcntl.h>  // open
+# include <limits.h> // LONG_MAX, INT_MAX
+# include <math.h>   // math
+# include <stdlib.h> // malloc, free, exit
+# include <string.h> // strerror
+# include <unistd.h> // close, read, write
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -32,7 +32,7 @@
 # define ROT_SPEED 0.20    // rotation speed
 # define WALK_SPEED 10     // walk speed
 # define BUFF_AREA 2       // buffer distance
-# define RATIO_SCREEN 0.75  // screen ratio
+# define RATIO_SCREEN 0.75 // screen ratio
 
 typedef struct s_text
 {
@@ -108,6 +108,7 @@ int					check_unique_starting_position(t_macro *m);
 void				clean_trailing_char(char *str, const char *set);
 void				create_buffer_zone(t_macro *m);
 char				**create_visited_array(int height, int width);
+int					cross_lines(double angle, float *crossed, float *step, int x_dda);
 void				draw_wall(t_macro *m, int top_wall, int bottom, double wall_h);
 void				do_wall(t_macro *m, int vertical);
 void				fill_with_spaces(char **map, int width, t_macro *m);
@@ -124,16 +125,18 @@ int					get_rgba(int r, int g, int b, int a);
 mlx_texture_t		*get_texture(t_macro *m, int flag);
 int					init_game(t_macro *m);
 t_macro				*init_macro(t_macro *m);
+int					is_valid_fc_format(char *line);
 void				load_game(void *param);
 void				load_map(t_macro *m);
 void				load_player(t_macro *m);
 void				map_chars_are_valid(t_macro *m);
+int					map_line_is_correct(char *line);
 int					make_color(int c);
 void				mirror_vert(mlx_texture_t *texture, int left, int right);
 void				move(t_macro *m);
 void				move_wsda(t_macro *m, double x, double y);
 float				normalize(float angle);
-int					parse_color_values(char *skipped, int *color, int *err, t_macro *m);
+int					parse_color_values(char *skipped, int *color, int *err,t_macro *m);
 int					parse_line(char *line, t_macro *m, int section,t_list **head);
 void				player_in_map(t_macro *m);
 int					radian_side(double angle, int side);
