@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 13:21:56 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 09:20:55 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:29:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Calculates the dimensions of the map.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	calculate_map_dimensions(t_macro *m)
 {
 	int		height;
@@ -38,6 +43,13 @@ void	calculate_map_dimensions(t_macro *m)
 	m->map->h_map = height;
 }
 
+/**
+ * Fills the map lines with spaces to ensure uniform width.
+ * 
+ * @param map The map grid.
+ * @param width The width of the map.
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	fill_with_spaces(char **map, int width, t_macro *m)
 {
 	int		i;
@@ -66,6 +78,11 @@ void	fill_with_spaces(char **map, int width, t_macro *m)
 	}
 }
 
+/**
+ * Substitutes spaces in the map with zeros.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	substitute_spaces_with_zeros(t_macro *m)
 {
 	int		i;
@@ -91,6 +108,13 @@ void	substitute_spaces_with_zeros(t_macro *m)
 	}
 }
 
+/**
+ * Checks if there is a unique starting position in the map
+ * and store the starting x and y into the macro.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @return The count of starting positions found.
+ */
 int	check_unique_starting_position(t_macro *m)
 {
 	int	i;
@@ -120,6 +144,11 @@ int	check_unique_starting_position(t_macro *m)
 	return (count);
 }
 
+/**
+ * Validates that all characters in the map are valid.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	map_chars_are_valid(t_macro *m)
 {
 	int	i;
@@ -133,8 +162,7 @@ void	map_chars_are_valid(t_macro *m)
 		j = 0;
 		while (j < line_length)
 		{
-			if (m->map->grid[i][j] && ft_strchr("10NSWE ",
-					m->map->grid[i][j]) == NULL)
+			if (m->map->grid[i][j] && ft_strchr("10NSWE ", m->map->grid[i][j]) == NULL)
 			{
 				ft_printf(2, "Error\nInvalid character in map\n");
 				free_all(m);

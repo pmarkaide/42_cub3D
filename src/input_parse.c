@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:16:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 22:25:55 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:54:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Saves the texture paths from the input line.
+ * 
+ * @param line The input string.
+ * @param m Pointer to the macro structure containing map information.
+ * @return 0 if parsing is successful, 1 otherwise.
+ */
 static int	parse_textures(char *line, t_macro *m)
 {
 	char	*clean;
@@ -38,6 +45,13 @@ static int	parse_textures(char *line, t_macro *m)
 	return (err);
 }
 
+/**
+ * Stores the floor and ceiling color values from the input line if the format is valid.
+ * 
+ * @param line The input string.
+ * @param m Pointer to the macro structure containing map information.
+ * @return 0 if parsing is successful, 1 otherwise.
+ */
 static int	parse_colors(char *line, t_macro *m)
 {
 	char	*skipped;
@@ -67,6 +81,12 @@ static int	parse_colors(char *line, t_macro *m)
 	return (0);
 }
 
+/**
+ * Checks if all necessary sections are ready before parsing the map.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @return 1 if all sections are ready, 0 otherwise.
+ */
 static int	premap_ready(t_macro *m)
 {
 	int	i;
@@ -84,6 +104,13 @@ static int	premap_ready(t_macro *m)
 	return (1);
 }
 
+/**
+ * Add the map line into a linked list.
+ * 
+ * @param line The input string.
+ * @param head Pointer to the head of the linked list.
+ * @return 0 if parsing is successful, 1 otherwise.
+ */
 static int	parse_map(char *line, t_list **head)
 {
 	t_list	*new;
@@ -100,6 +127,15 @@ static int	parse_map(char *line, t_list **head)
 	return (0);
 }
 
+/**
+ * Parses a line of the input file based on the current section.
+ * 
+ * @param line The input string.
+ * @param m Pointer to the macro structure containing map information.
+ * @param section The current section of the input file.
+ * @param head Pointer to the head of the linked list.
+ * @return 0 if parsing is successful, 1 otherwise.
+ */
 int	parse_line(char *line, t_macro *m, int section, t_list **head)
 {
 	int	err;

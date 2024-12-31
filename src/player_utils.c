@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 09:33:19 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:02:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Moves the player in the specified direction if the new position is valid.
+ * 
+ * @param m Pointer to the macro structure containing player and map information.
+ * @param x The x-coordinate offset for the movement.
+ * @param y The y-coordinate offset for the movement.
+ */
 void	move_wsda(t_macro *m, double x, double y)
 {
 	int	map_pos_x;
@@ -31,6 +38,13 @@ void	move_wsda(t_macro *m, double x, double y)
 	}
 }
 
+/**
+ * Calculates the movement direction based on the pressed keys (W, A, S, D).
+ * 
+ * @param m Pointer to the macro structure containing player and map information.
+ * @param x The x-coordinate offset for the movement.
+ * @param y The y-coordinate offset for the movement.
+ */
 void	get_wsda(t_macro *m, double x, double y)
 {
 	double	angle;
@@ -59,6 +73,11 @@ void	get_wsda(t_macro *m, double x, double y)
 	move_wsda(m, x, y);
 }
 
+/**
+ * Handles the player's movement and rotation based on the pressed keys.
+ * 
+ * @param m Pointer to the macro structure containing player and map information.
+ */
 void	move(t_macro *m)
 {
 	double	x;

@@ -6,12 +6,18 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:05:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 12:38:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:35:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Validates the floor and ceiling color values.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @return 0 if the colors are valid, 1 otherwise.
+ */
 static int	validate_colors(t_macro *m)
 {
 	int	i;
@@ -38,6 +44,13 @@ static int	validate_colors(t_macro *m)
 	return (0);
 }
 
+/**
+ * Validates the texture files by checking that they are not empty
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param mlx Flag indicating if the validation is for mlx textures.
+ * @return 0 if the textures are valid, 1 otherwise.
+ */
 static int	validate_textures_files(t_macro *m, int mlx)
 {
 	if (mlx == 0)
@@ -54,6 +67,12 @@ static int	validate_textures_files(t_macro *m, int mlx)
 	return (0);
 }
 
+/**
+ * Validates the map, textures, and colors contents.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @return 0 if validation is successful, 1 otherwise.
+ */
 int	validation(t_macro *m)
 {
 	if (validate_textures_files(m, 0))

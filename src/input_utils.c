@@ -6,12 +6,19 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 13:17:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:51:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Checks if the file can be readed and is not empty.
+ * 
+ * @param file The file path.
+ * @param m Pointer to the macro structure.
+ * @return 0 if the file is valid, 1 otherwise.
+ */
 int	check_file_contents(char *file, t_macro *m)
 {
 	int		fd;
@@ -36,6 +43,12 @@ int	check_file_contents(char *file, t_macro *m)
 	return (0);
 }
 
+/**
+ * Removes trailing characters from the string.
+ * 
+ * @param str The input string.
+ * @param set The set of characters to be removed.
+ */
 void	clean_trailing_char(char *str, const char *set)
 {
 	int	len;
@@ -48,6 +61,13 @@ void	clean_trailing_char(char *str, const char *set)
 	}
 }
 
+/**
+ * Store the texture path from the input string.
+ * 
+ * @param texture Pointer to the texture path.
+ * @param path The input string containing the texture path.
+ * @return 0 if saving is successful, 1 otherwise.
+ */
 int	save_texture_path(char **texture, char *path)
 {
 	char	*temp;
@@ -76,6 +96,12 @@ int	save_texture_path(char **texture, char *path)
 	return (0);
 }
 
+/**
+ * Checks if the map line contains valid characters.
+ * 
+ * @param line The input string.
+ * @return 1 if the line is valid, 0 otherwise.
+ */
 int	map_line_is_correct(char *line)
 {
 	int	i;
@@ -92,6 +118,14 @@ int	map_line_is_correct(char *line)
 	return (1);
 }
 
+/**
+ * Finishes reading the file when exited prematurely due to parsing errors.
+ * 
+ * This avoid get_next_line leaks.
+ * 
+ * @param fd The file descriptor.
+ * @param line The input string.
+ */
 void	finish_reading_the_file(int fd, char *line)
 {
 	while (line)

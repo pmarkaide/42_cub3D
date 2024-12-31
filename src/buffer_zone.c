@@ -3,33 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_zone.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:58:37 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/27 09:34:44 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/30 20:08:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Allocates memory for the buffer zone.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param new_height The height of the new buffer zone.
+ * @param new_width The width of the new buffer zone.
+ */
 static void	allocate_buffer(t_macro *m, int new_height, int new_width)
 {
 	int	i;
 
 	m->map->buff = (char **)ft_calloc(sizeof(char *), (new_height + 1));
 	if (!m->map->buff)
-		exit_malloc(m);
+	{
+		ft_printf(2, "Error\nMalloc failed\n");
+		free_all(m);
+	}
 	i = 0;
 	while (i < new_height)
 	{
 		m->map->buff[i] = (char *)ft_calloc(sizeof(char), (new_width + 1));
 		if (!m->map->buff[i])
-			exit_malloc(m);
+		{
+			ft_printf(2, "Error\nMalloc failed\n");
+			free_all(m);
+		}
 		i++;
 	}
 	m->map->buff[new_height] = NULL;
 }
 
+/**
+ * Initializes the buffer zone with walls ('1') on the edges and empty space ('0') inside.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ * @param new_height The height of the new buffer zone.
+ * @param new_width The width of the new buffer zone.
+ */
 static void	initialize_buffer(t_macro *m, int new_height, int new_width)
 {
 	int	i;
@@ -51,6 +71,11 @@ static void	initialize_buffer(t_macro *m, int new_height, int new_width)
 	}
 }
 
+/**
+ * Copies the original map into the center of the buffer zone.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 static void	copy_map_to_buffer(t_macro *m)
 {
 	int	i;
@@ -69,6 +94,13 @@ static void	copy_map_to_buffer(t_macro *m)
 	}
 }
 
+/**
+ * Creates a buffer zone around the original map,
+ * with 2 empty tiles an a wall in each side.
+ * This wall cannot be crossed by the player.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	create_buffer_zone(t_macro *m)
 {
 	m->map->h_buff = m->map->h_map + 12;

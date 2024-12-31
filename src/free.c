@@ -6,12 +6,17 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:10:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/27 12:38:13 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:24:55 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Frees the memory allocated for the buffer zone.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 static void	free_buff(t_macro *m)
 {
 	int	i;
@@ -26,6 +31,11 @@ static void	free_buff(t_macro *m)
 	}
 }
 
+/**
+ * Frees the memory allocated for the map and its components.
+ * 
+ * @param m Pointer to the macro structure containing map information.
+ */
 void	free_map(t_macro *m)
 {
 	int	i;
@@ -54,6 +64,11 @@ void	free_map(t_macro *m)
 	}
 }
 
+/**
+ * Frees the memory allocated for the textures.
+ * 
+ * @param m Pointer to the macro structure containing texture information.
+ */
 static void	free_textures(t_macro *m)
 {
 	if (m->tex)
@@ -70,6 +85,11 @@ static void	free_textures(t_macro *m)
 	}
 }
 
+/**
+ * Frees the memory allocated for the macro structure and its components.
+ * 
+ * @param m Pointer to the macro structure.
+ */
 void	free_macro(t_macro *m)
 {
 	if (m)
@@ -85,6 +105,11 @@ void	free_macro(t_macro *m)
 	exit(1);
 }
 
+/**
+ * Frees all allocated memory and terminates the program.
+ * 
+ * @param m Pointer to the macro structure.
+ */
 void	free_all(t_macro *m)
 {
 	if (m)

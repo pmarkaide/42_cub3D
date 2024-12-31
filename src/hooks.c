@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbejar-s <dbejar-s@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:39:43 by dbejar-s          #+#    #+#             */
-/*   Updated: 2024/11/26 14:51:54 by dbejar-s         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:26:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * Releases all keys when they are no longer pressed.
+ * 
+ * @param keydata The key data structure containing key information.
+ * @param m Pointer to the macro structure containing key states.
+ */
 void	release_all(mlx_key_data_t keydata, t_macro *m)
 {
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
@@ -28,6 +34,12 @@ void	release_all(mlx_key_data_t keydata, t_macro *m)
 		m->keys->key_right = 0;
 }
 
+/**
+ * Handles movement of the player using WASD and LR arrows
+ * 
+ * @param keydata The key data structure containing key information.
+ * @param param Pointer to the macro structure.
+ */
 void	ft_hook(mlx_key_data_t keydata, void *param)
 {
 	t_macro	*m;

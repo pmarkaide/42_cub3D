@@ -1,3 +1,9 @@
+# Project files
+cub3D
+
+# Generic project files
+*code-workspace
+
 # Prerequisites
 *.d
 
