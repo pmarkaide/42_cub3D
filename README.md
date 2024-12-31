@@ -2,6 +2,8 @@
 
 A simple raycasting engine inspired by Wolfenstein 3D, developed as part of the 42 school curriculum at Hive Helsinki. This project creates a 3D graphical representation of a maze using raycasting principles.
 
+https://github.com/user-attachments/assets/2301bc31-b68d-4cdc-8479-6894fa5f300d
+
 ## Description
 
 cub3D is a first-person perspective maze renderer inspired by Wolfenstein 3D. The rendering process happens in three main steps:
@@ -11,6 +13,8 @@ cub3D is a first-person perspective maze renderer inspired by Wolfenstein 3D. Th
 2. **Wall Rendering**: For each vertical line on the screen, we calculate the distance from the player to the wall. Closer walls appear taller and wider, while distant walls appear shorter and thinner, creating the 3D perspective effect.
 
 3. **Texture Mapping**: Finally, we apply textures to the walls based on their orientation (North, South, East, West). The textures are mapped onto the walls according to where the ray hits the wall, creating the final detailed appearance.
+
+![raycasting-steps](https://github.com/user-attachments/assets/1eede5f6-0bee-47a5-bebd-a94c7bb6eb14)
 
 ## Installation
 
@@ -74,6 +78,8 @@ C 14,62,89
 ## How Raycasting Works
 
 Raycasting creates a 3D perspective by sending out rays from the player's position and using the Digital Differential Analysis (DDA) algorithm to efficiently find wall intersections.
+
+![raycasting-visualization](https://github.com/user-attachments/assets/4d471897-563a-4ebb-9040-c53886a88e10)
 
 ### Basic Principle
 - For each vertical screen column, a ray is cast from the player's position
